@@ -24,7 +24,6 @@
     "resolveJsonModule": true
   },
   "exclude": [
-    "tsconfig.json",
     "client",
     "test/client",
     "node_modules*"

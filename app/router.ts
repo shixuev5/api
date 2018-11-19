@@ -1,7 +1,6 @@
 import { Application } from 'egg';
 
-export default (app: Application) => {
-  const { controller, router } = app;
+// tslint:disable-next-line:no-empty
+export default (_app: Application) => {
 
-  router.resources('users', '/users', controller.user);
 };
