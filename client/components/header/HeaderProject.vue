@@ -1,0 +1,46 @@
+<template>
+  <a-popover trigger="hover" placement="bottomLeft" arrowPointAtCenter>
+    <div class="project" slot="content">
+      <a-list size="small">
+        <a-list-item>我的项目</a-list-item>
+        <a-list-item>共享项目</a-list-item>
+        <a-list-item>探索项目</a-list-item>
+      </a-list>
+      <a-divider type="vertical"/>
+      <div class="project-result">
+        <a-input-search placeholder="搜索您的项目" @search="onSearch"/>
+      </div>
+    </div>
+    <slot></slot>
+  </a-popover>
+</template>
+
+<script>
+export default {
+  methods: {
+    onSearch() {}
+  }
+};
+</script>
+
+<style lang="less" scoped>
+.project {
+  display: flex;
+  height: 260px;
+  .ant-list {
+    width: 100px;
+    &-item {
+      cursor: pointer;
+      &:hover {
+        color: #1890ff;
+      }
+    }
+  }
+  .ant-divider {
+    height: 100%;
+  }
+  &-result {
+    width: 260px;
+  }
+}
+</style>
