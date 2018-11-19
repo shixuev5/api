@@ -28,7 +28,7 @@ export default (appInfo: EggAppInfo) => {
     // graphql 服务地址
     router: '/graphql',
     // ws 订阅服务地址
-    subscribe: '/graphql',
+    subscribe: '/subscribe',
     // 是否加载到 app 上，默认开启
     app: true,
     // 是否加载到 agent 上，默认关闭
@@ -67,7 +67,5 @@ export default (appInfo: EggAppInfo) => {
   };
 
   // the return config will combines to EggAppConfig
-  return {
-    ...config,
-  };
+  return config;
 };
