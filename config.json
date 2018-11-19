@@ -4,8 +4,8 @@
     "port": "27017",
     "database": "api",
     "authSource": "admin",
-    "user": "yh",
-    "pass": "yh1992816"
+    "user": "root",
+    "pass": "api-secret"
   },
   "mail": {
     "enable": true,
