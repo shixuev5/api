@@ -6,7 +6,7 @@ export default (app: Application) => {
   app.once('server', (server) => {
     SubscriptionServer.create(
       {
-        // schema: app.schema,
+        schema: app.schema,
         execute,
         subscribe,
       },
