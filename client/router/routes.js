@@ -31,7 +31,6 @@ const routes = [
         path: "postman",
         name: "postman",
         meta: { alias: "postman" },
-        layout: "AsideLayout",
         component: "postman/Index"
       }
     ]
@@ -41,6 +40,12 @@ const routes = [
     name: "login",
     meta: { auth: false },
     component: "user/Login"
+  },
+  {
+    path: "/explore",
+    name: "explore",
+    meta: { auth: false },
+    component: "explore/Index"
   }
 ];
 
