@@ -1,6 +1,6 @@
 <template>
   <header class="clearfix">
-    <div class="logo"/>
+    <Icon class="logo" type="explore" :size="48" slot="cover"></Icon>
     <HeaderNav></HeaderNav>
     <div class="header-right">
       <HeaderSearch></HeaderSearch>
@@ -16,11 +16,6 @@ header {
   padding: 0 24px;
   .logo {
     float: left;
-    width: 100px;
-    height: 30px;
-    background: #1890ff;
-    border-radius: 8px;
-    margin: 8px 20px 0 0;
   }
   .header-nav {
     float: left;

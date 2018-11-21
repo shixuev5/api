@@ -39,12 +39,13 @@ const routes = [
     path: "/login",
     name: "login",
     meta: { auth: false },
-    component: "user/Login"
+    component: "login/Index"
   },
   {
     path: "/explore",
     name: "explore",
     meta: { auth: false },
+    layout: "DefaultLayout",
     component: "explore/Index"
   }
 ];

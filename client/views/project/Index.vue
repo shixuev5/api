@@ -32,7 +32,7 @@
       <a-col :span="11" :offset="7">
        <router-link to="/docs">
           <a-card hoverable>
-            <Icon type="group" :size="48" slot="cover"></Icon>
+            <Icon type="docs" :size="48" slot="cover"></Icon>
             <a-card-meta title="浏览文档">
               <template slot="description">了解如何高效利用 API 管理系统</template>
             </a-card-meta>

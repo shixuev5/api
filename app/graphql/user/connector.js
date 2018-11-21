@@ -11,8 +11,12 @@ class UserConnector {
     return this.proxy.create(args);
   }
 
-  fetch() {
-    return this.ctx.app.model.User.find({});
+  fetch(ids) {
+    return this.ctx.app.model.User.find({
+      id: {
+        $in: ids
+      }
+    });
   }
 
   fetchByIds(ids) {
@@ -24,10 +28,12 @@ class UserConnector {
   }
 
   update(id, args) {
+    this.loader.clear(id);
     return this.proxy.findByIdAndUpdate(id, args);
   }
 
   remove(id) {
+    this.loader.clear(id);
     return this.proxy.remove({ id });
   }
 }

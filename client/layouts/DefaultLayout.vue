@@ -1,6 +1,7 @@
 <template>
   <div>
     <Header></Header>
+    <slot></slot>
     <router-view></router-view>
   </div>
 </template>

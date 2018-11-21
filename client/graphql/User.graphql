@@ -1,3 +1,22 @@
-mutation createUser($name: String!, $password: String!) {
-  createUser(name: $name, password: $password)
+query LOGIN($id: ID!) {
+  user(id: $id) {
+    name
+    password
+  }
+}
+
+mutation CREATE_USER($name: String!, $email: String!, $password: String!, $type: String) {
+  createUser(name: $name, email: $email, password: $password, type: $type) {
+    id
+  }
+}
+mutation UPDATE_USER($id: String!) {
+  updateUser(id: $id) {
+    id
+  }
+}
+mutation DELETE_USER($id: String!) {
+  deleteUser(id: $id) {
+    id
+  }
 }

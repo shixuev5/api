@@ -2,10 +2,11 @@ type User {
   id: ID!
   name: String!
   email: String!
-  role: String!
-  type: String!
-  createdAt: Date!
-  updatedAt: Date!
+  password: String!
+  role: String
+  type: String
+  createdAt: Date
+  updatedAt: Date
 }
 
 type Query {
