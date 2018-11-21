@@ -54,7 +54,6 @@ export default (appInfo: EggAppInfo) => {
 
   config.jwt = {
     secret: config.keys,
-    ignore: ['/login', '/explore'],
   };
 
   config.static = {

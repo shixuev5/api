@@ -1,27 +1,50 @@
 <template>
   <div id="user">
-    <a-tabs :tabBarStyle="{textAlign: 'center', borderBottom: 'none'}">
+    <a-tabs :tabBarStyle="{ textAlign: 'center', borderBottom: 'none' }">
       <a-tab-pane tab="登陆" key="login">
-        <a-form @submit.prevent="login" :autoFormCreate="(loginForm)=>{this.loginForm = loginForm}">
+        <a-form
+          @submit.prevent="login"
+          :autoFormCreate="
+            loginForm => {
+              this.loginForm = loginForm;
+            }
+          "
+        >
           <template v-if="loginForm">
             <a-form-item
               :validateStatus="userNameError() ? 'error' : ''"
               :help="userNameError() || ''"
               fieldDecoratorId="userName"
-              :fieldDecoratorOptions="{rules: [{ required: true, message: 'Please input your username!' }]}"
+              :fieldDecoratorOptions="{
+                rules: [
+                  { required: true, message: 'Please input your username!' }
+                ]
+              }"
             >
               <a-input placeholder="Username | Email">
-                <a-icon slot="prefix" type="user" style="color:rgba(0,0,0,.25)"/>
+                <a-icon
+                  slot="prefix"
+                  type="user"
+                  style="color:rgba(0,0,0,.25)"
+                />
               </a-input>
             </a-form-item>
             <a-form-item
               :validateStatus="passwordError() ? 'error' : ''"
               :help="passwordError() || ''"
               fieldDecoratorId="password"
-              :fieldDecoratorOptions="{rules: [{ required: true, message: 'Please input your Password!' }]}"
+              :fieldDecoratorOptions="{
+                rules: [
+                  { required: true, message: 'Please input your Password!' }
+                ]
+              }"
             >
               <a-input type="password" placeholder="Password">
-                <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)"/>
+                <a-icon
+                  slot="prefix"
+                  type="lock"
+                  style="color:rgba(0,0,0,.25)"
+                />
               </a-input>
             </a-form-item>
             <a-form-item>
@@ -30,7 +53,8 @@
                 htmlType="submit"
                 :disabled="hasErrors(loginForm.getFieldsError())"
                 block
-              >登陆</a-button>
+                >登陆</a-button
+              >
             </a-form-item>
           </template>
         </a-form>
@@ -38,43 +62,88 @@
       <a-tab-pane tab="注册" key="signup">
         <a-form
           @submit.prevent="signup"
-          :autoFormCreate="(signupForm)=>{this.signupForm = signupForm}"
+          :autoFormCreate="
+            signupForm => {
+              this.signupForm = signupForm;
+            }
+          "
         >
           <template v-if="signupForm">
             <a-form-item
               fieldDecoratorId="userName"
-              :fieldDecoratorOptions="{rules: [{ required: true, message: 'Please input your username!' }]}"
+              :fieldDecoratorOptions="{
+                rules: [
+                  { required: true, message: 'Please input your username!' }
+                ]
+              }"
             >
               <a-input placeholder="Username">
-                <a-icon slot="prefix" type="user" style="color:rgba(0,0,0,.25)"/>
+                <a-icon
+                  slot="prefix"
+                  type="user"
+                  style="color:rgba(0,0,0,.25)"
+                />
               </a-input>
             </a-form-item>
             <a-form-item
               fieldDecoratorId="email"
-              :fieldDecoratorOptions="{rules: [{ required: true, message: 'Please input your email!' }, {type: 'email', message: 'The input is not valid E-mail!'}]}"
+              :fieldDecoratorOptions="{
+                rules: [
+                  { required: true, message: 'Please input your email!' },
+                  { type: 'email', message: 'The input is not valid E-mail!' }
+                ]
+              }"
             >
               <a-input type="email" placeholder="Email">
-                <a-icon slot="prefix" type="mail" style="color:rgba(0,0,0,.25)"/>
+                <a-icon
+                  slot="prefix"
+                  type="mail"
+                  style="color:rgba(0,0,0,.25)"
+                />
               </a-input>
             </a-form-item>
             <a-form-item
               help="password must be at least 6 characters."
               fieldDecoratorId="password"
-              :fieldDecoratorOptions="{rules: [{ required: true, message: 'Please input your Password!' }, {
-              validator: this.validateToNextPassword }, { min: 6, message: 'password must be at least 6 characters!' }]}"
+              :fieldDecoratorOptions="{
+                rules: [
+                  { required: true, message: 'Please input your Password!' },
+                  {
+                    validator: this.validateToNextPassword
+                  },
+                  { min: 6, message: 'password must be at least 6 characters!' }
+                ]
+              }"
             >
               <a-input type="password" placeholder="Password">
-                <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)"/>
+                <a-icon
+                  slot="prefix"
+                  type="lock"
+                  style="color:rgba(0,0,0,.25)"
+                />
               </a-input>
             </a-form-item>
             <a-form-item
               fieldDecoratorId="confirm"
-              :fieldDecoratorOptions="{rules: [{ required: true, message: 'Please retype your Password!' }, {
-              validator: this.compareToFirstPassword,
-            }]}"
+              :fieldDecoratorOptions="{
+                rules: [
+                  { required: true, message: 'Please retype your Password!' },
+                  {
+                    validator: this.compareToFirstPassword
+                  }
+                ]
+              }"
             >
-              <a-input type="password" placeholder="Confirm Password" @blur="handleConfirmBlur">
-                <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)"/>
+              <a-input
+                type="password"
+                placeholder="Confirm Password"
+                @blur="handleConfirmBlur"
+              >
+                <a-icon
+                  slot="prefix"
+                  type="lock"
+                  style="color:rgba(0,0,0,.25)"
+                />
               </a-input>
             </a-form-item>
             <a-form-item>
@@ -83,7 +152,8 @@
                 htmlType="submit"
                 :disabled="hasErrors(signupForm.getFieldsError())"
                 block
-              >注册</a-button>
+                >注册</a-button
+              >
             </a-form-item>
           </template>
         </a-form>
@@ -93,9 +163,13 @@
 </template>
 
 <script>
+import createUser from "@/graphql/User.graphql";
+import { onLogin } from "@/apollo";
+
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
+
 export default {
   data() {
     return {
@@ -140,9 +214,13 @@ export default {
       callback();
     },
     login() {
-      this.loginForm.validateFields((err, values) => {
+      this.loginForm.validateFields(async (err, values) => {
         if (!err) {
-          console.log(values);
+          const response = await this.$apollo.mutate({
+            mutation: createUser,
+            variables: values
+          });
+          onLogin(this.$apollo, response.data.token);
         }
       });
     },
