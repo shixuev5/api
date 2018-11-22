@@ -1,10 +1,12 @@
 <template>
-  <div>
-    <a-input-search placeholder="input search text" @search="onSearch"/>
-    <a-tabs defaultActiveKey="2" @change="onChange">
-      <a-tab-pane tab="历史" key="1">Content of Tab Pane 1</a-tab-pane>
-      <a-tab-pane tab="项目" key="2" forceRender>
-        <a-collapse accordion>
+  <aside>
+    <a-input-search placeholder="过滤" @search="onSearch"/>
+    <a-tabs defaultActiveKey="project" @change="onChange">
+      <a-tab-pane tab="历史" key="history">
+        暂无请求历史
+      </a-tab-pane>
+      <a-tab-pane tab="项目" key="project">
+        <a-collapse accordion :bordered="false">
           <a-collapse-panel header="This is panel header 1" key="1">
             <p>234</p>
           </a-collapse-panel>
@@ -14,7 +16,7 @@
         </a-collapse>
       </a-tab-pane>
     </a-tabs>
-  </div>
+  </aside>
 </template>
 
 <script>
@@ -27,4 +29,18 @@ export default {
 </script>
 
 <style lang="less" scoped>
+aside {
+  padding: 8px;
+  /deep/ .ant-tabs-bar {
+    text-align: center;
+    margin-bottom: 0;
+  }
+  /deep/ .ant-tabs-nav {
+    width: 100%;
+  }
+  /deep/ .ant-tabs-tab {
+    width: 50%;
+    margin-right: 0;
+  }
+}
 </style>

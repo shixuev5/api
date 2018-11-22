@@ -13,10 +13,10 @@
           <a-icon type="logout"/>登出
         </a-menu-item>
       </a-menu>
-      <span>
+      <div>
         <a-avatar icon="user"/>
         <a-icon type="down"/>
-      </span>
+      </div>
     </a-dropdown>
     <!-- <a-button type="primary" @click="click({key: 'login'})">登陆 / 注册</a-button> -->
   </div>
@@ -30,7 +30,7 @@ export default {
     click({ key }) {
       if (key === "logout") {
         onLogout(this.$apolloProvider.defaultClient);
-        this.$router.push({ path: "/expolre" });
+        this.$router.push({ path: "/explore" });
       } else {
         this.$router.push({ path: key });
       }

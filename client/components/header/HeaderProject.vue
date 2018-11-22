@@ -3,7 +3,7 @@
     <div class="project" slot="content">
       <a-list size="small">
         <a-list-item>我的项目</a-list-item>
-        <a-list-item>共享项目</a-list-item>
+        <a-list-item>关注项目</a-list-item>
         <a-list-item>探索项目</a-list-item>
       </a-list>
       <a-divider type="vertical"/>

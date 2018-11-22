@@ -2,7 +2,7 @@
   <a-form layout="vertical" @submit.prevent="login" :autoFormCreate="(form)=>{this.form = form}">
     <template v-if="form">
       <a-form-item
-        label="项目名"
+        label="群组名"
         fieldDecoratorId="project"
         :fieldDecoratorOptions="{rules: [{ required: true, message: 'Please input project name!' }]}"
       >
@@ -16,29 +16,29 @@
         <a-input placeholder="/"></a-input>
       </a-form-item>
       <a-form-item
-        label="项目描述"
+        label="群组描述"
         fieldDecoratorId="description"
         :fieldDecoratorOptions="{rules: [{ message: 'Please input your Password!' }]}"
       >
-        <a-textarea placeholder="请简单描述项目信息... (可选)" :rows="4"/>
+        <a-textarea placeholder="请简单描述群组信息... (可选)" :rows="4"/>
       </a-form-item>
       <a-form-item
-        label="项目权限"
+        label="群组权限"
         fieldDecoratorId="permission"
         :fieldDecoratorOptions="{rules: [{ message: 'Please input your Password!' }]}"
       >
         <a-radio-group name="radioGroup" defaultValue="private">
           <a-radio name="permission" value="private">
             <a-icon type="lock" /> 私有
-            <p>项目访问权限必须明确授权给每个用户。</p>
+            <p>群组访问权限必须明确授权给每个用户。</p>
           </a-radio>
           <a-radio name="permission" value="share">
             <a-icon type="share-alt" /> 内部
-            <p>该项目允许已登录的用户访问。</p>
+            <p>该群组允许已登录的用户访问。</p>
           </a-radio>
           <a-radio name="permission" value="public">
             <a-icon type="unlock" /> 公开
-            <p>该项目允许任何人访问。</p>
+            <p>该群组允许任何人访问。</p>
           </a-radio>
         </a-radio-group>
       </a-form-item>

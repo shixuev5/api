@@ -3,7 +3,7 @@
     <a-row :gutter="16">
       <a-col :span="20">
         <a-input size="large" placeholder="请输入请求URL">
-          <a-select slot="addonBefore" defaultValue="GET" dropdownClassName style="width: 120px">
+          <a-select slot="addonBefore" defaultValue="GET" style="width: 120px">
             <a-select-option value="GET">GET</a-select-option>
             <a-select-option value="POST">POST</a-select-option>
             <a-select-option value="PUT">PUT</a-select-option>
@@ -126,6 +126,9 @@ export default {
 </script>
 
 <style lang="less">
+.ant-table-small {
+  border: none;
+}
 .ant-select-dropdown-menu {
   max-height: 300px;
 }

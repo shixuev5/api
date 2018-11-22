@@ -11,7 +11,7 @@ const routes = [
         name: "projects",
         meta: { alias: "项目" },
         layout: "NavLayout",
-        component: "project/Index",
+        component: "project/Index"
       },
       {
         path: "projects/new",
@@ -28,9 +28,16 @@ const routes = [
         component: "group/Index"
       },
       {
+        path: "groups/new",
+        name: "groups_new",
+        meta: { alias: "新建群组" },
+        layout: "NavLayout",
+        component: "group/Create"
+      },
+      {
         path: "postman",
         name: "postman",
-        meta: { alias: "postman" },
+        meta: { alias: "Postman" },
         component: "postman/Index"
       }
     ]
@@ -44,9 +51,24 @@ const routes = [
   {
     path: "/explore",
     name: "explore",
-    meta: { auth: false },
-    layout: "DefaultLayout",
-    component: "explore/Index"
+    layout: ["DefaultLayout", "NavLayout"],
+    meta: { auth: false, alias: "探索" },
+    redirect: "/explore/project",
+    component: "explore/Index",
+    children: [
+      {
+        path: "project",
+        name: "project",
+        meta: { alias: "项目" },
+        component: "explore/Project"
+      },
+      {
+        path: "group",
+        name: "group",
+        meta: { alias: "群组" },
+        component: "explore/Group"
+      }
+    ]
   }
 ];
 

@@ -1,6 +1,6 @@
 <template>
   <header class="clearfix">
-    <Icon class="logo" type="explore" :size="48" slot="cover"></Icon>
+    <Icon class="logo" type="explore" :size="46" slot="cover"></Icon>
     <HeaderNav></HeaderNav>
     <div class="header-right">
       <HeaderSearch></HeaderSearch>
@@ -22,12 +22,13 @@ header {
     border-bottom: none;
   }
   .header-right {
+    float: right;
     display: flex;
     align-items: center;
-    float: right;
-    height: 48px;
-    justify-content: space-between;
-    width: 300px;
+    height: 47px;
+    > * {
+      margin: 0 8px;
+    }
   }
 }
 </style>

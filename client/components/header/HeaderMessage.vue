@@ -1,6 +1,8 @@
 <template>
   <div>
-    <a-icon type="message" @click="visible = true"/>
+    <a-badge count="5">
+      <a-icon type="message" @click="visible = true"/>
+    </a-badge>
     <a-drawer title="消息中心" placement="right" :closable="false" :visible="visible" @close="() => visible = false">
       <p>Some contents...</p>
       <p>Some contents...</p>
