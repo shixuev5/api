@@ -1,14 +1,13 @@
 <template>
   <a-popover trigger="hover" placement="bottomLeft" arrowPointAtCenter>
-    <div class="project" slot="content">
+    <div class="group" slot="content">
       <a-list size="small">
-        <a-list-item>我的项目</a-list-item>
-        <a-list-item>关注项目</a-list-item>
-        <a-list-item>探索项目</a-list-item>
+        <a-list-item>我的群组</a-list-item>
+        <a-list-item>探索群组</a-list-item>
       </a-list>
       <a-divider type="vertical" />
-      <div class="project-result">
-        <a-input-search placeholder="搜索您的项目" @search="onSearch" />
+      <div class="group-result">
+        <a-input-search placeholder="搜索您的群组" @search="onSearch" />
       </div>
     </div>
     <slot></slot>
@@ -24,7 +23,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.project {
+.group {
   display: flex;
   height: 260px;
   .ant-list {

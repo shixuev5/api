@@ -1,5 +1,5 @@
 <template>
-  <a-input-search placeholder="搜索" @search="onSearch"/>
+  <a-input-search placeholder="搜索" @search="onSearch" />
 </template>
 
 <script>

@@ -1,74 +1,72 @@
 const routes = [
   {
     path: "/",
-    name: "dashboard",
-    meta: { alias: "首页" },
+    redirect: "/dashboard",
     component: "DefaultLayout",
-    redirect: "projects",
     children: [
       {
-        path: "projects",
-        name: "projects",
-        meta: { alias: "项目" },
-        layout: "NavLayout",
+        path: "dashboard",
+        name: "dashboard",
+        meta: { alias: "首页" },
         component: "project/Index"
       },
       {
         path: "projects/new",
         name: "projects_new",
         meta: { alias: "新建项目" },
-        layout: "NavLayout",
         component: "project/Create"
       },
       {
-        path: "groups",
-        name: "groups",
-        meta: { alias: "群组" },
-        layout: "NavLayout",
-        component: "group/Index"
+        path: "projects",
+        name: "projects",
+        meta: { alias: "项目" },
+        component: "project/List"
       },
       {
         path: "groups/new",
         name: "groups_new",
         meta: { alias: "新建群组" },
-        layout: "NavLayout",
         component: "group/Create"
       },
       {
-        path: "postman",
-        name: "postman",
-        meta: { alias: "Postman" },
-        component: "postman/Index"
+        path: "groups",
+        name: "groups",
+        meta: { alias: "群组" },
+        component: "group/List"
       }
     ]
   },
   {
-    path: "/login",
+    path: "/user/login",
     name: "login",
     meta: { auth: false },
-    component: "login/Index"
+    component: "user/Login"
   },
   {
     path: "/explore",
     name: "explore",
-    layout: ["DefaultLayout", "NavLayout"],
     meta: { auth: false, alias: "探索" },
-    redirect: "/explore/project",
     component: "explore/Index",
     children: [
       {
-        path: "project",
-        name: "project",
+        path: "projects",
+        name: "explore_projects",
         meta: { alias: "项目" },
-        component: "explore/Project"
+        component: "project/List"
       },
       {
-        path: "group",
-        name: "group",
+        path: "groups",
+        name: "explore_groups",
         meta: { alias: "群组" },
-        component: "explore/Group"
+        component: "group/List"
       }
     ]
+  },
+  {
+    path: "/postman",
+    name: "postman",
+    meta: { alias: "Postman" },
+    component: "postman/Index"
   }
 ];
 

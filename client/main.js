@@ -12,12 +12,13 @@ Vue.use(Antd);
 
 function importAll(r) {
   r.keys().forEach(item => {
-    const componentName = item.replace(/.*\/(\w+)\.vue$/, "$1");
+    let componentName = (r(item).default || r(item)).name;
+    if(!componentName) componentName = item.replace(/.*\/(\w+)\.vue$/, "$1");
     Vue.component(componentName, r(item).default || r(item));
   });
 }
-importAll(require.context("./components/", true, /\.vue$/));
-importAll(require.context("./layouts/", true, /\.vue$/));
+
+importAll(require.context("./components", true, /\.vue$/));
 
 new Vue({
   router,

@@ -1,31 +1,47 @@
 <template>
-  <a-form layout="vertical" @submit.prevent="login" :autoFormCreate="(form)=>{this.form = form}">
+  <a-form
+    layout="vertical"
+    @submit.prevent="login"
+    :autoFormCreate="
+      form => {
+        this.form = form;
+      }
+    "
+  >
     <template v-if="form">
       <a-form-item
         label="项目名"
         fieldDecoratorId="project"
-        :fieldDecoratorOptions="{rules: [{ required: true, message: 'Please input project name!' }]}"
+        :fieldDecoratorOptions="{
+          rules: [{ required: true, message: 'Please input project name!' }]
+        }"
       >
         <a-input></a-input>
       </a-form-item>
       <a-form-item
         label="基础路径"
         fieldDecoratorId="baseUrl"
-        :fieldDecoratorOptions="{rules: [{ message: 'Please input your Password!' }]}"
+        :fieldDecoratorOptions="{
+          rules: [{ message: 'Please input your Password!' }]
+        }"
       >
         <a-input placeholder="/"></a-input>
       </a-form-item>
       <a-form-item
         label="项目描述"
         fieldDecoratorId="description"
-        :fieldDecoratorOptions="{rules: [{ message: 'Please input your Password!' }]}"
+        :fieldDecoratorOptions="{
+          rules: [{ message: 'Please input your Password!' }]
+        }"
       >
-        <a-textarea placeholder="请简单描述项目信息... (可选)" :rows="4"/>
+        <a-textarea placeholder="请简单描述项目信息... (可选)" :rows="4" />
       </a-form-item>
       <a-form-item
         label="项目权限"
         fieldDecoratorId="permission"
-        :fieldDecoratorOptions="{rules: [{ message: 'Please input your Password!' }]}"
+        :fieldDecoratorOptions="{
+          rules: [{ message: 'Please input your Password!' }]
+        }"
       >
         <a-radio-group name="radioGroup" defaultValue="private">
           <a-radio name="permission" value="private">
@@ -48,7 +64,8 @@
           htmlType="submit"
           :disabled="hasErrors(form.getFieldsError())"
           block
-        >完成</a-button>
+          >完成</a-button
+        >
       </a-form-item>
     </template>
   </a-form>

@@ -1,8 +1,11 @@
 <template>
   <a-breadcrumb :routes="routes">
-    <template slot="itemRender" slot-scope="{route, params, routes, paths}">
-      <router-link v-if="routes.indexOf(route) === routes.length - 1" :to="`/${paths.join('/')}`">
-        {{route.alias}}
+    <template slot="itemRender" slot-scope="{ route, params, routes, paths }">
+      <router-link
+        v-if="routes.indexOf(route) === routes.length - 1"
+        :to="`/${paths.join('/')}`"
+      >
+        {{ route.alias }}
       </router-link>
     </template>
   </a-breadcrumb>
@@ -22,7 +25,6 @@ export default {
   }
 };
 </script>
-
 
 <style lang="less" scoped>
 .ant-breadcrumb {

@@ -2,16 +2,16 @@
   <a-layout-sider v-model="collapsed" theme="light" collapsible>
     <a-menu>
       <a-menu-item key="1">
-        <a-icon type="mail"/>
+        <a-icon type="mail" />
         <span>Navigation One</span>
       </a-menu-item>
       <a-menu-item key="2">
-        <a-icon type="calendar"/>
+        <a-icon type="calendar" />
         <span>Navigation Two</span>
       </a-menu-item>
       <a-sub-menu key="sub1">
         <span slot="title">
-          <a-icon type="appstore"/>
+          <a-icon type="appstore" />
           <span>Navigation Three</span>
         </span>
         <a-menu-item key="3">Option 3</a-menu-item>
@@ -23,7 +23,7 @@
       </a-sub-menu>
       <a-sub-menu key="sub2">
         <span slot="title">
-          <a-icon type="setting"/>
+          <a-icon type="setting" />
           <span>Navigation Four</span>
         </span>
         <a-menu-item key="7">Option 7</a-menu-item>

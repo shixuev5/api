@@ -60,7 +60,6 @@
     "@vue/test-utils": "^1.0.0-beta.20",
     "autod": "^3.0.1",
     "autod-egg": "^1.1.0",
-    "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
     "commitizen": "^3.0.4",
