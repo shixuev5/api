@@ -2,6 +2,7 @@
 node_modules
 run
 logs
+static
 
 # local env files
 .env.local
