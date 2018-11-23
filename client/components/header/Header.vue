@@ -3,6 +3,7 @@
     <Icon class="logo" type="explore" :size="46" slot="cover"></Icon>
     <HeaderNav></HeaderNav>
     <div class="header-right">
+      <HeaderAdd></HeaderAdd>
       <HeaderSearch></HeaderSearch>
       <HeaderMessage></HeaderMessage>
       <HeaderUser></HeaderUser>

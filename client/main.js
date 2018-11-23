@@ -19,6 +19,7 @@ function importAll(r) {
 }
 
 importAll(require.context("./components", true, /\.vue$/));
+importAll(require.context("./layouts", true, /\.vue$/));
 
 new Vue({
   router,

@@ -3,7 +3,9 @@
     <a-menu-item key="projects">
       <HeaderProject>项目</HeaderProject>
     </a-menu-item>
-    <a-menu-item key="groups"><HeaderGroup>群组</HeaderGroup></a-menu-item>
+    <a-menu-item key="groups">
+      <HeaderGroup>群组</HeaderGroup>
+    </a-menu-item>
     <a-menu-item key="postman">postman</a-menu-item>
   </a-menu>
 </template>

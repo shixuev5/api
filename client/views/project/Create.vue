@@ -34,7 +34,7 @@
           rules: [{ message: 'Please input your Password!' }]
         }"
       >
-        <a-textarea placeholder="请简单描述项目信息... (可选)" :rows="4" />
+        <a-textarea placeholder="请简单描述项目信息... (可选)" :rows="4"/>
       </a-form-item>
       <a-form-item
         label="项目权限"
@@ -45,15 +45,15 @@
       >
         <a-radio-group name="radioGroup" defaultValue="private">
           <a-radio name="permission" value="private">
-            <a-icon type="lock" /> 私有
+            <a-icon type="lock"/>私有
             <p>项目访问权限必须明确授权给每个用户。</p>
           </a-radio>
           <a-radio name="permission" value="share">
-            <a-icon type="share-alt" /> 内部
+            <a-icon type="share-alt"/>内部
             <p>该项目允许已登录的用户访问。</p>
           </a-radio>
           <a-radio name="permission" value="public">
-            <a-icon type="unlock" /> 公开
+            <a-icon type="unlock"/>公开
             <p>该项目允许任何人访问。</p>
           </a-radio>
         </a-radio-group>
@@ -64,8 +64,7 @@
           htmlType="submit"
           :disabled="hasErrors(form.getFieldsError())"
           block
-          >完成</a-button
-        >
+        >完成</a-button>
       </a-form-item>
     </template>
   </a-form>

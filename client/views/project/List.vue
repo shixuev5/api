@@ -9,11 +9,12 @@
         <a-tab-pane tab="全部" key="all">暂无公开项目</a-tab-pane>
         <span slot="tabBarExtraContent">
           <a-select
-            defaultValue="lastUpdate"
+            defaultValue="all"
             style="width: 120px"
             @change="handleChange"
           >
-            <a-select-opt-group title="所有">
+            <a-select-opt-group label="权限">
+              <a-select-option value="all">所有</a-select-option>
               <a-select-option value="private">私有</a-select-option>
               <a-select-option value="share">内部</a-select-option>
               <a-select-option value="public">公开</a-select-option>
@@ -53,9 +54,16 @@
 
 <script>
 export default {
+  props: {
+    type: String
+  },
   methods: {
     onSearch() {},
     handleChange() {}
+  },
+  mounted() {
+    console.log(this.type);
+    debugger;
   }
 };
 </script>

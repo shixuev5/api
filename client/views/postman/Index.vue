@@ -4,7 +4,7 @@
       <Aside></Aside>
     </a-col>
     <a-col :span="18" :offset="1">
-      <a-tabs v-model="activeKey" type="editable-card" @edit="onEdit">
+      <a-tabs v-model="activeKey" type="editable-card" :hideAdd="true" @edit="onEdit">
         <a-tab-pane
           v-for="pane in panes"
           :tab="pane.title"
@@ -31,15 +31,12 @@ export default {
     Response
   },
   data() {
-    const panes = [
-      {
-        title: "GET http://www.baidu.com",
-        key: "1"
-      }
-    ];
     return {
-      activeKey: panes[0].key,
-      panes
+      activeKey: "1",
+      panes: [{
+        title: "GET undefined request",
+        key: "1"
+      }]
     };
   },
   methods: {
@@ -47,30 +44,15 @@ export default {
       this[action](targetKey);
     },
     add() {
-      const panes = this.panes;
-      const activeKey = `newTab${this.newTabIndex++}`;
-      panes.push({
-        title: "New Tab",
-        content: "Content of new Tab",
+      const activeKey = '123';
+      this.panes.push({
+        title: "GET undefined request",
         key: activeKey
       });
-      this.panes = panes;
       this.activeKey = activeKey;
     },
     remove(targetKey) {
-      let activeKey = this.activeKey;
-      let lastIndex;
-      this.panes.forEach((pane, i) => {
-        if (pane.key === targetKey) {
-          lastIndex = i - 1;
-        }
-      });
-      const panes = this.panes.filter(pane => pane.key !== targetKey);
-      if (lastIndex >= 0 && activeKey === targetKey) {
-        activeKey = panes[lastIndex].key;
-      }
-      this.panes = panes;
-      this.activeKey = activeKey;
+
     }
   }
 };
