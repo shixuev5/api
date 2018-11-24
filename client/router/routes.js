@@ -1,7 +1,7 @@
 const routes = [
   {
     path: "/",
-    redirect: "/dashboard",
+    redirect: { name: "dashboard" },
     component: "DefaultLayout",
     children: [
       {
@@ -9,8 +9,10 @@ const routes = [
         name: "dashboard",
         layout: "NavLayout",
         meta: { alias: "首页" },
-        component: "project/Index"
+        component: "common/Dashboard"
       },
+
+      /* 项目 */
       {
         path: "projects/new",
         name: "projects_new",
@@ -26,6 +28,27 @@ const routes = [
         component: "project/List"
       },
       {
+        path: "project/:name",
+        name: "project",
+        component: "project/Index",
+        redirect: { name: "interfaces" },
+        children: [
+          /* 接口 */
+          {
+            path: "interfaces",
+            name: "interfaces",
+            component: "interface/List"
+          },
+          {
+            path: "interfaces/new",
+            name: "interfaces_new",
+            component: "interface/Create"
+          }
+        ]
+      },
+
+      /* 群组 */
+      {
         path: "groups/new",
         name: "groups_new",
         layout: "NavLayout",
@@ -39,24 +62,37 @@ const routes = [
         meta: { alias: "群组" },
         component: "group/List"
       },
-      {
-        path: "interfaces/new",
-        name: "interfaces_new",
-        meta: { alias: "新建接口" },
-        component: "interface/Create"
-      },
-      {
-        path: "interfaces",
-        name: "interfaces",
-        meta: { alias: "接口" },
-        component: "interface/List"
-      },
+
+      /* Postman */
       {
         path: "postman",
         name: "postman",
         meta: { alias: "Postman" },
         component: "postman/Index"
       },
+
+      /* 探索 */
+      {
+        path: "explore",
+        name: "explore",
+        meta: { auth: false, alias: "探索" },
+        redirect: { name: "explore_projects" },
+        component: "explore/Index",
+        children: [
+          {
+            path: "projects",
+            name: "explore_projects",
+            meta: { alias: "项目" },
+            component: "explore/Project"
+          },
+          {
+            path: "groups",
+            name: "explore_groups",
+            meta: { alias: "群组" },
+            component: "explore/Group"
+          }
+        ]
+      }
     ]
   },
   {
@@ -66,26 +102,16 @@ const routes = [
     component: "user/Login"
   },
   {
-    path: "/explore",
-    name: "explore",
-    meta: { auth: false, alias: "探索" },
-    redirect: "/explore/projects",
-    component: "explore/Index",
-    children: [
-      {
-        path: "projects",
-        name: "explore_projects",
-        meta: { alias: "项目" },
-        component: "explore/Project"
-      },
-      {
-        path: "groups",
-        name: "explore_groups",
-        meta: { alias: "群组" },
-        component: "explore/Group"
-      }
-    ]
+    path: "/forbidden",
+    name: "forbidden",
+    component: "common/Forbidden"
   },
+  {
+    path: "*",
+    name: "not_found",
+    meta: { auth: false },
+    component: "common/NotFound"
+  }
 ];
 
 export default routes;

@@ -1,16 +1,13 @@
 <template>
-  <dir>
+  <div>
     interface create
-  </dir>
+  </div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
 
 <style lang="less" scoped>
-
 </style>

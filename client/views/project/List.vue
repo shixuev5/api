@@ -48,6 +48,9 @@
           <a-select-option value="onlyShow">只显示归档项目</a-select-option>
         </a-select-opt-group>
       </a-select>
+      <router-link to="/projects/new">
+        <a-button type="primary" style="marginLeft: 8px;">新建项目</a-button>
+      </router-link>
     </span>
   </a-tabs>
 </template>
@@ -60,10 +63,6 @@ export default {
   methods: {
     onSearch() {},
     handleChange() {}
-  },
-  mounted() {
-    console.log(this.type);
-    debugger;
   }
 };
 </script>
