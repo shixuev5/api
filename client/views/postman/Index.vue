@@ -33,10 +33,12 @@ export default {
   data() {
     return {
       activeKey: "1",
-      panes: [{
-        title: "GET undefined request",
-        key: "1"
-      }]
+      panes: [
+        {
+          title: "GET undefined request",
+          key: "1"
+        }
+      ]
     };
   },
   methods: {
@@ -44,16 +46,14 @@ export default {
       this[action](targetKey);
     },
     add() {
-      const activeKey = '123';
+      const activeKey = "123";
       this.panes.push({
         title: "GET undefined request",
         key: activeKey
       });
       this.activeKey = activeKey;
     },
-    remove(targetKey) {
-
-    }
+    remove(targetKey) {}
   }
 };
 </script>

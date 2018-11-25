@@ -98,8 +98,16 @@ const routes = [
   {
     path: "/login",
     name: "login",
+    layout: "LoginLayout",
     meta: { auth: false },
     component: "user/Login"
+  },
+  {
+    path: "/signup",
+    name: "signup",
+    layout: "LoginLayout",
+    meta: { auth: false },
+    component: "user/Signup"
   },
   {
     path: "/forbidden",

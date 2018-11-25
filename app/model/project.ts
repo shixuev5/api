@@ -1,7 +1,5 @@
 import { Application } from 'egg';
 
-enum permission { 'private', 'shared', 'public' }
-
 export default (app: Application) => {
   const mongoose = app.mongoose;
   const projectSchema = new mongoose.Schema(
@@ -9,7 +7,7 @@ export default (app: Application) => {
       name: { type: String, required: true },
       path: { type: String, required: true },
       env: [],
-      permission: { type: permission },
+      permission: { type: String, enum: ['private', 'shared', 'public'] },
       archive: { type: Boolean, default: false },
     },
     {

@@ -21,13 +21,10 @@
 </template>
 
 <script>
-import { onLogout } from "@/apollo";
-
 export default {
   methods: {
     click({ key }) {
       if (key === "logout") {
-        onLogout(this.$apolloProvider.defaultClient);
         this.$router.push({ path: "/explore" });
       } else {
         this.$router.push({ path: key });

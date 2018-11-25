@@ -29,6 +29,8 @@ export default {
           default:
             return this.type;
         }
+      } else {
+        return this.type;
       }
     }
   }

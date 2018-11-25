@@ -1,14 +1,8 @@
 export default {
   state: {
-    history: [],
+    history: []
   },
-  getters: {
-
-  },
-  mutations: {
-
-  },
-  actions: {
-
-  }
+  getters: {},
+  mutations: {},
+  actions: {}
 };
