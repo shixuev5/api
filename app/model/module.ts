@@ -6,6 +6,7 @@ export default (app: Application) => {
     {
       name: { type: String, required: true },
       path: { type: String, required: true },
+      project_id: { type: mongoose.Schema.Types.ObjectId, required: true },
     },
     {
       timestamps: true,

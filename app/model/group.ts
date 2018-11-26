@@ -5,7 +5,6 @@ export default (app: Application) => {
   const groupSchema = new mongoose.Schema(
     {
       name: { type: String, required: true },
-      path: { type: String, required: true },
       permission: { type: String, enum: ['private', 'shared', 'public'] },
     },
     {

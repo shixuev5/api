@@ -7,7 +7,5 @@ export default (app: Application) => {
   // io.of('/').route('server', io.controller.default.ping);
 
   // users
-  router.resources('users', '/api/v1/users', controller.users);
-  router.post('/api/v1/users/login', controller.users.login);
-  router.get('/api/v1/users/search', controller.users.search);
+  router.get('api/v1/user/search', controller.users.search);
 };

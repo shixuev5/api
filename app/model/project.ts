@@ -7,6 +7,7 @@ export default (app: Application) => {
       name: { type: String, required: true },
       path: { type: String, required: true },
       env: [],
+      group_id: { type: mongoose.Schema.Types.ObjectId },
       permission: { type: String, enum: ['private', 'shared', 'public'] },
       archive: { type: Boolean, default: false },
     },
