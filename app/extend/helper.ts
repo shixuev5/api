@@ -1,11 +1,10 @@
-import { IHelper } from 'egg';
-
 export default {
-  res(this: IHelper, data: any, code = 0, message = '成功') {
-    return {
-      data,
+  success({ ctx, data, code = 0, msg = '成功'}) {
+    ctx.body = {
       code,
-      message,
+      data,
+      msg,
     };
+    ctx.status = 200;
   },
 };

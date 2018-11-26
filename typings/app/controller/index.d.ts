@@ -2,10 +2,10 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg'; // Make sure ts to import egg declaration at first
-import Users from '../../../app/controller/users';
+import User from '../../../app/controller/user';
 
 declare module 'egg' {
   interface IController {
-    users: Users;
+    user: User;
   }
 }

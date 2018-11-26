@@ -7,14 +7,14 @@ export default (appInfo: EggAppInfo) => {
 
   // override config from framework / plugin
   // use for cookie sign key, should change to your own and keep security
-  config.keys = appInfo.name + '_1542163835910_5000';
+  config.keys = appInfo.name + '_secret';
 
   // add your egg config in here
   config.middleware = ['errorHandler'];
 
-  // 只对 /api 前缀的 url 路径生效
+  // 只对 /api/v1 前缀的 url 路径生效
   config.errorHandler = {
-    match: '/api',
+    match: '/api/v1',
   };
 
   // mongodb config
@@ -41,8 +41,9 @@ export default (appInfo: EggAppInfo) => {
   };
 
   config.jwt = {
-    // enable: true,
+    enable: true,
     secret: config.keys,
+    ignore: /user\/(search|login|signup)/,
   };
 
   config.io = {
