@@ -1,10 +1,12 @@
+import { IHelper } from 'egg';
+
 export default {
-  success({ ctx, data, code = 0, msg = '成功'}) {
-    ctx.body = {
+  success(this: IHelper, data, code = 0, msg = '成功') {
+    this.ctx.body = {
       code,
       data,
       msg,
     };
-    ctx.status = 200;
+    this.ctx.status = 200;
   },
 };

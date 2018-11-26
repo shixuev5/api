@@ -9,4 +9,7 @@ module.exports = {
       .add("./client/main.js");
     config.resolve.alias.set("@", path.join(__dirname, "client"));
   },
+  devServer: {
+    proxy: 'http://localhost:7001'
+  }
 };
