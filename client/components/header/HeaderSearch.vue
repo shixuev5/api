@@ -4,6 +4,11 @@
 
 <script>
 export default {
+  computed: {
+    isLogin() {
+      return this.$store.state.user.isLogin;
+    }
+  },
   methods: {
     onSearch() {}
   }

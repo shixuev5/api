@@ -16,7 +16,7 @@ export default () => {
           : err.message;
 
       // 从 error 对象上读出各个属性，设置到响应中
-      ctx.body = { data: null, code: err.code, msg: error };
+      ctx.body = { code: err.code, msg: error };
       if (status === 422) {
         ctx.body.detail = err.errors;
       }

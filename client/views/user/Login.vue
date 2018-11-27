@@ -12,8 +12,10 @@ const LoginForm = {
       e.preventDefault();
       this.form.validateFields(async (err, values) => {
         if (!err) {
-          this.$store.dispatch(types.USER_LOGIN, values);
-          this.$router.replace("/");
+          await this.$store.dispatch(types.USER_LOGIN, values);
+          this.$router.replace("/", () => {
+            this.$message.success("欢迎回来～");
+          });
         }
       });
     }

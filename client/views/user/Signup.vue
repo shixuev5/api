@@ -98,10 +98,11 @@ export default {
     };
   },
   methods: {
-    exsitCheck(rule, value, callback) {
-      setTimeout(function() {
-        callback();
-      }, 300);
+    async exsitCheck(rule, value, callback) {
+      const { exist } = await this.$store.dispatch(types.USER_SEARCH, {
+        [rule.field]: value
+      });
+      exist ? callback(false) : callback();
     },
     handleConfirmBlur(e) {
       const value = e.target.value;
@@ -123,7 +124,8 @@ export default {
     signup() {
       this.form.validateFields(async (err, values) => {
         if (!err) {
-          this.$store.dispatch(types.USER_SIGNUP, values);
+          await this.$store.dispatch(types.USER_SIGNUP, values);
+          this.$message.success("注册成功!");
         }
       });
     }

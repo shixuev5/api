@@ -2,12 +2,16 @@
   <a-popover trigger="hover" placement="bottomLeft" arrowPointAtCenter>
     <div class="group" slot="content">
       <a-list size="small">
-        <a-list-item>我的群组</a-list-item>
-        <a-list-item>探索群组</a-list-item>
+        <a-list-item>
+          <router-link to="/groups" tag="span">我的群组</router-link>
+        </a-list-item>
+        <a-list-item>
+          <router-link to="/groups" tag="span">探索群组</router-link>
+        </a-list-item>
       </a-list>
-      <a-divider type="vertical" />
+      <a-divider type="vertical"/>
       <div class="group-result">
-        <a-input-search placeholder="搜索您的群组" @search="onSearch" />
+        <a-input-search placeholder="搜索您的群组" @search="onSearch"/>
       </div>
     </div>
     <slot></slot>

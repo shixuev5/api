@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="isLogin">
     <a-badge count="5">
       <a-icon type="message" @click="visible = true;" />
     </a-badge>
@@ -19,6 +19,11 @@
 
 <script>
 export default {
+  computed: {
+    isLogin() {
+      return this.$store.state.user.isLogin;
+    }
+  },
   data() {
     return {
       visible: false

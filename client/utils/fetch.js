@@ -23,30 +23,19 @@ fetch.interceptors.request.use(
 
 fetch.interceptors.response.use(
   response => {
-    // 定义服务端 code 匹配不同 message 提示类型
-    // 0 默认成功 不提示 1 成功(提示) 2 提示 3 警告  其他 错误
-    switch (response.data.code) {
-      case 0:
-        return response.data.data;
-      case 1:
-        message.success(response.data.msg);
-        return response.data.data;
-      case 2:
-        message.info(response.data.msg);
-        return response.data.data;
-      case 3:
-        message.warn(response.data.msg);
-        return response.data.data;
-      default:
-        message.error(response.data.msg);
-        return Promise.reject(response);
+    if(response.data.code === 0) {
+      return response.data.data;
     }
+    message.error(response.data.msg);
+    return Promise.reject(response);
   },
   error => {
     if(error.response.status === 401) {
       router.replace('/login', function() {
         message.info('未授权，请重新登陆');
       })
+    } else if(error.response.data.msg) {
+      message.error(error.response.data.msg);
     } else {
       message.error(`${error.response.status} ${error.response.statusText}`);
     }

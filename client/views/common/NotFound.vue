@@ -5,7 +5,7 @@
       <Icon type="404" :size="160"></Icon>
       <div class="description">
         <h1>您请求的页面未找到</h1>
-        <router-link to="/dashboard" replace>回首页
+        <router-link to="/" replace>回首页
           <a-icon type="enter"/>
         </router-link>
       </div>

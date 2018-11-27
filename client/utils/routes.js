@@ -1,6 +1,9 @@
-export function resolveRoutes(routes) {
+import router from "../router";
+
+export function resolveRoutes(routes, auth = true) {
   routes.forEach(route => {
-    if (route.children) resolveRoutes(route.children);
+    if (route.children) resolveRoutes(route.children, route.meta && route.meta.auth);
+    route.meta = Object.assign({ auth }, route.meta);
     const componentPath = route.component;
     const componentName = route.component.replace(/.*\/(\w+)$/, "$1");
     const asyncComponent = /Layout/.test(componentName)

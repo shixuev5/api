@@ -2,13 +2,19 @@
   <a-popover trigger="hover" placement="bottomLeft" arrowPointAtCenter>
     <div class="project" slot="content">
       <a-list size="small">
-        <a-list-item>我的项目</a-list-item>
-        <a-list-item>关注项目</a-list-item>
-        <a-list-item>探索项目</a-list-item>
+        <a-list-item>
+         <router-link to="/projects" tag="span">我的项目</router-link>
+        </a-list-item>
+        <a-list-item>
+          <router-link to="/projects" tag="span">关注项目</router-link>
+        </a-list-item>
+        <a-list-item>
+          <router-link to="/projects" tag="span">探索项目</router-link>
+        </a-list-item>
       </a-list>
-      <a-divider type="vertical" />
+      <a-divider type="vertical"/>
       <div class="project-result">
-        <a-input-search placeholder="搜索您的项目" @search="onSearch" />
+        <a-input-search placeholder="搜索您的项目" @search="onSearch"/>
       </div>
     </div>
     <slot></slot>

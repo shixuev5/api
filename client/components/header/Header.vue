@@ -1,6 +1,6 @@
 <template>
   <header class="clearfix">
-    <Icon class="logo" type="explore" :size="40" slot="cover" @click.native="$router.push('/dashboard')"></Icon>
+    <Icon class="logo" type="explore" :size="40" slot="cover" @click.native="$router.push('/')"></Icon>
     <HeaderNav></HeaderNav>
     <div class="header-right">
       <HeaderAdd></HeaderAdd>
