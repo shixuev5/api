@@ -22,7 +22,6 @@ export default class UserController extends Controller {
   async info() {
     const { ctx, service } = this;
     const res = await service.user.info(ctx.params.id);
-    delete res.password;
     ctx.helper.success(res);
   }
 }

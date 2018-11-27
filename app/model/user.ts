@@ -9,7 +9,7 @@ export default (app: Application) => {
       password: { type: String, required: true },
       role: {
         type: String,
-        enum: ['fe', 'be', 'te', 'other'],
+        enum: ['fe', 'be', 'qa', 'other'],
         default: 'other',
       },
       type: { type: String, enum: ['base', 'ldap'], default: 'base' },

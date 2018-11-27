@@ -21,6 +21,6 @@ export default class UserService extends Service {
     return res[0];
   }
   info(_id) {
-    return this.app.model.User.findById(_id);
+    return this.app.model.User.findById(_id).select({ password: 0 });
   }
 };

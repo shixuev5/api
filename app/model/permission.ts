@@ -17,7 +17,7 @@ export default (app: Application) => {
         type: [
           {
             project_id: mongoose.Schema.Types.ObjectId,
-            role: { type: String, enum: ['be', 'fe', 'test'] },
+            role: { type: String, enum: ['be', 'fe', 'qa'] },
           },
         ],
       },
