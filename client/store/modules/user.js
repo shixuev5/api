@@ -42,6 +42,7 @@ export default {
       const token =
         sessionStorage.getItem("api-token") ||
         localStorage.getItem("api-token");
+      // 存在安全问题 需要对token进行校验
       const { _id } = jwt.decode(token);
       const response = await fetch.get(`user/${_id}`);
       commit(types.UPDATE_USER_INFO, response);

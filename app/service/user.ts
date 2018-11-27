@@ -25,6 +25,7 @@ export default class UserService extends Service {
     if (res[0].password !== hmac.digest('hex')) {
       this.ctx.throw('密码不匹配，请重试!');
     }
+    // 安全问题？
     return res[0];
   }
   info(_id) {

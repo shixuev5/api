@@ -8,6 +8,8 @@ export default (app: Application) => {
       email: { type: String, unique: true, required: true },
       password: { type: String, required: true },
       salt: { type: String, required: true },
+      avatar: { type: String },
+      guide: { type: Boolean, default: true },
       role: {
         type: String,
         enum: ['fe', 'be', 'qa', 'other'],
