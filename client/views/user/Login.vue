@@ -13,6 +13,7 @@ const LoginForm = {
       this.form.validateFields(async (err, values) => {
         if (!err) {
           this.$store.dispatch(types.USER_LOGIN, values);
+          this.$router.replace("/");
         }
       });
     }
@@ -29,7 +30,7 @@ const LoginForm = {
     return (
       <a-form onSubmit={this.handleSubmit}>
         <a-form-item>
-          {getFieldDecorator("username", {
+          {getFieldDecorator("name", {
             rules: [{ required: true, message: "请输入您的用户名或邮箱!" }]
           })(
             <a-input

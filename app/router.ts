@@ -18,6 +18,11 @@ const routes = {
       method: 'post',
       action: 'login',
     },
+    {
+      path: ':id',
+      method: 'get',
+      action: 'info',
+    },
   ],
 };
 

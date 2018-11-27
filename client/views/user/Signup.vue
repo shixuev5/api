@@ -75,6 +75,7 @@
           :disabled="hasErrors(form.getFieldsError())"
           block
         >注册</a-button>
+        <router-link to="/login">已有账号？现在登陆</router-link>
       </a-form-item>
     </template>
   </a-form>
@@ -82,6 +83,7 @@
 
 <script>
 // import debounce from 'lodash-es/debounce';
+import * as types from "@/store/types";
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -121,6 +123,7 @@ export default {
     signup() {
       this.form.validateFields(async (err, values) => {
         if (!err) {
+          this.$store.dispatch(types.USER_SIGNUP, values);
         }
       });
     }
