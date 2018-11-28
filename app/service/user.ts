@@ -5,21 +5,16 @@ export default class UserService extends BaseService {
   constructor(ctx) {
     super(ctx, 'User');
   }
-  index({ name = undefined, email = undefined }) {
-    return this.app.model.User.find({
-      $or: [{name}, {email}],
-    });
-  }
   signup(payload) {
     payload.salt = payload.salt || this.app.config.keys;
     const hmac = createHmac('sha256', payload.salt);
     hmac.update(payload.password);
     payload.password = hmac.digest('hex');
-    return this.app.model.User.create(payload);
+    return this.db.create(payload);
   }
   async login(payload) {
     const isEmail = /^.+@.+$/.test(payload.name);
-    const res = await this.search(isEmail ? {email: payload.name} : {name: payload.name});
+    const res = await this.find(isEmail ? {email: payload.name} : {name: payload.name});
     if (!res.length) {
       this.ctx.throw(isEmail ? '邮箱未注册!' : '用户名未注册!');
     }
@@ -29,8 +24,5 @@ export default class UserService extends BaseService {
       this.ctx.throw('密码不匹配，请重试!');
     }
     return res[0];
-  }
-  info(_id) {
-    return this.app.model.User.findById(_id).select({ password: 0, salt: 0 });
   }
 };

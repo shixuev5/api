@@ -17,12 +17,27 @@ export default class BaseService extends Service {
     return this.db.countDocuments(conditions);
   }
 
-  find(conditions = {}, projection = null, options = {}) {
-    return this.db.find(conditions, projection, options);
+  async paging({ num = 0, size = 10, sort = { createdAt: 'desc' }}) {
+    const total = await this.total();
+    const list = await this.db.find({}).skip(num * size).limit(size).sort(sort);
+    return {
+      total,
+      num,
+      size,
+      list,
+    };
+  }
+
+  find(...args) {
+    return this.db.find(...args);
   }
 
   findById(_id) {
     return this.db.findById(_id);
+  }
+
+  create(payload) {
+    return this.db.create(payload);
   }
 
   update(_id, payload) {
@@ -32,4 +47,4 @@ export default class BaseService extends Service {
   remove(_id) {
     return this.db.findByIdAndRemove(_id);
   }
-};
+}

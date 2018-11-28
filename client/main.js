@@ -22,9 +22,9 @@ importAll(require.context("./components", true, /\.vue$/));
 importAll(require.context("./layouts", true, /\.vue$/));
 
 Object.defineProperty(Vue.prototype, '$user', {
-  get(key) {
-    return store.state.user[key];
-  }
+  get() {
+    return store.state.user;
+  },
 });
 
 new Vue({

@@ -1,5 +1,5 @@
 import { verifyJwt, decodeJwt } from "@/utils/auth";
-import * as user from "@/api/user";
+import user from "@/api/user";
 import * as types from "../types";
 
 export default {
@@ -17,28 +17,30 @@ export default {
       state.isLogin = payload;
     },
     [types.UPDATE_USER_INFO](state, payload) {
-      state.info = payload;
+      state.info = Object.assign({}, state.info, payload);
     }
   },
   actions: {
-    async [types.USER_LOGIN]({ commit, dispatch }, payload) {
-      const { token } = await fetch.put("user", payload);
+    async [types.USER_LOGIN]({ commit }, payload) {
+      const { token } = await user.login(payload);
       payload.remember
         ? localStorage.setItem("api-token", token)
         : sessionStorage.setItem("api-token", token);
       commit(types.UPDATE_USER_LOGIN_STATUS, true);
     },
-    [types.USER_SEARCH]({ commit }, payload) {
-      return fetch.get("users", {
-        params: payload
-      });
+    [types.USER_EXSIT]({ commit }, payload) {
+      return user.exist(payload);
     },
     [types.USER_SIGNUP]({ commit }, payload) {
-      return fetch.post("users", payload);
+      return user.create(payload);
+    },
+    async [types.USER_UPDATE]({ state, commit }, payload) {
+      const response = await user.update(state.info._id, payload);
+      commit(types.UPDATE_USER_INFO, response);
     },
     async [types.USER_INFO]({ commit }) {
       const { _id } = decodeJwt();
-      const response = await fetch.get(`users/${_id}`);
+      const response = await user.findById(_id);
       commit(types.UPDATE_USER_INFO, response);
     }
   }

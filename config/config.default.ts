@@ -43,7 +43,7 @@ export default (appInfo: EggAppInfo) => {
   config.jwt = {
     enable: true,
     secret: config.keys,
-    ignore: /user\/(search|login|signup)/,
+    ignore: [ (ctx) => ctx.path.endsWith('users') && ['POST', 'PUT'].includes(ctx.method), /users\/exsit$/],
   };
 
   config.io = {

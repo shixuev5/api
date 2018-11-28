@@ -9,6 +9,11 @@ const routes = {
       action: 'index',
     },
     {
+      path: 'exsit',
+      method: 'get',
+      action: 'exsit',
+    },
+    {
       path: '',
       method: 'post',
       action: 'create',
@@ -30,8 +35,8 @@ const routes = {
     },
     {
       path: ':id',
-      method: 'del',
-      action: 'destroy',
+      method: 'delete',
+      action: 'remove',
     },
   ],
 };

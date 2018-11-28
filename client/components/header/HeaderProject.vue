@@ -6,10 +6,10 @@
          <router-link to="/projects" tag="span">我的项目</router-link>
         </a-list-item>
         <a-list-item>
-          <router-link to="/projects" tag="span">关注项目</router-link>
+          <router-link to="/projects/star" tag="span">关注项目</router-link>
         </a-list-item>
         <a-list-item>
-          <router-link to="/projects" tag="span">探索项目</router-link>
+          <router-link to="/projects/explore" tag="span">探索项目</router-link>
         </a-list-item>
       </a-list>
       <a-divider type="vertical"/>

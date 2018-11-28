@@ -1,6 +1,6 @@
 <template>
   <a-tabs>
-    <a-tab-pane tab="我的群组" key="my">暂无公开群组</a-tab-pane>
+    <a-tab-pane tab="我的群组" key="owner">暂无公开群组</a-tab-pane>
     <a-tab-pane tab="探索公开群组" key="public">暂无公开群组</a-tab-pane>
     <span slot="tabBarExtraContent">
       <a-input-search placeholder="通过名称搜索" style="width: 200px" @search="onSearch"/>

@@ -82,7 +82,7 @@
 </template>
 
 <script>
-// import debounce from 'lodash-es/debounce';
+import debounce from "lodash-es/debounce";
 import * as types from "@/store/types";
 
 function hasErrors(fieldsError) {
@@ -98,12 +98,12 @@ export default {
     };
   },
   methods: {
-    async exsitCheck(rule, value, callback) {
-      const { exist } = await this.$store.dispatch(types.USER_SEARCH, {
+    exsitCheck: debounce(async function(rule, value, callback) {
+      const { exist } = await this.$store.dispatch(types.USER_EXSIT, {
         [rule.field]: value
       });
       exist ? callback(false) : callback();
-    },
+    }, 300),
     handleConfirmBlur(e) {
       const value = e.target.value;
       this.confirmDirty = this.confirmDirty || !!value;

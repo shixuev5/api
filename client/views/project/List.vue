@@ -1,8 +1,8 @@
 <template>
   <a-tabs>
-    <a-tab-pane tab="我的项目" key="trend">暂无公开项目</a-tab-pane>
+    <a-tab-pane tab="我的项目" key="owner">暂无公开项目</a-tab-pane>
     <a-tab-pane tab="关注项目" key="star">暂无公开项目</a-tab-pane>
-    <a-tab-pane tab="探索项目" key="all">
+    <a-tab-pane tab="探索项目" key="explore">
       <a-tabs>
         <a-tab-pane tab="趋势" key="trend">暂无公开项目</a-tab-pane>
         <a-tab-pane tab="关注" key="star">暂无公开项目</a-tab-pane>
@@ -57,9 +57,6 @@
 
 <script>
 export default {
-  props: {
-    type: String
-  },
   methods: {
     onSearch() {},
     handleChange() {}

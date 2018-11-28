@@ -50,29 +50,46 @@
         </router-link>
       </a-col>
     </a-row>
-    <a-modal :closable="false" :maskClosable="false" :keyboard="false" :visible="$user.info.guiade">
-      <label class="ant-form-item-label">用户角色</label>
+    <a-modal :closable="false" :maskClosable="false" :keyboard="false" :visible="$user.info.guide">
+      <h3>首次登陆</h3>
+      <p>请选择您的<span style="color: #1890ff"> &lt;用户角色&gt; </span> <strong style="color: red">重要：</strong>确认后将不可更改，请谨慎选择！</p>
       <a-radio-group v-model="role" name="role">
-        <a-radio :value="fe">前端</a-radio>
-        <a-radio :value="be">后端</a-radio>
-        <a-radio :value="qa">测试</a-radio>
-        <a-radio :value="other">其他</a-radio>
+        <a-radio value="fe">前端</a-radio>
+        <a-radio value="be">后端</a-radio>
+        <a-radio value="qa">测试</a-radio>
+        <a-radio value="other">其他</a-radio>
       </a-radio-group>
-      <a-button type="primary" block>确认</a-button>
+      <a-button slot="footer" type="primary" @click="confirm" block>
+        {{count ? '请再次确认' : '确认' }}
+      </a-button>
     </a-modal>
   </div>
 </template>
 
 <script>
+import * as types from "@/store/types";
+
 export default {
   data() {
     return {
-      role: "fe"
+      role: "other",
+      count: 0
     };
   },
-  mounted() {
-    if (!this.$user.info.guide) {
-      this.$message.success("欢迎回来～");
+  watch: {
+    role() {
+      this.count = 0;
+    }
+  },
+  methods: {
+    confirm() {
+      if (this.count) {
+        this.$store.dispatch(types.USER_UPDATE, {
+          guide: false,
+          role: this.role
+        });
+      }
+      this.count++;
     }
   }
 };
