@@ -1,12 +1,10 @@
-import fetch from "@/utils/fetch";
+import { verifyJwt, decodeJwt } from "@/utils/auth";
+import * as user from "@/api/user";
 import * as types from "../types";
-import jwt from "jsonwebtoken";
 
 export default {
   state: {
-    isLogin:
-      !!sessionStorage.getItem("api-token") ||
-      !!localStorage.getItem("api-token"),
+    isLogin: verifyJwt(),
     info: null
   },
   getters: {},
@@ -24,27 +22,23 @@ export default {
   },
   actions: {
     async [types.USER_LOGIN]({ commit, dispatch }, payload) {
-      const { token } = await fetch.post("user/login", payload);
+      const { token } = await fetch.put("user", payload);
       payload.remember
         ? localStorage.setItem("api-token", token)
         : sessionStorage.setItem("api-token", token);
       commit(types.UPDATE_USER_LOGIN_STATUS, true);
     },
     [types.USER_SEARCH]({ commit }, payload) {
-      return fetch.get("user/search", {
+      return fetch.get("users", {
         params: payload
       });
     },
     [types.USER_SIGNUP]({ commit }, payload) {
-      return fetch.post("user/signup", payload);
+      return fetch.post("users", payload);
     },
     async [types.USER_INFO]({ commit }) {
-      const token =
-        sessionStorage.getItem("api-token") ||
-        localStorage.getItem("api-token");
-      // 存在安全问题 需要对token进行校验
-      const { _id } = jwt.decode(token);
-      const response = await fetch.get(`user/${_id}`);
+      const { _id } = decodeJwt();
+      const response = await fetch.get(`users/${_id}`);
       commit(types.UPDATE_USER_INFO, response);
     }
   }

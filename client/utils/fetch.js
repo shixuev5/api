@@ -1,4 +1,5 @@
 import axios from "axios";
+import nprogress from 'nprogress';
 import router from "@/router";
 import { message } from "ant-design-vue";
 
@@ -9,13 +10,15 @@ const fetch = axios.create({
 
 fetch.interceptors.request.use(
   config => {
-    const token = localStorage.getItem('api-token');
+    nprogress.start();
+    const token = localStorage.getItem('api-token') || sessionStorage.getItem('api-token');
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }
     return config;
   },
   error => {
+    nprogress.done();
     debugger;
     return Promise.reject(error);
   }
@@ -23,6 +26,7 @@ fetch.interceptors.request.use(
 
 fetch.interceptors.response.use(
   response => {
+    nprogress.done();
     if(response.data.code === 0) {
       return response.data.data;
     }
@@ -30,6 +34,7 @@ fetch.interceptors.response.use(
     return Promise.reject(response);
   },
   error => {
+    nprogress.done();
     if(error.response.status === 401) {
       router.replace('/login', function() {
         message.info('未授权，请重新登陆');

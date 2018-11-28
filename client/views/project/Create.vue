@@ -34,7 +34,7 @@
           rules: [{ message: 'Please input your Password!' }]
         }"
       >
-        <a-textarea placeholder="请简单描述项目信息... (可选)" :rows="4"/>
+        <a-textarea placeholder="请简单描述项目信息... (可选)" :autosize="{ minRows: 4, maxRows: 6 }">
       </a-form-item>
       <a-form-item
         label="项目权限"

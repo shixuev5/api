@@ -125,7 +125,7 @@ export default {
       this.form.validateFields(async (err, values) => {
         if (!err) {
           await this.$store.dispatch(types.USER_SIGNUP, values);
-          this.$message.success("注册成功!");
+          this.$message.success("注册成功");
         }
       });
     }

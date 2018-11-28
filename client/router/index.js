@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
+import nprogress from 'nprogress';
 import routes from "./routes";
 import store from '@/store';
 import * as types from '@/store/types';
@@ -12,6 +13,7 @@ const router = new Router({
 });
 
 router.beforeEach(function(to, from, next) {
+  nprogress.start();
   const user = store.state.user;
   if (to.meta.auth) {
     if(user.isLogin) {
@@ -24,5 +26,9 @@ router.beforeEach(function(to, from, next) {
     user.isLogin ? next('/') : next();
   }
 });
+
+router.afterEach(function (to, from, next) {
+  nprogress.done();
+})
 
 export default router;

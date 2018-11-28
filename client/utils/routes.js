@@ -1,5 +1,3 @@
-import router from "../router";
-
 export function resolveRoutes(routes, auth = true) {
   routes.forEach(route => {
     if (route.children) resolveRoutes(route.children, route.meta && route.meta.auth);

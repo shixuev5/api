@@ -4,6 +4,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import "ant-design-vue/dist/antd.css";
+import "nprogress/nprogress.css";
 
 Vue.config.productionTip = false;
 
@@ -19,6 +20,12 @@ function importAll(r) {
 
 importAll(require.context("./components", true, /\.vue$/));
 importAll(require.context("./layouts", true, /\.vue$/));
+
+Object.defineProperty(Vue.prototype, '$user', {
+  get(key) {
+    return store.state.user[key];
+  }
+});
 
 new Vue({
   router,

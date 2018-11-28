@@ -28,7 +28,7 @@
         <a-input placeholder="/"></a-input>
       </a-form-item>
       <a-form-item label="群组描述" fieldDecoratorId="description">
-        <a-textarea placeholder="请简单描述群组信息... (可选)" :rows="4" />
+        <a-textarea placeholder="请简单描述群组信息... (可选)" :autosize="{ minRows: 4, maxRows: 6 }"/>
       </a-form-item>
       <a-form-item label="群组权限" fieldDecoratorId="permission">
         <a-radio-group name="radioGroup" defaultValue="private">

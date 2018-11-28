@@ -2,26 +2,36 @@ import { Application } from 'egg';
 import { createRoute } from './utils/index';
 
 const routes = {
-  user: [
+  users: [
     {
-      path: 'search',
+      path: '',
       method: 'get',
-      action: 'search',
+      action: 'index',
     },
     {
-      path: 'signup',
+      path: '',
       method: 'post',
-      action: 'signup',
+      action: 'create',
     },
     {
-      path: 'login',
-      method: 'post',
+      path: '',
+      method: 'put',
       action: 'login',
     },
     {
       path: ':id',
       method: 'get',
-      action: 'info',
+      action: 'show',
+    },
+    {
+      path: ':id',
+      method: 'patch',
+      action: 'update',
+    },
+    {
+      path: ':id',
+      method: 'del',
+      action: 'destroy',
     },
   ],
 };

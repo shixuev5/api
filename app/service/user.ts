@@ -1,8 +1,11 @@
 import { createHmac } from 'crypto';
-import { Service } from 'egg';
+import BaseService from './base';
 
-export default class UserService extends Service {
-  search({ name = undefined, email = undefined }) {
+export default class UserService extends BaseService {
+  constructor(ctx) {
+    super(ctx, 'User');
+  }
+  index({ name = undefined, email = undefined }) {
     return this.app.model.User.find({
       $or: [{name}, {email}],
     });
@@ -25,7 +28,6 @@ export default class UserService extends Service {
     if (res[0].password !== hmac.digest('hex')) {
       this.ctx.throw('密码不匹配，请重试!');
     }
-    // 安全问题？
     return res[0];
   }
   info(_id) {
