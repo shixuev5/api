@@ -18,8 +18,5 @@ export default {
 <style lang="less" scoped>
 main {
   display: flex;
-  section {
-    flex: 1;
-  }
 }
 </style>

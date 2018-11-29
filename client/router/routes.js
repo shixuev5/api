@@ -28,21 +28,7 @@ const routes = [
         component: "project/List"
       },
       {
-        path: "projects/star",
-        name: "projects_star",
-        layout: "NavLayout",
-        meta: { alias: "关注项目" },
-        component: "project/List"
-      },
-      {
-        path: "projects/explore",
-        name: "projects_explore",
-        layout: "NavLayout",
-        meta: { alias: "探索项目" },
-        component: "project/List"
-      },
-      {
-        path: "project/:name",
+        path: "projects/:name",
         name: "project",
         component: "project/Index",
         redirect: { name: "interfaces" },
@@ -51,7 +37,7 @@ const routes = [
           {
             path: "interfaces",
             name: "interfaces",
-            component: "interface/List"
+            component: "interface/Tabs"
           },
           {
             path: "interfaces/new",
@@ -74,13 +60,6 @@ const routes = [
         name: "groups",
         layout: "NavLayout",
         meta: { alias: "群组" },
-        component: "group/List"
-      },
-      {
-        path: "groups/explore",
-        name: "groups_explore",
-        layout: "NavLayout",
-        meta: { alias: "探索群组" },
         component: "group/List"
       },
 
@@ -121,14 +100,14 @@ const routes = [
     name: "login",
     layout: "LoginLayout",
     meta: { auth: false },
-    component: "user/Login"
+    component: "common/Login"
   },
   {
     path: "/signup",
     name: "signup",
     layout: "LoginLayout",
     meta: { auth: false },
-    component: "user/Signup"
+    component: "common/Signup"
   },
   {
     path: "/forbidden",

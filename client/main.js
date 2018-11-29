@@ -5,6 +5,7 @@ import router from "./router";
 import store from "./store";
 import "ant-design-vue/dist/antd.css";
 import "nprogress/nprogress.css";
+import "./styles/index.less";
 
 Vue.config.productionTip = false;
 

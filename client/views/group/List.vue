@@ -1,7 +1,7 @@
 <template>
-  <a-tabs>
+  <a-tabs :activeKey="activeKey" @change="change">
     <a-tab-pane tab="我的群组" key="owner">暂无公开群组</a-tab-pane>
-    <a-tab-pane tab="探索公开群组" key="public">暂无公开群组</a-tab-pane>
+    <a-tab-pane tab="探索群组" key="explore">暂无公开群组</a-tab-pane>
     <span slot="tabBarExtraContent">
       <a-input-search placeholder="通过名称搜索" style="width: 200px" @search="onSearch"/>
       <a-select
@@ -30,7 +30,20 @@
 
 <script>
 export default {
+  data() {
+    return {
+      activeKey: "owner"
+    };
+  },
+  watch: {
+    "$route.query.key": function(val) {
+      this.activeKey = val || "owner";
+    }
+  },
   methods: {
+    change(key) {
+      this.$router.push({ path: "/groups", query: { key } });
+    },
     onSearch() {},
     handleChange() {}
   }

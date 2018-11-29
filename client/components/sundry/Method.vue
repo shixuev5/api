@@ -1,5 +1,5 @@
 <template>
-  <span :class="type.toLowerCase()">
+  <span class="method" :class="type.toLowerCase()">
     {{text.toUpperCase()}}
   </span>
 </template>
@@ -38,6 +38,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.method {
+  display: inline-block;
+  width: 34px;
+  font-size: 12px;
+}
 .get {
   color: #52c41a;
 }
