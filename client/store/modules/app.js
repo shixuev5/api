@@ -1,4 +1,6 @@
-import * as types from '@/store/types';
+/*
+  系统公共状态
+*/
 
 export default {
   state: {

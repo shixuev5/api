@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isLogin">
+  <div v-if="$user.isLogin">
     <a-badge count="5">
       <a-icon type="message" @click="visible = true;" />
     </a-badge>
@@ -19,9 +19,9 @@
 
 <script>
 export default {
-  computed: {
-    isLogin() {
-      return this.$store.state.user.isLogin;
+  sockets: {
+    connect() {
+      console.log("socket connected");
     }
   },
   data() {

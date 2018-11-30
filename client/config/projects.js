@@ -1,4 +1,4 @@
-export default [
+export const menu = [
   {
     key: "module",
     icon: "module",

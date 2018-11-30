@@ -1,22 +1,12 @@
 <template>
-  <main>
-    <ProjectAside></ProjectAside>
-    <router-view></router-view>
-  </main>
+  <div>
+
+  </div>
 </template>
 
 <script>
-import ProjectAside from "./aside/Aside";
-
-export default {
-  components: {
-    ProjectAside
-  }
-};
+export default {};
 </script>
 
 <style lang="less" scoped>
-main {
-  display: flex;
-}
 </style>

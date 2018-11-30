@@ -1,5 +1,5 @@
 <template>
-  <aside>
+  <main>
     <a-layout-sider v-model="collapsed" theme="light" collapsible>
       <a-menu :defaultSelectedKeys="[config[0].key]">
         <a-menu-item v-for="item in config" :key="item.key">
@@ -8,21 +8,14 @@
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
-    <Module></Module>
-  </aside>
+    <router-view></router-view>
+  </main>
 </template>
 
 <script>
-import config from "./config.js";
-import Module from "./Module";
-
 export default {
-  components: {
-    Module
-  },
   data() {
     return {
-      config,
       collapsed: false
     };
   }
@@ -30,11 +23,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
-aside {
+main {
   display: flex;
+  align-items: stretch;
 }
 .ant-layout-sider {
-  height: calc(100vh - 48px);
+  // height: calc(100vh - 48px);
   border-right: 1px solid #e8e8e8;
   /deep/ &-trigger {
     border-right: 1px solid #e8e8e8;

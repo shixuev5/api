@@ -28,30 +28,17 @@ const routes = [
         component: "project/List"
       },
       {
-        path: "projects/star",
-        name: "projects_star",
-        layout: "NavLayout",
-        meta: { alias: "关注项目" },
-        component: "project/List"
-      },
-      {
-        path: "projects/explore",
-        name: "projects_explore",
-        layout: "NavLayout",
-        meta: { alias: "探索项目" },
-        component: "project/List"
-      },
-      {
-        path: "project/:id",
+        path: "projects/:id",
         name: "project",
-        component: "project/Index",
+        config: "project.menu",
+        component: "AsideLayout",
         redirect: { name: "interfaces" },
         children: [
           /* 接口 */
           {
-            path: "interfaces",
+            path: "",
             name: "interfaces",
-            component: "interface/Tabs"
+            component: "interface/Index"
           },
           {
             path: "interfaces/new",
@@ -77,16 +64,18 @@ const routes = [
         component: "group/List"
       },
       {
-        path: "groups/explore",
-        name: "groups_explore",
-        layout: "NavLayout",
-        meta: { alias: "探索群组" },
-        component: "group/List"
-      },
-      {
         path: "groups/:id",
-        name: "group",
-        component: "group/Index"
+        name: "groups",
+        config: "groups.menu",
+        component: "AsideLayout",
+        redirect: { name: "groups_index" },
+        children: [
+          {
+            path: "",
+            name: "groups_index",
+            component: "group/Index"
+          }
+        ],
       },
 
       /* Postman */

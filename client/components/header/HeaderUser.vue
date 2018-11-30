@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-dropdown v-if="isLogin" placement="bottomRight">
+    <a-dropdown v-if="$user.isLogin" placement="bottomRight">
       <a-menu @click="click" slot="overlay">
         <a-menu-item key="user"> <a-icon type="user" />用户信息 </a-menu-item>
         <a-menu-item key="setting">
@@ -22,11 +22,6 @@
 import * as types from "@/store/types";
 
 export default {
-  computed: {
-    isLogin() {
-      return this.$store.state.user.isLogin;
-    }
-  },
   methods: {
     click({ key }) {
       if (key === "logout") {

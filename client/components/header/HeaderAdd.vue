@@ -1,5 +1,5 @@
 <template>
-  <a-dropdown v-if="isLogin" placement="bottomRight">
+  <a-dropdown v-if="$user.isLogin" placement="bottomRight">
     <a-icon type="plus-square" />
     <a-menu slot="overlay">
       <a-menu-item>
@@ -16,13 +16,7 @@
 </template>
 
 <script>
-export default {
-  computed: {
-    isLogin() {
-      return this.$store.state.user.isLogin;
-    }
-  }
-};
+export default {};
 </script>
 
 <style lang="less" scoped>
