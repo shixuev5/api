@@ -6,9 +6,26 @@ export default (app: Application) => {
     {
       name: { type: String, required: true },
       path: { type: String, required: true },
-      env: [],
+      desc: String,
+      env: [{
+        name: { type: String, required: true },
+        key: { type: String, required: true },
+        value: { type: String, required: true },
+        initial: String,
+        global: { type: Boolean, default: false },
+      }],
       group_id: { type: mongoose.Schema.Types.ObjectId },
-      permission: { type: String, enum: ['private', 'shared', 'public'], default: 'private' },
+      members: [
+        {
+          _id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+          role: { type: String, enum: ['owner', 'devloper', 'visitor'] },
+        },
+      ],
+      permission: {
+        type: String,
+        enum: ['private', 'shared', 'public'],
+        default: 'private',
+      },
       archive: { type: Boolean, default: false },
     },
     {

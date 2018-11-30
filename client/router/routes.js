@@ -28,7 +28,21 @@ const routes = [
         component: "project/List"
       },
       {
-        path: "projects/:name",
+        path: "projects/star",
+        name: "projects_star",
+        layout: "NavLayout",
+        meta: { alias: "关注项目" },
+        component: "project/List"
+      },
+      {
+        path: "projects/explore",
+        name: "projects_explore",
+        layout: "NavLayout",
+        meta: { alias: "探索项目" },
+        component: "project/List"
+      },
+      {
+        path: "project/:id",
         name: "project",
         component: "project/Index",
         redirect: { name: "interfaces" },
@@ -61,6 +75,18 @@ const routes = [
         layout: "NavLayout",
         meta: { alias: "群组" },
         component: "group/List"
+      },
+      {
+        path: "groups/explore",
+        name: "groups_explore",
+        layout: "NavLayout",
+        meta: { alias: "探索群组" },
+        component: "group/List"
+      },
+      {
+        path: "groups/:id",
+        name: "group",
+        component: "group/Index"
       },
 
       /* Postman */
