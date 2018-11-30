@@ -68,19 +68,17 @@
 
 <script>
 export default {
-  data() {
-    return {
-      activeKey: "owner"
-    };
+  props: {
+    type: String
   },
-  watch: {
-    "$route.query.key": function(val) {
-      this.activeKey = val || "owner";
+  computed: {
+    activeKey() {
+      return this.type ? this.type : "owner";
     }
   },
   methods: {
     onChange(key) {
-      this.$router.push({ path: "/projects", query: { key } });
+      this.$router.push({ path: "/projects", query: { type: key } });
     },
     onSearch() {},
     handleChange() {}

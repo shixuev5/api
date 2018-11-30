@@ -10,16 +10,7 @@ export default (app: Application) => {
       salt: { type: String, required: true },
       avatar: { type: String },
       guide: { type: Boolean, default: true },
-      star: {
-        type: [Object],
-        enum: [
-          { group_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Group' } },
-          {
-            project_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Project' },
-          },
-          { module_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Module' } },
-        ],
-      },
+      star: { type: [Object] },
       role: {
         type: String,
         enum: ['fe', 'be', 'qa', 'other'],

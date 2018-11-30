@@ -13,12 +13,9 @@ const LoginForm = {
       this.form.validateFields(async (err, values) => {
         if (!err) {
           await this.$store.dispatch(types.USER_LOGIN, values);
-          this.$router.replace(
-            "/",
-            function() {
-              if (!this.$user.info.guide) this.$message.success("欢迎回来～");
-            }.bind(this)
-          );
+          this.$router.replace("/", () => {
+            if (!this.$user.info.guide) this.$message.success("欢迎回来～");
+          });
         }
       });
     }

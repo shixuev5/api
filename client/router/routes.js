@@ -65,8 +65,8 @@ const routes = [
       },
       {
         path: "groups/:id",
-        name: "groups",
-        config: "groups.menu",
+        name: "group",
+        config: "group.menu",
         component: "AsideLayout",
         redirect: { name: "groups_index" },
         children: [

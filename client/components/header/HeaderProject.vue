@@ -6,10 +6,10 @@
          <router-link to="/projects" tag="span">我的项目</router-link>
         </a-list-item>
         <a-list-item>
-          <router-link :to="{ path: '/projects', query: { 'key': 'star' } }" tag="span">关注项目</router-link>
+          <router-link :to="{ path: '/projects', query: { type: 'star' } }" tag="span">关注项目</router-link>
         </a-list-item>
         <a-list-item>
-          <router-link :to="{ path: '/projects', query: { 'key': 'explore' } }" tag="span">探索项目</router-link>
+          <router-link :to="{ path: '/projects', query: { type: 'explore' } }" tag="span">探索项目</router-link>
         </a-list-item>
       </a-list>
       <a-divider type="vertical"/>

@@ -1,5 +1,5 @@
 <template>
-  <a-tabs :activeKey="activeKey" @change="change">
+  <a-tabs :activeKey="activeKey" @change="onChange">
     <a-tab-pane tab="我的群组" key="owner">暂无公开群组</a-tab-pane>
     <a-tab-pane tab="探索群组" key="explore">暂无公开群组</a-tab-pane>
     <span slot="tabBarExtraContent">
@@ -30,19 +30,17 @@
 
 <script>
 export default {
-  data() {
-    return {
-      activeKey: "owner"
-    };
+  props: {
+    type: String
   },
-  watch: {
-    "$route.query.key": function(val) {
-      this.activeKey = val || "owner";
+  computed: {
+    activeKey() {
+      return this.type ? this.type : "owner";
     }
   },
   methods: {
-    change(key) {
-      this.$router.push({ path: "/groups", query: { key } });
+    onChange(key) {
+      this.$router.push({ path: "/groups", query: { type: key } });
     },
     onSearch() {},
     handleChange() {}

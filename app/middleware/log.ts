@@ -1,7 +1,7 @@
-import { Context } from 'egg';
+// import { Context } from 'egg';
 
-export default () => {
-  return function log(ctx: Context, next) {
-    next();
-  };
-};
+// export default () => {
+//   return function log(ctx: Context, next) {
+//     next();
+//   };
+// };

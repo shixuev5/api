@@ -6,7 +6,7 @@
           <router-link to="/groups" tag="span">我的群组</router-link>
         </a-list-item>
         <a-list-item>
-          <router-link :to="{ path: '/groups', query: { key: 'explore' } }" tag="span">探索群组</router-link>
+          <router-link :to="{ path: '/groups', query: { type: 'explore' } }" tag="span">探索群组</router-link>
         </a-list-item>
       </a-list>
       <a-divider type="vertical"/>

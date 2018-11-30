@@ -1,11 +1,12 @@
 function resolveConfig(route) {
   const config = route.config.split(".");
-  route.beforeEnter(function(to, from, next) {
-    next(async vm => {
-      const result = await import(`@/config/${config.shift()}`);
-      vm.$config = config.reduce((prev, curr) => prev[curr] , result);
-    });
-  });
+  route.beforeEnter = async function(to, from, next) {
+    const name = config.length === 1 ? config[0] : config.slice(-1);
+    const result = await import(`@/config/${config.shift()}`);
+    const value = config.length ? config.reduce((prev, curr) => prev[curr] , result) : result[name];
+    Object.assign(to.params, { [name]: value });
+    next();
+  };
 }
 
 function resolveLayout(route) {
@@ -13,11 +14,11 @@ function resolveLayout(route) {
   route.layout = Array.isArray(route.layout) ? route.layout : [route.layout];
   route.layout.reverse();
   route.component = {
-    // provide: {
-
-    // },
+    inheritAttrs: false,
     render(h) {
-      return route.layout.reduce((pre, cur) => h(cur, [pre]), h(asyncComponent));
+      return route.layout.reduce((pre, cur) => h(cur, [pre]), h(asyncComponent, {
+        props: this.$attrs
+      }));
     }
   };
 }
@@ -36,6 +37,7 @@ export function resolveRoutes(routes, auth = true) {
     if (route.children) {
       resolveRoutes(route.children, route.meta && route.meta.auth);
     }
+    route.props = route => Object.assign({}, route.query, route.params);
     route.meta = Object.assign({ auth }, route.meta);
     resolveComponent(route);
 
