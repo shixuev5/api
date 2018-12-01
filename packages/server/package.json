@@ -1,0 +1,64 @@
+{
+  "name": "api-server",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "author": "yanhao <136393414@qq.com>",
+  "homepage": "https://github.com/shixuev5/api#readme",
+  "egg": {
+    "typescript": true
+  },
+  "scripts": {
+    "dev": "egg-bin dev --sticky -r egg-ts-helper/register",
+    "start": "egg-scripts start --daemon --sticky --title=api-server",
+    "stop": "egg-scripts stop --title=api-server",
+    "debug": "egg-bin debug -r egg-ts-helper/register",
+    "test-local": "egg-bin test -r egg-ts-helper/register",
+    "test": "npm run lint -- --fix && npm run test-local",
+    "cov": "egg-bin cov -r egg-ts-helper/register",
+    "tsc": "ets && tsc -p tsconfig.json",
+    "ci": "npm run lint && npm run cov && npm run tsc",
+    "autod": "autod",
+    "lint": "tslint --project . -c tslint.json",
+    "clean": "ets clean"
+  },
+  "dependencies": {
+    "egg": "^2.6.1",
+    "egg-cors": "^2.1.1",
+    "egg-jwt": "^3.1.4",
+    "egg-mongoose": "^3.1.1",
+    "egg-socket.io": "^4.1.5",
+    "mongoose-autopopulate": "^0.9.0",
+    "egg-scripts": "^2.6.0"
+  },
+  "devDependencies": {
+    "@types/mocha": "^2.2.40",
+    "@types/node": "^7.0.12",
+    "@types/supertest": "^2.0.0",
+    "autod": "^3.0.1",
+    "autod-egg": "^1.1.0",
+    "egg-ci": "^1.8.0",
+    "egg-bin": "^4.6.2",
+    "egg-mock": "^3.16.0",
+    "egg-ts-helper": "^1.11.0",
+    "tslib": "^1.9.0",
+    "tslint": "^4.0.0",
+    "typescript": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=8.9.0"
+  },
+  "ci": {
+    "version": "8"
+  },
+  "eslintIgnore": [
+    "coverage"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shixuev5/api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shixuev5/api/issues"
+  }
+}

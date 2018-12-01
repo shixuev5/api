@@ -1,0 +1,13 @@
+{
+  "npmClient": "yarn",
+  "npmClientArgs": ["--registry", "https://registry.npm.taobao.org"],
+  "command": {
+    "run": {
+      "stream": true
+    }
+  },
+  "packages": [
+    "packages/*"
+  ],
+  "version": "1.0.0"
+}

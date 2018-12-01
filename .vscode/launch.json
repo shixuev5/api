@@ -8,6 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Egg Debug",
+      "cwd": "${workspaceFolder}/packages/server",
       "runtimeExecutable": "npm",
       "runtimeArgs": [
         "run",
@@ -25,6 +26,7 @@
       "type": "node",
       "request": "launch",
       "name": "Egg Test",
+      "cwd": "${workspaceFolder}/packages/server",
       "runtimeExecutable": "npm",
       "runtimeArgs": [
         "run",
@@ -40,7 +42,7 @@
       "type": "node",
       "request": "attach",
       "name": "Egg Attach to remote",
-      "localRoot": "${workspaceRoot}",
+      "localRoot": "${workspaceRoot}/packages/server",
       "remoteRoot": "/usr/src/app",
       "address": "localhost",
       "protocol": "auto",

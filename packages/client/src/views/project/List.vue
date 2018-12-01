@@ -1,0 +1,102 @@
+<template>
+  <a-tabs :activeKey="activeKey" @change="onChange">
+    <a-tab-pane tab="我的项目" key="owner">
+      <a-tabs>
+        <a-tab-pane tab="全部" key="all">
+          <Placeholder></Placeholder>
+        </a-tab-pane>
+        <a-tab-pane tab="个人" key="person">
+          <Placeholder></Placeholder>
+        </a-tab-pane>
+      </a-tabs>
+    </a-tab-pane>
+    <a-tab-pane tab="关注项目" key="star">
+      <Placeholder></Placeholder>
+    </a-tab-pane>
+    <a-tab-pane tab="探索项目" key="explore">
+      <a-tabs>
+        <a-tab-pane tab="趋势" key="trend">
+          <Placeholder></Placeholder>
+        </a-tab-pane>
+        <a-tab-pane tab="关注" key="star">
+          <Placeholder></Placeholder>
+        </a-tab-pane>
+        <a-tab-pane tab="全部" key="all">
+          <Placeholder></Placeholder>
+        </a-tab-pane>
+        <span slot="tabBarExtraContent">
+          <a-select
+            defaultValue="all"
+            style="width: 120px"
+            @change="handleChange"
+          >
+            <a-select-opt-group label="权限">
+              <a-select-option value="all">全部</a-select-option>
+              <a-select-option value="private">私有</a-select-option>
+              <a-select-option value="share">内部</a-select-option>
+              <a-select-option value="public">公开</a-select-option>
+            </a-select-opt-group>
+          </a-select>
+        </span>
+      </a-tabs>
+    </a-tab-pane>
+    <span slot="tabBarExtraContent">
+      <a-input-search
+        placeholder="通过名称搜索"
+        style="width: 200px"
+        @search="onSearch"
+      />
+      <a-select
+        defaultValue="lastUpdate"
+        style="width: 160px; marginLeft: 8px;"
+        @change="handleChange"
+      >
+        <a-select-opt-group>
+          <span slot="label"> <a-icon type="swap" />排序 </span>
+          <a-select-option value="lastUpdate">最近更新</a-select-option>
+          <a-select-option value="name">项目名</a-select-option>
+          <a-select-option value="oldUpdate">最久更新</a-select-option>
+          <a-select-option value="oldCreate">最久创建</a-select-option>
+          <a-select-option value="lastCreate">最近创建</a-select-option>
+        </a-select-opt-group>
+        <a-select-opt-group label="归档">
+          <a-select-option value="hide">隐藏归档项目</a-select-option>
+          <a-select-option value="show">显示归档项目</a-select-option>
+          <a-select-option value="onlyShow">只显示归档项目</a-select-option>
+        </a-select-opt-group>
+      </a-select>
+      <router-link to="/projects/new">
+        <a-button type="primary" style="marginLeft: 8px;">新建项目</a-button>
+      </router-link>
+    </span>
+  </a-tabs>
+</template>
+
+<script>
+export default {
+  props: {
+    type: String
+  },
+  computed: {
+    activeKey() {
+      return this.type ? this.type : "owner";
+    }
+  },
+  methods: {
+    onChange(key) {
+      this.$router.push({ path: "/projects", query: { type: key } });
+    },
+    onSearch() {},
+    handleChange() {}
+  }
+};
+</script>
+
+<style lang="less">
+.ant-tabs-bar {
+  margin: 0;
+}
+.ant-select-dropdown-menu {
+  max-height: 360px;
+}
+</style>

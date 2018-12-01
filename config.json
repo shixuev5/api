@@ -1,11 +1,12 @@
 {
+  "secret": "api_secret",
   "db": {
     "host": "localhost",
     "port": "27017",
     "database": "api",
     "authSource": "admin",
     "user": "root",
-    "pass": "api-secret"
+    "pass": "api_secret"
   },
   "mail": {
     "enable": true,
