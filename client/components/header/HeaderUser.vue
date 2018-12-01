@@ -25,7 +25,7 @@ export default {
   methods: {
     click({ key }) {
       if (key === "logout") {
-        this.$store.commit(types.UPDATE_USER_LOGIN_STATUS, false);
+        this.$store.commit(types.SET_USER_LOGIN_STATUS, false);
         this.$router.replace("/explore");
       } else {
         this.$router.push({ path: key });

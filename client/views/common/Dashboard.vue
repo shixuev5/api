@@ -52,13 +52,18 @@
     </a-row>
     <a-modal :closable="false" :maskClosable="false" :keyboard="false" :visible="$user.info.guide">
       <h3>首次登陆</h3>
-      <p>请选择您的<span style="color: #1890ff"> &lt;用户角色&gt; </span> <strong style="color: red">重要：</strong>确认后将不可更改，请谨慎选择！</p>
+      <p>请选择您的
+        <a-tooltip title="角色有助于系统为您优化操作流程" placement="top" >
+        <span style="color: #1890ff"> &lt;用户角色&gt; ?</span>
+        </a-tooltip>
+      </p>
       <a-radio-group v-model="role" name="role">
         <a-radio value="fe">前端</a-radio>
         <a-radio value="be">后端</a-radio>
         <a-radio value="qa">测试</a-radio>
         <a-radio value="other">其他</a-radio>
       </a-radio-group>
+      <p class="tip"><strong style="color: red">重要：</strong>确认后将不可更改，请谨慎选择！</p>
       <a-button slot="footer" type="primary" @click="confirm" block>
         {{count ? '请再次确认' : '确认' }}
       </a-button>
@@ -104,5 +109,8 @@ export default {
     justify-content: center;
     align-items: center;
   }
+}
+.tip {
+  margin: 1em 0 0 0;
 }
 </style>

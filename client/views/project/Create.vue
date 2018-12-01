@@ -71,9 +71,12 @@
 </template>
 
 <script>
+import * as types from "@/store/types";
+
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
+
 export default {
   data() {
     return {
@@ -85,8 +88,7 @@ export default {
     handleSubmit() {
       this.form.validateFields((err, values) => {
         if (!err) {
-          console.log(values);
-        }
+          this.$store.dispatch(types)
       });
     }
   }

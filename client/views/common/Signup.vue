@@ -124,8 +124,9 @@ export default {
     signup() {
       this.form.validateFields(async (err, values) => {
         if (!err) {
-          await this.$store.dispatch(types.USER_SIGNUP, values);
-          this.$message.success("注册成功");
+          await this.$store.dispatch(types.USER_CREATE, values);
+          await this.$message.success("注册成功");
+          this.$router.replace("/login");
         }
       });
     }

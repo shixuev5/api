@@ -17,6 +17,8 @@ Vue.use(
   io({
     url: "http://localhost:7001",
     autoConnect: false
+  }, {
+    store
   })
 );
 
