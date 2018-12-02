@@ -20,8 +20,12 @@ const store = new Vuex.Store({
   plugins: [
     createPersistedState({
       key: "api-cache",
-      paths: ["postman"]
-    })
+      storage: sessionStorage
+    }),
+    createPersistedState({
+      key: "api-cache",
+      paths: ['postman']
+    }),
   ]
 });
 

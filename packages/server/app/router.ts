@@ -39,6 +39,114 @@ const routes = {
       action: 'remove',
     },
   ],
+  groups: [
+    {
+      path: '',
+      method: 'get',
+      action: 'index',
+    },
+    {
+      path: '',
+      method: 'post',
+      action: 'create',
+    },
+    {
+      path: ':id',
+      method: 'get',
+      action: 'show',
+    },
+    {
+      path: ':id',
+      method: 'patch',
+      action: 'update',
+    },
+    {
+      path: ':id',
+      method: 'delete',
+      action: 'remove',
+    },
+  ],
+  projects: [
+    {
+      path: '',
+      method: 'get',
+      action: 'index',
+    },
+    {
+      path: '',
+      method: 'post',
+      action: 'create',
+    },
+    {
+      path: ':id',
+      method: 'get',
+      action: 'show',
+    },
+    {
+      path: ':id',
+      method: 'patch',
+      action: 'update',
+    },
+    {
+      path: ':id',
+      method: 'delete',
+      action: 'remove',
+    },
+  ],
+  modules: [
+    {
+      path: '',
+      method: 'get',
+      action: 'index',
+    },
+    {
+      path: '',
+      method: 'post',
+      action: 'create',
+    },
+    {
+      path: ':id',
+      method: 'get',
+      action: 'show',
+    },
+    {
+      path: ':id',
+      method: 'patch',
+      action: 'update',
+    },
+    {
+      path: ':id',
+      method: 'delete',
+      action: 'remove',
+    },
+  ],
+  interfaces: [
+    {
+      path: '',
+      method: 'get',
+      action: 'index',
+    },
+    {
+      path: '',
+      method: 'post',
+      action: 'create',
+    },
+    {
+      path: ':id',
+      method: 'get',
+      action: 'show',
+    },
+    {
+      path: ':id',
+      method: 'patch',
+      action: 'update',
+    },
+    {
+      path: ':id',
+      method: 'delete',
+      action: 'remove',
+    },
+  ],
 };
 
 export default (app: Application) => {

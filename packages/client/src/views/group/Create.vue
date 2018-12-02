@@ -1,7 +1,7 @@
 <template>
   <a-form
     layout="vertical"
-    @submit.prevent="login"
+    @submit.prevent="handleSubmit"
     :autoFormCreate="
       form => {
         this.form = form;
@@ -11,14 +11,14 @@
     <template v-if="form">
       <a-form-item
         label="群组名"
-        fieldDecoratorId="project"
+        fieldDecoratorId="name"
         :fieldDecoratorOptions="{
-          rules: [{ required: true, message: '请输入群组名称!' }]
+          rules: [{ required: true, message: '请输入群组名!' }]
         }"
       >
         <a-input></a-input>
       </a-form-item>
-      <a-form-item label="群组描述" fieldDecoratorId="description">
+      <a-form-item label="群组描述" fieldDecoratorId="desc">
         <a-textarea
           placeholder="请简单描述群组信息... (可选)"
           :autosize="{ minRows: 4, maxRows: 6 }"
@@ -30,7 +30,7 @@
             <a-icon type="lock" /> 私有
             <p>群组访问权限必须明确授权给每个用户。</p>
           </a-radio>
-          <a-radio name="permission" value="share">
+          <a-radio name="permission" value="shared">
             <a-icon type="share-alt" /> 内部
             <p>该群组允许已登录的用户访问。</p>
           </a-radio>
@@ -54,6 +54,8 @@
 </template>
 
 <script>
+import * as types from "@/store/types";
+
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
@@ -66,9 +68,13 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.form.validateFields((err, values) => {
+      this.form.validateFields(async (err, values) => {
         if (!err) {
-          console.log(values);
+          const { _id } = await this.$store.dispatch(
+            types.GROUP_CREATE,
+            values
+          );
+          this.$router.push({ name: "group", params: { id: _id } });
         }
       });
     }

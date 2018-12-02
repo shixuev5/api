@@ -1,7 +1,7 @@
 <template>
   <a-form
     layout="vertical"
-    @submit.prevent="login"
+    @submit.prevent="handleSubmit"
     :autoFormCreate="
       form => {
         this.form = form;
@@ -11,47 +11,35 @@
     <template v-if="form">
       <a-form-item
         label="项目名"
-        fieldDecoratorId="project"
+        fieldDecoratorId="name"
         :fieldDecoratorOptions="{
-          rules: [{ required: true, message: 'Please input project name!' }]
+          rules: [{ required: true, message: '请输入项目名!' }]
         }"
       >
         <a-input></a-input>
       </a-form-item>
       <a-form-item
         label="基础路径"
-        fieldDecoratorId="baseUrl"
+        fieldDecoratorId="path"
         :fieldDecoratorOptions="{
-          rules: [{ message: 'Please input your Password!' }]
+          rules: [{ message: '请输入有效的URL!' }]
         }"
       >
         <a-input placeholder="/"></a-input>
       </a-form-item>
-      <a-form-item
-        label="项目描述"
-        fieldDecoratorId="description"
-        :fieldDecoratorOptions="{
-          rules: [{ message: 'Please input your Password!' }]
-        }"
-      >
+      <a-form-item label="项目描述" fieldDecoratorId="desc">
         <a-textarea
           placeholder="请简单描述项目信息... (可选)"
           :autosize="{ minRows: 4, maxRows: 6 }"
         ></a-textarea>
       </a-form-item>
-      <a-form-item
-        label="项目权限"
-        fieldDecoratorId="permission"
-        :fieldDecoratorOptions="{
-          rules: [{ message: 'Please input your Password!' }]
-        }"
-      >
+      <a-form-item label="项目权限" fieldDecoratorId="permission">
         <a-radio-group name="radioGroup" defaultValue="private">
           <a-radio name="permission" value="private">
             <a-icon type="lock" />私有
             <p>项目访问权限必须明确授权给每个用户。</p>
           </a-radio>
-          <a-radio name="permission" value="share">
+          <a-radio name="permission" value="shared">
             <a-icon type="share-alt" />内部
             <p>该项目允许已登录的用户访问。</p>
           </a-radio>
@@ -90,9 +78,13 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.form.validateFields((err, values) => {
+      this.form.validateFields(async (err, values) => {
         if (!err) {
-          // this.$store.dispatch()
+          const { _id } = await this.$store.dispatch(
+            types.PROJECT_CREATE,
+            values
+          );
+          this.$router.push({ name: "project", params: { id: _id } });
         }
       });
     }

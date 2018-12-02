@@ -29,9 +29,15 @@ export default {
     };
   },
   methods: {
-    // eslint-disable-next-line no-unused-vars
-    onSelect({ _, key }) {
-      // this.$router.push({ path: key });
+    onSelect({ key }) {
+      const reg = new RegExp(`${this.$route.params.id}\\/?(.*)`);
+      const prev = this.$route.path.match(reg)[1];
+      const path = this.$route.path.endsWith("/")
+        ? this.$route.path.slice(0, -1)
+        : this.$route.path;
+      this.$router.push({
+        path: prev ? key : `${path}/${key}`
+      });
     }
   }
 };

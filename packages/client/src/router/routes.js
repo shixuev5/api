@@ -32,18 +32,64 @@ const routes = [
         name: "project",
         config: "project.menu",
         component: "AsideLayout",
-        redirect: { name: "interfaces" },
+        redirect: { name: "project_modules" },
         children: [
-          /* 接口 */
           {
-            path: "",
-            name: "interfaces",
-            component: "interface/Index"
+            path: "modules",
+            name: "project_modules",
+            component: "module/List",
+            // children: [
+            //   {
+            //     path: ":id",
+            //     name: "module_interfaces",
+            //     component: "interface/List"
+            //   }
+            // ]
           },
           {
-            path: "interfaces/new",
-            name: "interfaces_new",
-            component: "interface/Create"
+            path: "test",
+            name: "project_test",
+            component: "test/Index"
+          },
+          {
+            path: "model",
+            name: "project_model",
+            component: "project/Model"
+          },
+          {
+            path: "template",
+            name: "project_template",
+            component: "project/Template"
+          },
+          {
+            path: "mock",
+            name: "project_mock",
+            component: "mock/Index"
+          },
+          {
+            path: "activity",
+            name: "project_activity",
+            component: "project/Activity"
+          },
+          {
+            path: "import",
+            name: "project_import",
+            component: "project/Import"
+          },
+          {
+            path: "member",
+            name: "project_member",
+            component: "project/Member"
+          },
+          {
+            path: "wiki",
+            name: "project_wiki",
+            component: "project/Wiki"
+          },
+          {
+            path: "setting",
+            name: "project_setting",
+            component: "project/Setting"
           }
         ]
       },
@@ -72,8 +118,28 @@ const routes = [
         children: [
           {
             path: "",
-            name: "groups_index",
+            name: "group_index",
             component: "group/Index"
+          },
+          {
+            path: "activity",
+            name: "group_activity",
+            component: "group/Activity"
+          },
+          {
+            path: "member",
+            name: "group_member",
+            component: "group/Member"
+          },
+          {
+            path: "wiki",
+            name: "group_wiki",
+            component: "group/Wiki"
+          },
+          {
+            path: "setting",
+            name: "group_setting",
+            component: "group/Setting"
           }
         ]
       },

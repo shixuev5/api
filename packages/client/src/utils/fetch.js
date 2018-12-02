@@ -22,7 +22,6 @@ fetch.interceptors.request.use(
   },
   error => {
     nprogress.done();
-    debugger;
     return Promise.reject(error);
   }
 );
@@ -38,7 +37,9 @@ fetch.interceptors.response.use(
   },
   error => {
     nprogress.done();
-    if (error.response.status === 401) {
+    if(!error.response) {
+      message.error(error.message);
+    } else if (error.response.status === 401) {
       router.replace("/login", function() {
         message.info("未授权，请重新登陆");
       });

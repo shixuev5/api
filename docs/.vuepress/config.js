@@ -1,4 +1,4 @@
 module.exports = {
   base: '/docs/',
-  dest: '../static/docs'
+  dest: 'static/docs'
 };

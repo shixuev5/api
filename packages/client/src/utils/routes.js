@@ -1,14 +1,11 @@
 function resolveConfig(route) {
   const config = route.config.split(".");
-  route.beforeEnter = async function(to, from, next) {
-    const name = config.length === 1 ? config[0] : config.slice(-1);
-    const result = await import(`@/config/${config.shift()}`);
-    const value = config.length
-      ? config.reduce((prev, curr) => prev[curr], result)
-      : result[name];
-    Object.assign(to.params, { [name]: value });
-    next();
-  };
+  const name = config.length === 1 ? config[0] : config.slice(-1);
+  const result = require(`@/config/${config.shift()}`);
+  const value = config.length
+    ? config.reduce((prev, curr) => prev[curr], result)
+    : result[name];
+  route.props = route => Object.assign({ [name]: value }, route.query, route.params);
 }
 
 function resolveLayout(route) {

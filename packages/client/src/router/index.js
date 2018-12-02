@@ -12,8 +12,8 @@ const router = new Router({
   routes: resolveRoutes(routes)
 });
 
-router.beforeEach(async function(to, _, next) {
-  nprogress.start();
+router.beforeEach(async function(to, from, next) {
+  if(to.path !== from.path) nprogress.start();
   const user = store.state.user;
   if (to.meta.auth) {
     if (user.isLogin) {

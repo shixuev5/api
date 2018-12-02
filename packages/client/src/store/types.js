@@ -10,11 +10,28 @@ export const USER_INFO = "USER_INFO";
 export const USER_UPDATE = "USER_UPDATE";
 export const USER_DELETE = "USER_DELETE";
 
+/* group mutation */
+export const SET_GROUP_INFO = "SET_GROUP_INFO";
+export const SET_GROUP_OWNER = "SET_GROUP_OWNER";
+export const SET_GROUP_EXPLORE = "SET_GROUP_EXPLORE";
+
+/* group action */
+export const GROUP_CREATE = "GROUP_CREATE";
+export const GROUP_INFO = "GROUP_INFO";
+export const GROUP_LIST = "GROUP_LIST";
+export const GROUP_UPDATE = "GROUP_UPDATE";
+export const GROUP_DELETE = "GROUP_DELETE";
+
+
 /* project mutation */
-// export const SET_USER_LOGIN_STATUS = "SET_USER_LOGIN_STATUS";
+export const SET_PROJECT_INFO = "SET_PROJECT_INFO";
+export const SET_PROJECT_OWNER = "SET_PROJECT_OWNER";
+export const SET_PROJECT_STAR = "SET_PROJECT_STAR";
+export const SET_PROJECT_EXPLORE = "SET_PROJECT_EXPLORE";
 
 /* project action */
 export const PROJECT_CREATE = "PROJECT_CREATE";
 export const PROJECT_INFO = "PROJECT_INFO";
+export const PROJECT_LIST = "PROJECT_LIST";
 export const PROJECT_UPDATE = "PROJECT_UPDATE";
 export const PROJECT_DELETE = "PROJECT_DELETE";

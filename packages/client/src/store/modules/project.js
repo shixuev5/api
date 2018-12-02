@@ -2,12 +2,23 @@ import project from "@/api/project";
 import * as types from "../types";
 
 export default {
-  state: {},
+  state: {
+    info: {},
+    owner: [],
+    star: [],
+    explore: [],
+  },
   getters: {},
-  mutations: {},
+  mutations: {
+    [types.SET_PROJECT_INFO](state, payload) {
+      state.info = Object.assign({}, state.info, payload);
+    }
+  },
   actions: {
-    [types.PROJECT_CREATE]({}, payload) {
-      return project.create(payload);
+    async [types.PROJECT_CREATE]({ commit }, payload) {
+      const response = await project.create(payload);
+      commit(types.SET_PROJECT_INFO, response);
+      return response;
     }
   }
 };
