@@ -20,7 +20,10 @@ Vue.use(
       autoConnect: false
     },
     {
-      store
+      store,
+      mutationPrefix: 'SET_SOCKET_',
+      actionPrefix: 'SOCKET_',
+      eventToActionTransformer: VueSocketio.defaults.eventToMutationTransformer
     }
   )
 );

@@ -4,7 +4,7 @@
       <List :value="listValue"></List>
     </a-tab-pane>
     <a-tab-pane tab="探索群组" key="explore">
-      <Grid :value="listValue"></Grid>
+      <List :value="listValue"></List>
     </a-tab-pane>
     <span slot="tabBarExtraContent">
       <a-input-search
@@ -32,6 +32,7 @@
 
 <script>
 import { mapState } from "vuex";
+import Fuse from "fuse.js";
 import * as types from "@/store/types";
 
 function initFilter() {
@@ -56,15 +57,22 @@ export default {
       return this.type ? this.type : "owner";
     },
     listValue() {
-      const nameRegExp = new RegExp(this.filter.name, "i");
       const [key, sortord] = this.filter.sort.split("|");
-      const nameFilter = this.group[this.activeKey].find(item =>
-        nameRegExp.test(item.name)
-      );
-      if (!nameFilter) return [];
-      return nameFilter.sort((a, b) =>
-        sortord === "desc" ? b[key] - a[key] : a[key] - b[key]
-      );
+      const sortFn = (a, b) =>
+        sortord === "desc" ? b[key] - a[key] : a[key] - b[key];
+      const fuse = new Fuse(this.group[this.activeKey], {
+        keys: ["name"],
+        sortFn
+      });
+      return fuse.search(this.filter.name);
+    }
+  },
+  watch: {
+    type: {
+      handler(val) {
+        this.$store.dispatch(types.GROUP_LIST, val);
+      },
+      immediate: true
     }
   },
   methods: {
@@ -76,4 +84,5 @@ export default {
 };
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+</style>

@@ -9,7 +9,8 @@ import { resolveRoutes } from "@/utils/routes";
 Vue.use(Router);
 
 const router = new Router({
-  routes: resolveRoutes(routes)
+  routes: resolveRoutes(routes),
+  strict: process.env.NODE_ENV !== 'production'
 });
 
 router.beforeEach(async function(to, from, next) {

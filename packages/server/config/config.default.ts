@@ -57,11 +57,6 @@ export default (appInfo: EggAppInfo) => {
     },
   };
 
-  config.static = {
-    prefix: '/',
-    dir: path.join(appInfo.baseDir, '../../static'),
-  };
-
   config.bodyParser = {
     jsonLimit: '10mb',
   };

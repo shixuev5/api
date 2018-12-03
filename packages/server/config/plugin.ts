@@ -1,6 +1,7 @@
 import { EggPlugin } from 'egg';
 
 const plugin: EggPlugin = {
+  static: false,
   mongoose: {
     enable: true,
     package: 'egg-mongoose',

@@ -1,7 +1,7 @@
 <template>
   <main>
     <a-layout-sider v-model="collapsed" theme="light" collapsible>
-      <a-menu @select="onSelect" :defaultSelectedKeys="[menu[0].key]">
+      <a-menu :selectedKeys="selectedKeys" @select="onSelect">
         <a-menu-item v-for="item in menu" :key="item.key">
           <Icon :type="item.icon" :size="24" />
           <span>{{ item.name }}</span>
@@ -21,22 +21,26 @@ export default {
       key: String,
       icon: String,
       name: String
-    }).def(() => [{ key: "" }])
+    }).def(() => [])
   },
   data() {
     return {
       collapsed: false
     };
   },
+  computed: {
+    selectedKeys() {
+      const reg = new RegExp(`${this.$route.params.id}\\/?(.*)`);
+      const key = this.$route.path.match(reg)[1];
+      return this.menu.length ? [key ? key : this.menu[0].key] : [];
+    }
+  },
   methods: {
     onSelect({ key }) {
-      const reg = new RegExp(`${this.$route.params.id}\\/?(.*)`);
-      const prev = this.$route.path.match(reg)[1];
-      const path = this.$route.path.endsWith("/")
-        ? this.$route.path.slice(0, -1)
-        : this.$route.path;
       this.$router.push({
-        path: prev ? key : `${path}/${key}`
+        path: this.$route.path.endsWith(this.$route.params.id)
+          ? `${this.$route.path}/${key}`
+          : key
       });
     }
   }
