@@ -26,10 +26,7 @@ export default {
       return response;
     },
     async [types.GROUP_LIST]({commit}, type) {
-      const payload = type === 'owner' ? {} : {
-        permission: ['shared', 'public']
-      };
-      const response = await group.find(payload);
+      const response = await group.find({ type });
       commit(type === 'owner' ? types.SET_GROUP_OWNER : types.SET_GROUP_EXPLORE, response);
     }
   }

@@ -8,7 +8,7 @@
       <HeaderGroup v-if="$user.isLogin">群组</HeaderGroup>
       <router-link v-else to="/explore/groups">群组</router-link>
     </a-menu-item>
-    <a-menu-item key="postman">
+    <a-menu-item v-if="$user.isLogin" key="postman">
       <router-link to="/postman">postman</router-link>
     </a-menu-item>
   </a-menu>

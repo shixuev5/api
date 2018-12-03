@@ -15,6 +15,7 @@ export default (app: Application) => {
       permission: { type: String, enum: ['private', 'shared', 'public'] },
     },
     {
+      id: false,
       timestamps: true,
     },
   );

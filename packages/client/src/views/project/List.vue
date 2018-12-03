@@ -3,26 +3,26 @@
     <a-tab-pane tab="我的项目" key="owner">
       <a-tabs>
         <a-tab-pane tab="全部" key="all">
-          <Placeholder></Placeholder>
+          <List :value="listValue"></List>
         </a-tab-pane>
         <a-tab-pane tab="个人" key="person">
-          <Placeholder></Placeholder>
+          <List :value="listValue"></List>
         </a-tab-pane>
       </a-tabs>
     </a-tab-pane>
     <a-tab-pane tab="关注项目" key="star">
-      <Placeholder></Placeholder>
+      <List :value="listValue"></List>
     </a-tab-pane>
     <a-tab-pane tab="探索项目" key="explore">
       <a-tabs>
         <a-tab-pane tab="趋势" key="trend">
-          <Placeholder></Placeholder>
+          <List :value="listValue"></List>
         </a-tab-pane>
         <a-tab-pane tab="关注" key="star">
-          <Placeholder></Placeholder>
+          <List :value="listValue"></List>
         </a-tab-pane>
         <a-tab-pane tab="全部" key="all">
-          <Placeholder></Placeholder>
+          <List :value="listValue"></List>
         </a-tab-pane>
         <span slot="tabBarExtraContent">
           <a-select
@@ -33,7 +33,7 @@
             <a-select-opt-group label="权限">
               <a-select-option value="all">全部</a-select-option>
               <a-select-option value="private">私有</a-select-option>
-              <a-select-option value="share">内部</a-select-option>
+              <a-select-option value="shared">内部</a-select-option>
               <a-select-option value="public">公开</a-select-option>
             </a-select-opt-group>
           </a-select>
@@ -42,27 +42,30 @@
     </a-tab-pane>
     <span slot="tabBarExtraContent">
       <a-input-search
+        v-model="filter.name"
         placeholder="通过名称搜索"
         style="width: 200px"
-        @search="onSearch"
       />
       <a-select
-        defaultValue="lastUpdate"
+        v-model="filter.sort"
+        mode="multiple"
         style="width: 160px; marginLeft: 8px;"
-        @change="handleChange"
       >
         <a-select-opt-group>
           <span slot="label"> <a-icon type="swap" />排序 </span>
-          <a-select-option value="lastUpdate">最近更新</a-select-option>
-          <a-select-option value="name">项目名</a-select-option>
-          <a-select-option value="oldUpdate">最久更新</a-select-option>
-          <a-select-option value="oldCreate">最久创建</a-select-option>
-          <a-select-option value="lastCreate">最近创建</a-select-option>
+          <a-select-option value="name|asc">名称升序</a-select-option>
+          <a-select-option value="name|desc">名称降序</a-select-option>
+          <a-select-option value="updatedAt|desc">最近更新</a-select-option>
+          <a-select-option value="updatedAt|asc">最久更新</a-select-option>
+          <a-select-option value="createdAt|desc">最近创建</a-select-option>
+          <a-select-option value="createdAt|asc">最久创建</a-select-option>
         </a-select-opt-group>
         <a-select-opt-group label="归档">
-          <a-select-option value="hide">隐藏归档项目</a-select-option>
-          <a-select-option value="show">显示归档项目</a-select-option>
-          <a-select-option value="onlyShow">只显示归档项目</a-select-option>
+          <a-select-option value="achive|false">隐藏归档项目</a-select-option>
+          <a-select-option value="achive|true">显示归档项目</a-select-option>
+          <a-select-option value="achive|true|only"
+            >只显示归档项目</a-select-option
+          >
         </a-select-opt-group>
       </a-select>
       <router-link to="/projects/new">
@@ -73,20 +76,56 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import Fuse from "fuse.js";
+import * as types from "@/store/types";
+
+function initFilter() {
+  return {
+    name: "",
+    sort: "updatedAt|desc"
+  };
+}
+
 export default {
   props: {
     type: String
   },
+  data() {
+    return {
+      filter: initFilter()
+    };
+  },
   computed: {
+    ...mapState(["project"]),
     activeKey() {
       return this.type ? this.type : "owner";
+    },
+    listValue() {
+      const [key, sortord] = this.filter.sort.split("|");
+      debugger;
+      const sortFn = (a, b) =>
+        sortord === "desc" ? b[key] - a[key] : a[key] - b[key];
+      const fuse = new Fuse(this.project[this.activeKey], {
+        keys: ["name"],
+        sortFn
+      });
+      return fuse.search(this.filter.name);
+    }
+  },
+  watch: {
+    type: {
+      handler(val) {
+        this.$store.dispatch(types.GROUP_LIST, val);
+      },
+      immediate: true
     }
   },
   methods: {
     onChange(key) {
+      this.filter = initFilter();
       this.$router.push({ path: "/projects", query: { type: key } });
     },
-    onSearch() {},
     handleChange() {}
   }
 };

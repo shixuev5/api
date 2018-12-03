@@ -19,6 +19,7 @@ export default (app: Application) => {
       source: { type: String, enum: ['site', 'ldap'], default: 'site' },
     },
     {
+      id: false,
       timestamps: true,
     },
   );

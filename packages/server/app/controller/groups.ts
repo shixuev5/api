@@ -1,11 +1,13 @@
 import { Controller } from 'egg';
 
 export default class GroupsController extends Controller {
+  /* 根据 type 显示分类列表 */
   async index() {
     const { ctx, service } = this;
-    const res = await service.group.find(ctx.query);
+    const res = await service.group[ctx.query.type]();
     ctx.helper.success(res);
   }
+  /* 创建群组 */
   async create() {
     const { ctx, service } = this;
     const res = await service.group.create(ctx.request.body);

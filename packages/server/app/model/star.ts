@@ -5,13 +5,6 @@ export default (app: Application) => {
   const starSchema = new mongoose.Schema(
     {
       user_id: { type: mongoose.Schema.Types.ObjectId, required: true },
-      groups: {
-        type: [
-          {
-            _id: { type: mongoose.Schema.Types.ObjectId, ref: 'Group' },
-          },
-        ],
-      },
       projects: {
         type: [
           {
@@ -28,6 +21,7 @@ export default (app: Application) => {
       },
     },
     {
+      id: false,
       timestamps: true,
     },
   );

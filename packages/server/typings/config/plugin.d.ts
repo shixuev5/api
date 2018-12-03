@@ -3,6 +3,7 @@
 
 import 'egg';
 import 'egg-mongoose';
+import 'egg-validate';
 import 'egg-cors';
 import 'egg-jwt';
 import 'egg-socket.io';

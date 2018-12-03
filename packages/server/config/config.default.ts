@@ -1,9 +1,8 @@
 import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
-import * as path from 'path';
 import { db, secret } from '../../../config.json';
 
-export default (appInfo: EggAppInfo) => {
-  // tslint:disable-next-line:no-object-literal-type-assertion
+export default (_appInfo: EggAppInfo) => {
+
   const config = {} as PowerPartial<EggAppConfig>;
 
   // override config from framework / plugin
@@ -26,6 +25,7 @@ export default (appInfo: EggAppInfo) => {
         auth: { authSource: db.authSource },
         user: db.user,
         pass: db.pass,
+        useCreateIndex: true,
       },
     },
   };
@@ -44,7 +44,7 @@ export default (appInfo: EggAppInfo) => {
   config.jwt = {
     enable: true,
     secret: config.keys,
-    ignore: [ (ctx) => ctx.path.endsWith('users') && ['POST', 'PUT'].includes(ctx.method), /users\/exsit$/],
+    ignore: [ (ctx) => ctx.path.endsWith('users') && ['POST', 'PUT'].includes(ctx.method), /users\/count$/],
   };
 
   config.io = {

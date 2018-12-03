@@ -1,9 +1,10 @@
 import { Controller } from 'egg';
 
 export default class ProjectsController extends Controller {
+   /* 根据 type 显示分类列表 */
   async index() {
     const { ctx, service } = this;
-    const res = await service.project.find(ctx.query);
+    const res = await service.project[ctx.query.type]();
     ctx.helper.success(res);
   }
   async create() {

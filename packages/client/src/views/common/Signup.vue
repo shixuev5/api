@@ -108,10 +108,10 @@ export default {
   },
   methods: {
     exsitCheck: debounce(async function(rule, value, callback) {
-      const { exist } = await this.$store.dispatch(types.USER_EXSIT, {
+      const isExist = await this.$store.dispatch(types.USER_EXSIT, {
         [rule.field]: value
       });
-      exist ? callback(false) : callback();
+      isExist ? callback(false) : callback();
     }, 300),
     handleConfirmBlur(e) {
       const value = e.target.value;

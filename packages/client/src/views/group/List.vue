@@ -64,7 +64,7 @@ export default {
         keys: ["name"],
         sortFn
       });
-      return fuse.search(this.filter.name);
+      return fuse.search(this.filter.name || "群组");
     }
   },
   watch: {
@@ -84,5 +84,8 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
+.ant-tabs-bar {
+  margin: 0;
+}
 </style>

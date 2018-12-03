@@ -29,6 +29,7 @@ export default (app: Application) => {
       archive: { type: Boolean, default: false },
     },
     {
+      id: false,
       timestamps: true,
     },
   );

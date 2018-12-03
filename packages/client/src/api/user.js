@@ -4,8 +4,8 @@ class User extends Base {
   constructor() {
     super("users");
   }
-  exist(payload) {
-    return this.fetch.get(`${this.module}/exsit`, {
+  count(payload) {
+    return this.fetch.get(`${this.module}/count`, {
       params: payload
     });
   }

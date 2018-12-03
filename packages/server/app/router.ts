@@ -9,9 +9,9 @@ const routes = {
       action: 'index',
     },
     {
-      path: 'exsit',
+      path: 'count',
       method: 'get',
-      action: 'exsit',
+      action: 'count',
     },
     {
       path: '',

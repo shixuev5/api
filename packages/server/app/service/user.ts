@@ -12,14 +12,13 @@ export default class UserService extends BaseService {
     payload.password = hmac.digest('hex');
     return this.db.create(payload);
   }
-  async login(payload) {
-    const isEmail = /^.+@.+$/.test(payload.name);
-    const res = await this.find(isEmail ? {email: payload.name} : {name: payload.name});
+  async login({ name, email, password }) {
+    const res = await this.find(email ? { email } : { name });
     if (!res.length) {
-      this.ctx.throw(isEmail ? '邮箱未注册!' : '用户名未注册!');
+      this.ctx.throw(email ? '邮箱未注册!' : '用户名未注册!');
     }
     const hmac = createHmac('sha256', res[0].salt);
-    hmac.update(payload.password);
+    hmac.update(password);
     if (res[0].password !== hmac.digest('hex')) {
       this.ctx.throw('密码不匹配，请重试!');
     }

@@ -10,6 +10,7 @@ export default (app: Application) => {
       project_id: { type: mongoose.Schema.Types.ObjectId, required: true },
     },
     {
+      id: false,
       timestamps: true,
     },
   );

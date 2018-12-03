@@ -7,11 +7,11 @@ export default class UsersController extends Controller {
     const res = await service.user.find(ctx.query).select('-password -salt');
     ctx.helper.success(res);
   }
-  /* 效验用户名、邮箱是否已注册 */
-  async exsit() {
+  /* 用户是否存在 */
+  async count() {
     const { ctx, service } = this;
-    const num = await service.user.count(ctx.query);
-    ctx.helper.success({ exist: Boolean(num) });
+    const count = await service.user.count(ctx.query);
+    ctx.helper.success({ count });
   }
   /* 用户注册 */
   async create() {

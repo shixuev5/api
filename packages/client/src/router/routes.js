@@ -114,7 +114,7 @@ const routes = [
         name: "group",
         config: "group.menu",
         component: "AsideLayout",
-        redirect: { name: "groups_index" },
+        redirect: { name: "group_index" },
         children: [
           {
             path: "",

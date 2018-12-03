@@ -37,11 +37,15 @@ export default {
   },
   methods: {
     onSelect({ key }) {
-      this.$router.push({
-        path: this.$route.path.endsWith(this.$route.params.id)
-          ? `${this.$route.path}/${key}`
-          : key
-      });
+      if (key === this.menu[0].key) {
+        this.$router.push(this.$route.path.replace(/\/\w+$/, ""));
+      } else {
+        this.$router.push({
+          path: this.$route.path.endsWith(this.$route.params.id)
+            ? `${this.$route.path}/${key}`
+            : key
+        });
+      }
     }
   }
 };

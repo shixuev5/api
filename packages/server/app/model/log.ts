@@ -11,6 +11,7 @@ export default (app: Application) => {
       new_version: { type: mongoose.Schema.Types.Mixed },
     },
     {
+      id: false,
       timestamps: true,
     },
   );

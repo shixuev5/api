@@ -27,9 +27,11 @@
     "egg-cors": "^2.1.1",
     "egg-jwt": "^3.1.4",
     "egg-mongoose": "^3.1.1",
+    "egg-scripts": "^2.6.0",
     "egg-socket.io": "^4.1.5",
-    "mongoose-autopopulate": "^0.9.0",
-    "egg-scripts": "^2.6.0"
+    "egg-validate": "^2.0.2",
+    "lodash": "^4.17.11",
+    "mongoose-autopopulate": "^0.9.0"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.40",
