@@ -53,8 +53,6 @@
       >
         <a-select-opt-group>
           <span slot="label"> <a-icon type="swap" />排序 </span>
-          <a-select-option value="name|asc">名称升序</a-select-option>
-          <a-select-option value="name|desc">名称降序</a-select-option>
           <a-select-option value="updatedAt|desc">最近更新</a-select-option>
           <a-select-option value="updatedAt|asc">最久更新</a-select-option>
           <a-select-option value="createdAt|desc">最近创建</a-select-option>
@@ -77,6 +75,7 @@
 
 <script>
 import { mapState } from "vuex";
+import Types from "vue-types";
 import Fuse from "fuse.js";
 import * as types from "@/store/types";
 
@@ -89,7 +88,7 @@ function initFilter() {
 
 export default {
   props: {
-    type: String
+    type: Types.string.def("owner")
   },
   data() {
     return {
@@ -103,20 +102,22 @@ export default {
     },
     listValue() {
       const [key, sortord] = this.filter.sort.split("|");
-      debugger;
       const sortFn = (a, b) =>
         sortord === "desc" ? b[key] - a[key] : a[key] - b[key];
-      const fuse = new Fuse(this.project[this.activeKey], {
-        keys: ["name"],
-        sortFn
-      });
-      return fuse.search(this.filter.name);
+      if (this.filter.name) {
+        const fuse = new Fuse(this.project[this.activeKey], {
+          keys: ["name", "desc"]
+        });
+        return fuse.search(this.filter.name).sort(sortFn);
+      } else {
+        return this.project[this.activeKey].slice().sort(sortFn);
+      }
     }
   },
   watch: {
     type: {
       handler(val) {
-        this.$store.dispatch(types.GROUP_LIST, val);
+        this.$store.dispatch(types.PROJECT_LIST, val);
       },
       immediate: true
     }

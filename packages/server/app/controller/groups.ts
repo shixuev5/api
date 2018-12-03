@@ -4,7 +4,8 @@ export default class GroupsController extends Controller {
   /* 根据 type 显示分类列表 */
   async index() {
     const { ctx, service } = this;
-    const res = await service.group[ctx.query.type]();
+    const groups = await service.group[ctx.query.type]();
+    const res = await service.group.countProject(groups);
     ctx.helper.success(res);
   }
   /* 创建群组 */

@@ -24,8 +24,14 @@
           :autosize="{ minRows: 4, maxRows: 6 }"
         />
       </a-form-item>
-      <a-form-item label="群组权限" fieldDecoratorId="permission">
-        <a-radio-group name="radioGroup" defaultValue="private">
+      <a-form-item
+        label="群组权限"
+        fieldDecoratorId="permission"
+        :fieldDecoratorOptions="{
+          initialValue: 'private'
+        }"
+      >
+        <a-radio-group name="radioGroup">
           <a-radio name="permission" value="private">
             <a-icon type="lock" /> 私有
             <p>群组访问权限必须明确授权给每个用户。</p>

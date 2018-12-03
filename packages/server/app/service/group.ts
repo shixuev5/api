@@ -18,6 +18,13 @@ export default class GroupService extends BaseService {
       },
     });
   }
+  /* 统计群组包含的项目数 */
+  async countProject(groups) {
+    const counts = await Promise.all(groups.map((group) => this.service.project.count({
+      group_id: group._id,
+    })));
+    return groups.map((group, index) => Object.assign({ project_num: counts[index]}, group.toJSON()));
+  }
   /* 创建群组 */
   create(payload) {
     return super.create({

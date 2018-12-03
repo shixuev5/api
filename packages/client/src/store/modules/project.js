@@ -19,6 +19,10 @@ export default {
       const response = await project.create(payload);
       commit(types.SET_PROJECT_INFO, response);
       return response;
+    },
+    async [types.PROJECT_LIST]({commit}, type) {
+      const response = await project.find({ type });
+      commit(types[`SET_PROJECT_${type.toUppercase()}`], response);
     }
   }
 };

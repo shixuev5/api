@@ -1,59 +1,71 @@
 <template>
-  <a-list itemLayout="horizontal" :pagination="pagination" :dataSource="value">
-    <a-list-item slot="renderItem" slot-scope="item, index">
+  <a-list
+    itemLayout="horizontal"
+    :pagination="{ pageSize: 10 }"
+    :dataSource="value"
+  >
+    <a-list-item
+      @click="onClick(item)"
+      slot="renderItem"
+      slot-scope="item, index"
+    >
       <a-list-item-meta :description="item.desc">
-        <span slot="title">
-          <router-link :to="{ name: 'group', params: { id: item._id } }">{{
-            item.name
-          }}</router-link>
-          <a-tag color="blue">拥有者</a-tag>
-        </span>
         <a-avatar slot="avatar" :size="40">{{ item.name[0] }}</a-avatar>
+        <div slot="title">
+          {{ item.name }}
+          <a-tag color="blue">{{ showRole(item.members) }}</a-tag>
+        </div>
       </a-list-item-meta>
-      <a-tooltip
-        v-if="item.permission === 'private'"
-        title="私有 - 群组访问权限必须明确授权给每个用户。"
-        placement="left"
-      >
-        <a-icon type="lock" />
+      <a-tooltip :title="type === 'project' ? '关注' : '项目'" placement="top">
+        <a-icon :type="type === 'project' ? 'star-o' : 'profile'" />
+        {{ type === "project" ? item.star : item.project_num }}
       </a-tooltip>
-      <a-tooltip
-        v-else-if="item.permission === 'shared'"
-        title="内部 - 该群组允许已登录的用户访问。"
-        placement="left"
-      >
-        <a-icon type="share-alt" />
+      <a-tooltip title="成员" placement="top">
+        <a-icon type="team" /> {{ item.members.length }}
       </a-tooltip>
-      <a-tooltip v-else title="公开 - 该群组允许任何人访问。" placement="left">
-        <a-icon type="unlock" />
+      <a-tooltip :title="config[type][item.permission].title" placement="left">
+        <a-icon :type="config[type][item.permission].icon" />
       </a-tooltip>
+      <p>创建于：{{ new Date(item.createdAt) }}</p>
     </a-list-item>
   </a-list>
 </template>
 
 <script>
 import Types from "vue-types";
+import config from "./config.js";
 
 export default {
   props: {
+    type: Types.oneOf(["project", "group"]).required,
     value: Types.array.def([])
   },
   data() {
     return {
-      pagination: {
-        onChange: page => {
-          console.log(page);
-        },
-        pageSize: 3
-      }
+      config
     };
+  },
+  methods: {
+    showRole(members) {
+      const { role } = members.find(item => item._id === this.$user.info._id);
+      return this.config.role[role];
+    },
+    onClick({ _id: id }) {
+      this.$router.push({ name: "group", params: { id } });
+    }
   }
 };
 </script>
 
 <style lang="less" scoped>
 .ant-list-item {
-  padding: 8px 0;
+  padding: 8px;
+  transition: background-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+  &:hover {
+    cursor: pointer;
+    background-color: #e6f7ff;
+  }
   &-meta {
     align-items: center;
     &-title {
@@ -65,8 +77,14 @@ export default {
       }
     }
   }
-  .anticon {
-    font-size: 16px;
+  &-content {
+    > * {
+      margin: 0 8px;
+    }
+    .anticon {
+      font-size: 16px;
+      line-height: 21px;
+    }
   }
 }
 </style>

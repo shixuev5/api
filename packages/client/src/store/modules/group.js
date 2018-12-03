@@ -27,7 +27,7 @@ export default {
     },
     async [types.GROUP_LIST]({commit}, type) {
       const response = await group.find({ type });
-      commit(type === 'owner' ? types.SET_GROUP_OWNER : types.SET_GROUP_EXPLORE, response);
+      commit(types[`SET_GROUP_${type.toUppercase()}`], response);
     }
   }
 };
