@@ -1,21 +1,12 @@
 <template>
   <a-row>
-    <a-col :span="4"> <Aside></Aside> </a-col>
+    <a-col :span="4"> <Aside :value="postman.history"></Aside> </a-col>
     <a-col :span="18" :offset="1">
-      <a-tabs
-        v-model="activeKey"
-        type="editable-card"
-        :hideAdd="true"
-        @edit="onEdit"
-      >
-        <a-tab-pane
-          v-for="pane in panes"
-          :tab="pane.title"
-          :key="pane.key"
-          :closable="pane.closable"
-        >
-          <Request></Request>
-          <Response></Response>
+      <a-tabs v-model="activeKey" type="editable-card" @edit="onEdit">
+        <a-tab-pane v-for="item in postman.list" :key="item.key">
+          <span slot="tab"><Method :type="item.method" />{{ item.name }}</span>
+          <Request :value="item"></Request>
+          <Response :value="item.response"></Response>
         </a-tab-pane>
       </a-tabs>
     </a-col>
@@ -23,6 +14,7 @@
 </template>
 
 <script>
+import * as types from "@/store/types";
 import Aside from "./Aside";
 import Request from "./Request";
 import Response from "./Response";
@@ -34,29 +26,39 @@ export default {
     Response
   },
   data() {
-    return {
-      activeKey: "1",
-      panes: [
-        {
-          title: "GET undefined request",
-          key: "1"
-        }
-      ]
-    };
+    return {};
+  },
+  computed: {
+    activeKey: {
+      get() {
+        return this.$store.state.postman.activeKey;
+      },
+      set(val) {
+        debugger;
+        this.$store.commit(types.SET_POSTMAN_ACTIVE_KEY, val);
+      }
+    },
+    postman() {
+      return this.$store.state.postman;
+    }
   },
   methods: {
     onEdit(targetKey, action) {
       this[action](targetKey);
     },
     add() {
-      const activeKey = "123";
-      this.panes.push({
-        title: "GET undefined request",
-        key: activeKey
-      });
-      this.activeKey = activeKey;
+      this.$store.dispatch(types.POSTMAN_CREATE);
     },
-    remove(targetKey) {}
+    remove(targetKey) {
+      // 移除最后一个时，重置request对象
+      this.$store.dispatch(types.POSTMAN_REMOVE, targetKey);
+    }
   }
 };
 </script>
+
+<style lang="less" scoped>
+.method {
+  display: inline;
+}
+</style>

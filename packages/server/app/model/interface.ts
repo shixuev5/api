@@ -9,8 +9,8 @@ export default (app: Application) => {
     method: { type: String, required: true },
     request: {
       type: {
-        header: [],
         params: [],
+        header: [],
         body: {},
       },
     },

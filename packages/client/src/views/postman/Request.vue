@@ -1,9 +1,24 @@
 <template>
   <div>
+    <p>
+      {{ value.path }}
+      <Clipboard v-show="value.path" :value="value.path"></Clipboard>
+    </p>
     <a-row :gutter="16">
       <a-col :span="20">
-        <a-input size="large" placeholder="请输入请求URL">
-          <a-select slot="addonBefore" defaultValue="GET" style="width: 120px">
+        <a-input
+          size="large"
+          :value="path"
+          @blur="pathBlur"
+          @change="pathChange"
+          placeholder="请输入请求 URL"
+        >
+          <a-select
+            slot="addonBefore"
+            :value="value.method"
+            @select="methodSelect"
+            style="width: 120px"
+          >
             <a-select-option value="GET">GET</a-select-option>
             <a-select-option value="POST">POST</a-select-option>
             <a-select-option value="PUT">PUT</a-select-option>
@@ -16,10 +31,14 @@
         </a-input>
       </a-col>
       <a-col :span="2">
-        <a-button type="primary" size="large" block>发送</a-button>
+        <a-button type="primary" size="large" @click="requestSend" block
+          >发送</a-button
+        >
       </a-col>
       <a-col :span="2">
-        <a-button type="primary" size="large" block>保存</a-button>
+        <a-button type="primary" size="large" @click="requestSave" block
+          >保存</a-button
+        >
       </a-col>
     </a-row>
     <a-tabs defaultActiveKey="params">
@@ -51,7 +70,12 @@
           size="small"
         />
       </a-tab-pane>
-      <a-tab-pane tab="请求体" key="body" forceRender>
+      <a-tab-pane
+        tab="请求体"
+        key="body"
+        :disabled="value.method === 'GET'"
+        forceRender
+      >
         <a-radio-group name="radioGroup" @change="onChange" v-model="value">
           <a-radio value="none">none</a-radio>
           <a-radio value="formdata">form-data</a-radio>
@@ -95,6 +119,10 @@
 </template>
 
 <script>
+import Types from "vue-types";
+import * as types from "@/store/types";
+import { resolveRequestParams, createRequestParams } from "@/utils/postman";
+
 const columns = [
   {
     title: "键",
@@ -123,16 +151,55 @@ const dataSource = [
 ];
 
 export default {
+  props: {
+    value: Types.object.def({
+      path: "",
+      method: "GET",
+      request: {
+        header: [],
+        params: [],
+        body: {}
+      }
+    })
+  },
   data() {
     return {
+      path: "",
       newTabIndex: 0,
       columns,
       dataSource,
-      selectedRowKeys: [],
-      value: "none"
+      selectedRowKeys: []
     };
   },
   methods: {
+    methodSelect(val) {
+      this.$store.dispatch(types.POSTMAN_UPDATE, {
+        key: this.value.key,
+        method: val
+      });
+    },
+    pathChange({ e }) {
+      const { value } = e.target;
+      if (!value) {
+        const params = resolveRequestParams(value);
+        if (params.length) {
+          this.$store.dispatch(types.POSTMAN_UPDATE, {
+            key: this.value.key,
+            request: {
+              params: createRequestParams(params)
+            }
+          });
+        }
+      }
+    },
+    pathBlur() {
+      this.$store.dispatch(types.POSTMAN_UPDATE, {
+        key: this.value.key,
+        path: this.path
+      });
+    },
+    requestSend() {},
+    requestSave() {},
     onSelectChange() {},
     onChange() {},
     handleChange() {}

@@ -5,7 +5,16 @@
 </template>
 
 <script>
-export default {};
+import Types from "vue-types";
+
+export default {
+  props: {
+    value: Types.object.def({
+      header: [],
+      body: {}
+    })
+  }
+};
 </script>
 
 <style lang="less" scoped></style>

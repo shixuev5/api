@@ -10,6 +10,18 @@ export const USER_INFO = "USER_INFO";
 export const USER_UPDATE = "USER_UPDATE";
 export const USER_DELETE = "USER_DELETE";
 
+/* postman mutation */
+export const SET_POSTMAN_ACTIVE_KEY = "SET_POSTMAN_ACTIVE_KEY";
+export const SET_POSTMAN_HISTORY = "SET_POSTMAN_HISTORY";
+export const SET_POSTMAN_LIST = "SET_POSTMAN_LIST";
+
+/* postman action */
+export const POSTMAN_CREATE = "POSTMAN_CREATE";
+export const POSTMAN_INFO = "POSTMAN_INFO";
+export const POSTMAN_LIST = "POSTMAN_LIST";
+export const POSTMAN_UPDATE = "POSTMAN_UPDATE";
+export const POSTMAN_DELETE = "POSTMAN_DELETE";
+
 /* group mutation */
 export const SET_GROUP_INFO = "SET_GROUP_INFO";
 export const SET_GROUP_OWNER = "SET_GROUP_OWNER";
@@ -21,7 +33,6 @@ export const GROUP_INFO = "GROUP_INFO";
 export const GROUP_LIST = "GROUP_LIST";
 export const GROUP_UPDATE = "GROUP_UPDATE";
 export const GROUP_DELETE = "GROUP_DELETE";
-
 
 /* project mutation */
 export const SET_PROJECT_INFO = "SET_PROJECT_INFO";
