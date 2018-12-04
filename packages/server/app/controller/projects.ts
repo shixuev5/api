@@ -4,7 +4,8 @@ export default class ProjectsController extends Controller {
    /* 根据 type 显示分类列表 */
   async index() {
     const { ctx, service } = this;
-    const res = await service.project[ctx.query.type]();
+    const projects = await service.project[ctx.query.type]();
+    const res = await service.project.countInterface(projects);
     ctx.helper.success(res);
   }
   async create() {

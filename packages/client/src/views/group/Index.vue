@@ -48,7 +48,13 @@
 </template>
 
 <script>
+import Types from "vue-types";
+import * as types from "@/store/types";
+
 export default {
+  props: {
+    id: Types.string.required
+  },
   data() {
     return {
       showGrid: true
@@ -62,6 +68,9 @@ export default {
   methods: {
     onSearch() {},
     handleChange() {}
+  },
+  created() {
+    this.$store.dispatch(types.GROUP_INFO, this.id);
   }
 };
 </script>

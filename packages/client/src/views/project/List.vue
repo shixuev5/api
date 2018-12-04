@@ -3,26 +3,26 @@
     <a-tab-pane tab="我的项目" key="owner">
       <a-tabs>
         <a-tab-pane tab="全部" key="all">
-          <List :value="listValue"></List>
+          <List :value="listValue" type="project"></List>
         </a-tab-pane>
         <a-tab-pane tab="个人" key="person">
-          <List :value="listValue"></List>
+          <List :value="listValue" type="project"></List>
         </a-tab-pane>
       </a-tabs>
     </a-tab-pane>
     <a-tab-pane tab="关注项目" key="star">
-      <List :value="listValue"></List>
+      <List :value="listValue" type="project"></List>
     </a-tab-pane>
     <a-tab-pane tab="探索项目" key="explore">
       <a-tabs>
         <a-tab-pane tab="趋势" key="trend">
-          <List :value="listValue"></List>
+          <List :value="listValue" type="project"></List>
         </a-tab-pane>
         <a-tab-pane tab="关注" key="star">
-          <List :value="listValue"></List>
+          <List :value="listValue" type="project"></List>
         </a-tab-pane>
         <a-tab-pane tab="全部" key="all">
-          <List :value="listValue"></List>
+          <List :value="listValue" type="project"></List>
         </a-tab-pane>
         <span slot="tabBarExtraContent">
           <a-select
@@ -75,6 +75,7 @@
 
 <script>
 import { mapState } from "vuex";
+import before from "lodash-es/before";
 import Types from "vue-types";
 import Fuse from "fuse.js";
 import * as types from "@/store/types";

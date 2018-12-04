@@ -14,25 +14,36 @@
         <div slot="title">
           {{ item.name }}
           <a-tag color="blue">{{ showRole(item.members) }}</a-tag>
+          <a-icon v-if="type === 'project'" type="star" />
         </div>
       </a-list-item-meta>
-      <a-tooltip :title="type === 'project' ? '关注' : '项目'" placement="top">
-        <a-icon :type="type === 'project' ? 'star-o' : 'profile'" />
-        {{ type === "project" ? item.star : item.project_num }}
-      </a-tooltip>
-      <a-tooltip title="成员" placement="top">
-        <a-icon type="team" /> {{ item.members.length }}
-      </a-tooltip>
-      <a-tooltip :title="config[type][item.permission].title" placement="left">
-        <a-icon :type="config[type][item.permission].icon" />
-      </a-tooltip>
-      <p>创建于：{{ new Date(item.createdAt) }}</p>
+      <div>
+        <a-tooltip
+          :title="type === 'project' ? '接口' : '项目'"
+          placement="top"
+        >
+          <a-icon :type="type === 'project' ? 'api' : 'profile'" />
+          {{ type === "project" ? item.interface_num : item.project_num }}
+        </a-tooltip>
+        <a-tooltip title="成员" placement="top">
+          <a-icon type="team" /> {{ item.members.length }}
+        </a-tooltip>
+        <a-tooltip
+          :title="config[type][item.permission].title"
+          placement="left"
+        >
+          <a-icon :type="config[type][item.permission].icon" />
+        </a-tooltip>
+      </div>
+      <p>{{ timeFormat(item) }}</p>
     </a-list-item>
   </a-list>
 </template>
 
 <script>
 import Types from "vue-types";
+import dayjs from "dayjs";
+import timeago from "timeago.js";
 import config from "./config.js";
 
 export default {
@@ -50,8 +61,15 @@ export default {
       const { role } = members.find(item => item._id === this.$user.info._id);
       return this.config.role[role];
     },
+    timeFormat(item) {
+      if (this.type === "project") {
+        return `更新于：${new timeago().format(item.updatedAt, "zh_CN")}`;
+      } else {
+        return `创建于：${dayjs(item.createdAt).format("YYYY/MM/DD HH:mm")}`;
+      }
+    },
     onClick({ _id: id }) {
-      this.$router.push({ name: "group", params: { id } });
+      this.$router.push({ name: this.type, params: { id } });
     }
   }
 };
@@ -75,10 +93,20 @@ export default {
       .ant-tag {
         margin: 0 8px;
       }
+      .anticon {
+        color: #faad14;
+        font-size: 16px;
+        vertical-align: middle;
+      }
     }
   }
-  &-content {
-    > * {
+  /deep/ &-content {
+    flex-direction: column;
+    text-align: right;
+    p {
+      margin-bottom: 0;
+    }
+    span {
       margin: 0 8px;
     }
     .anticon {

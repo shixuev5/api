@@ -7,7 +7,6 @@ import ExportGroup from '../../../app/service/group';
 import ExportInterface from '../../../app/service/interface';
 import ExportModule from '../../../app/service/module';
 import ExportProject from '../../../app/service/project';
-import ExportStar from '../../../app/service/star';
 import ExportUser from '../../../app/service/user';
 
 declare module 'egg' {
@@ -17,7 +16,6 @@ declare module 'egg' {
     interface: ExportInterface;
     module: ExportModule;
     project: ExportProject;
-    star: ExportStar;
     user: ExportUser;
   }
 }

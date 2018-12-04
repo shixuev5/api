@@ -12,6 +12,15 @@ export default {
   mutations: {
     [types.SET_PROJECT_INFO](state, payload) {
       state.info = Object.assign({}, state.info, payload);
+    },
+    [types.SET_PROJECT_OWNER](state, payload) {
+      state.owner =payload;
+    },
+    [types.SET_PROJECT_STAR](state, payload) {
+      state.star = payload;
+    },
+    [types.SET_PROJECT_EXPLORE](state, payload) {
+      state.explore = payload;
     }
   },
   actions: {
@@ -22,7 +31,7 @@ export default {
     },
     async [types.PROJECT_LIST]({commit}, type) {
       const response = await project.find({ type });
-      commit(types[`SET_PROJECT_${type.toUppercase()}`], response);
+      commit(types[`SET_PROJECT_${type.toUpperCase()}`], response);
     }
   }
 };

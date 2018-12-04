@@ -22,6 +22,7 @@ export default (app: Application) => {
     },
     state: { type: String, enum: ['dev', 'debug', 'complete', 'mainten', 'drop'], default: 'dev'},
     mock: { type: Boolean, default: true },
+    project_id: {type: mongoose.Schema.Types.ObjectId, required: true},
     module_id: {type: mongoose.Schema.Types.ObjectId, required: true},
   }, {
     id: false,

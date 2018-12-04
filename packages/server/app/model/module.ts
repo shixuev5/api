@@ -8,6 +8,11 @@ export default (app: Application) => {
       path: { type: String, required: true },
       parent_id: { type: mongoose.Schema.Types.ObjectId },
       project_id: { type: mongoose.Schema.Types.ObjectId, required: true },
+      stars: [
+        {
+          _id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        },
+      ],
     },
     {
       id: false,

@@ -21,6 +21,11 @@ export default (app: Application) => {
           role: { type: String, enum: ['owner', 'devloper', 'visitor'] },
         },
       ],
+      stars: [
+        {
+          _id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        },
+      ],
       permission: {
         type: String,
         enum: ['private', 'shared', 'public'],

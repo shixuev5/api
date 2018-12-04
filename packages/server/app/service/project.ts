@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import BaseService from './base';
 
 export default class ProjectService extends BaseService {
@@ -8,23 +7,23 @@ export default class ProjectService extends BaseService {
   /* 我的项目 */
   async owner() {
     const groupIds = await this.service.group.owner().select('_id');
-    return _.unionBy(await this.db.find({
+    // 查找从我的群组继承权限的项目
+    const inheritProjects = await this.db.find({
       group_id: {
         $in: groupIds,
       },
-    }), await this.db.find({
+    });
+    // 查找项目成员中包含我的项目
+    const ownerProjects = await this.db.find({
       'members._id': this.ctx.state.user._id,
-    }), '_id');
+    });
+    // 对项目列表去重
+    return inheritProjects.concat(ownerProjects);
   }
   /* 关注项目 */
-  async star() {
-    const projectIds = await this.service.star.find({
-      user_id: this.ctx.state.user._id,
-    });
+  star() {
     return this.db.find({
-      _id: {
-        $in: projectIds,
-      },
+      'stars._id': this.ctx.state.user._id,
     });
   }
   /* 探索项目 */
@@ -34,6 +33,13 @@ export default class ProjectService extends BaseService {
         $in: ['shared', 'public'],
       },
     });
+  }
+  /* 查找项目包含的接口数 */
+  async countInterface(projects) {
+    const counts = await Promise.all(projects.map((project) => this.service.interface.count({
+      interface_id: project._id,
+    })));
+    return projects.map((project, index) => Object.assign({ interface_num: counts[index]}, project.toJSON()));
   }
   create(payload) {
     return super.create({

@@ -25,9 +25,13 @@ export default {
       commit(types.SET_GROUP_INFO, response);
       return response;
     },
+    async [types.GROUP_INFO]({commit}, id) {
+      const response = await group.findById(id);
+      commit(types.SET_GROUP_INFO, response);
+    },
     async [types.GROUP_LIST]({commit}, type) {
       const response = await group.find({ type });
-      commit(types[`SET_GROUP_${type.toUppercase()}`], response);
+      commit(types[`SET_GROUP_${type.toUpperCase()}`], response);
     }
   }
 };
