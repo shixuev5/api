@@ -2,12 +2,13 @@
   <a-row>
     <a-col :span="4"> <Aside :value="postman.history"></Aside> </a-col>
     <a-col :span="18" :offset="1">
-      <a-tabs v-model="activeKey" type="editable-card" @edit="onEdit">
+      <a-tabs v-model="activeKey" type="editable-card" hideAdd @edit="onEdit">
         <a-tab-pane v-for="item in postman.list" :key="item.key">
           <span slot="tab"><Method :type="item.method" />{{ item.name }}</span>
           <Request :value="item"></Request>
           <Response :value="item.response"></Response>
         </a-tab-pane>
+        <a-button slot="tabBarExtraContent" @click="add">新增</a-button>
       </a-tabs>
     </a-col>
   </a-row>
@@ -34,7 +35,6 @@ export default {
         return this.$store.state.postman.activeKey;
       },
       set(val) {
-        debugger;
         this.$store.commit(types.SET_POSTMAN_ACTIVE_KEY, val);
       }
     },
@@ -51,7 +51,7 @@ export default {
     },
     remove(targetKey) {
       // 移除最后一个时，重置request对象
-      this.$store.dispatch(types.POSTMAN_REMOVE, targetKey);
+      this.$store.dispatch(types.POSTMAN_DELETE, targetKey);
     }
   }
 };

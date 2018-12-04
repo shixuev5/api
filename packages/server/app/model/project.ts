@@ -5,15 +5,17 @@ export default (app: Application) => {
   const projectSchema = new mongoose.Schema(
     {
       name: { type: String, required: true },
-      path: { type: String, required: true },
+      path: String,
       desc: String,
-      env: [{
-        name: { type: String, required: true },
-        key: { type: String, required: true },
-        value: { type: String, required: true },
-        initial: String,
-        global: { type: Boolean, default: false },
-      }],
+      env: [
+        {
+          name: { type: String, required: true },
+          key: { type: String, required: true },
+          value: { type: String, required: true },
+          initial: String,
+          global: { type: Boolean, default: false },
+        },
+      ],
       group_id: { type: mongoose.Schema.Types.ObjectId },
       members: [
         {

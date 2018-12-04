@@ -1,13 +1,13 @@
 export const menu = [
   {
-    key: "project",
-    icon: "project",
-    name: "项目管理"
+    key: "group",
+    icon: "home",
+    name: "首页"
   },
   {
     key: "activity",
     icon: "activity",
-    name: "群组动态"
+    name: "动态"
   },
   // {
   //   key: "import",
@@ -17,16 +17,16 @@ export const menu = [
   {
     key: "member",
     icon: "member",
-    name: "成员管理"
+    name: "成员"
   },
   {
     key: "wiki",
     icon: "wiki",
-    name: "群组Wiki"
+    name: "Wiki"
   },
   {
     key: "setting",
     icon: "setting",
-    name: "群组设置"
+    name: "设置"
   }
 ];

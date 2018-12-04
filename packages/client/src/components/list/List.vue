@@ -13,8 +13,7 @@
         <a-avatar slot="avatar" :size="40">{{ item.name[0] }}</a-avatar>
         <div slot="title">
           {{ item.name }}
-          <a-tag color="blue">{{ showRole(item.members) }}</a-tag>
-          <a-icon v-if="type === 'project'" type="star" />
+          <a-tag>{{ showRole(item.members) }}</a-tag>
         </div>
       </a-list-item-meta>
       <div>

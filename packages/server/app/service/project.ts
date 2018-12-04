@@ -41,6 +41,7 @@ export default class ProjectService extends BaseService {
     })));
     return projects.map((project, index) => Object.assign({ interface_num: counts[index]}, project.toJSON()));
   }
+  /* 创建项目 */
   create(payload) {
     return super.create({
       members: {

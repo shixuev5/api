@@ -1,7 +1,7 @@
 <template>
   <a-tabs :activeKey="activeKey" @change="onChange">
     <a-tab-pane tab="我的项目" key="owner">
-      <a-tabs>
+      <a-tabs v>
         <a-tab-pane tab="全部" key="all">
           <List :value="listValue" type="project"></List>
         </a-tab-pane>
@@ -102,17 +102,7 @@ export default {
       return this.type ? this.type : "owner";
     },
     listValue() {
-      const [key, sortord] = this.filter.sort.split("|");
-      const sortFn = (a, b) =>
-        sortord === "desc" ? b[key] - a[key] : a[key] - b[key];
-      if (this.filter.name) {
-        const fuse = new Fuse(this.project[this.activeKey], {
-          keys: ["name", "desc"]
-        });
-        return fuse.search(this.filter.name).sort(sortFn);
-      } else {
-        return this.project[this.activeKey].slice().sort(sortFn);
-      }
+      return this.project[this.type];
     }
   },
   watch: {

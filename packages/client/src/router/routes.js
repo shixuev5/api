@@ -32,8 +32,13 @@ const routes = [
         name: "project",
         config: "project.menu",
         component: "AsideLayout",
-        redirect: { name: "project_modules" },
+        redirect: { name: "project_index" },
         children: [
+          {
+            path: "",
+            name: "project_index",
+            component: "project/Index"
+          },
           {
             path: "modules",
             name: "project_modules",
@@ -70,6 +75,11 @@ const routes = [
             path: "activity",
             name: "project_activity",
             component: "project/Activity"
+          },
+          {
+            path: "graph",
+            name: "project_graph",
+            component: "project/Graph"
           },
           {
             path: "import",

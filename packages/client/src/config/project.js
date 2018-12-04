@@ -1,52 +1,62 @@
 export const menu = [
   {
-    key: "module",
+    key: "project",
+    icon: "home",
+    name: "首页"
+  },
+  {
+    key: "modules",
     icon: "module",
-    name: "项目模块"
+    name: "模块"
   },
   {
     key: "test",
     icon: "test",
-    name: "接口测试"
+    name: "测试"
   },
   {
     key: "model",
     icon: "model",
-    name: "数据模型"
+    name: "模型"
   },
   {
     key: "template",
     icon: "template",
-    name: "接口模版"
+    name: "模版"
   },
   {
     key: "mock",
     icon: "mock",
-    name: "请求Mock"
+    name: "Mock"
   },
   {
     key: "activity",
     icon: "activity",
-    name: "项目动态"
+    name: "动态"
+  },
+  {
+    key: "graph",
+    icon: "graph",
+    name: "图表"
   },
   {
     key: "import",
     icon: "import",
-    name: "数据导入"
+    name: "导入"
   },
   {
     key: "member",
     icon: "member",
-    name: "成员管理"
+    name: "成员"
   },
   {
     key: "wiki",
     icon: "wiki",
-    name: "项目Wiki"
+    name: "Wiki"
   },
   {
     key: "setting",
     icon: "setting",
-    name: "项目设置"
+    name: "设置"
   }
 ];

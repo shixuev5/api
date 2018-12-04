@@ -178,19 +178,18 @@ export default {
         method: val
       });
     },
-    pathChange({ e }) {
+    pathChange(e) {
       const { value } = e.target;
-      if (!value) {
-        const params = resolveRequestParams(value);
-        if (params.length) {
-          this.$store.dispatch(types.POSTMAN_UPDATE, {
-            key: this.value.key,
-            request: {
-              params: createRequestParams(params)
-            }
-          });
-        }
+      const params = resolveRequestParams(value);
+      if (params && params.length) {
+        this.$store.dispatch(types.POSTMAN_UPDATE, {
+          key: this.value.key,
+          request: {
+            params: createRequestParams(params)
+          }
+        });
       }
+      this.path = value;
     },
     pathBlur() {
       this.$store.dispatch(types.POSTMAN_UPDATE, {
@@ -198,7 +197,9 @@ export default {
         path: this.path
       });
     },
-    requestSend() {},
+    requestSend() {
+      this.$store.dispatch(types.POSTMAN_SEND, this.value.key);
+    },
     requestSave() {},
     onSelectChange() {},
     onChange() {},

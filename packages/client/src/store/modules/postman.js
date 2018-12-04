@@ -1,4 +1,5 @@
 import * as types from "../types";
+import axios from "axios";
 import { createInterface } from "@/utils/postman";
 
 const api = createInterface();
@@ -27,7 +28,7 @@ export default {
           const index = state.list.findIndex(item => item.key === payload);
           if (index >= 0) {
             state.list.splice(index, 1);
-            state.activeKey = state.list[index].key;
+            state.activeKey = (state.list[index] || state.list[index - 1]).key;
           }
         }
       };
@@ -45,6 +46,27 @@ export default {
     },
     [types.POSTMAN_DELETE]({ commit }, payload) {
       commit(types.SET_POSTMAN_LIST, { type: "delete", payload });
+    },
+    async [types.POSTMAN_SEND]({ dispatch, state }, payload) {
+      const api = state.list.find(item => item.key === payload);
+      let response;
+      try {
+        response = await axios({
+          url: api.path,
+          method: api.method
+        });
+      } catch (error) {
+        response = error;
+      }
+      // dispatch(types.POSTMAN_UPDATE, {
+      //   type: "update",
+      //   payload: {
+      //     key: payload,
+      //     response: {
+
+      //     }
+      //   }
+      // });
     }
   }
 };

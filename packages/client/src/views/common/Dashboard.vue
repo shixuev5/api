@@ -10,7 +10,7 @@
       <a-col :span="11" :offset="1">
         <router-link to="/projects/new">
           <a-card hoverable>
-            <Icon type="project" :size="56" slot="cover"></Icon>
+            <Icon type="create-project" :size="56" slot="cover"></Icon>
             <a-card-meta title="新建项目">
               <template slot="description"
                 >项目是接口的集合</template
@@ -22,7 +22,7 @@
       <a-col :span="11">
         <router-link to="/groups/new">
           <a-card hoverable>
-            <Icon type="group" :size="56" slot="cover"></Icon>
+            <Icon type="create-group" :size="56" slot="cover"></Icon>
             <a-card-meta title="新建群组">
               <template slot="description"
                 >新建群组以更好的管理项目及多人协助</template
@@ -36,7 +36,7 @@
       <a-col :span="11" :offset="1">
         <router-link to="/intefaces/new">
           <a-card hoverable>
-            <Icon type="interface" :size="56" slot="cover"></Icon>
+            <Icon type="create-interface" :size="56" slot="cover"></Icon>
             <a-card-meta title="新建接口">
               <template slot="description"
                 >提供接口流程管理、文档、mock、自动化测试</template

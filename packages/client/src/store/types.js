@@ -21,6 +21,7 @@ export const POSTMAN_INFO = "POSTMAN_INFO";
 export const POSTMAN_LIST = "POSTMAN_LIST";
 export const POSTMAN_UPDATE = "POSTMAN_UPDATE";
 export const POSTMAN_DELETE = "POSTMAN_DELETE";
+export const POSTMAN_SEND = "POSTMAN_SEND";
 
 /* group mutation */
 export const SET_GROUP_INFO = "SET_GROUP_INFO";
