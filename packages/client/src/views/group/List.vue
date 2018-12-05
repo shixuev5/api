@@ -14,9 +14,9 @@
       />
       <a-select v-model="filter.sort" style="width: 120px; marginLeft: 8px;">
         <a-select-option value="updatedAt|desc">最近更新</a-select-option>
-        <a-select-option value="updatedAt|asc">最久更新</a-select-option>
+        <a-select-option value="updatedAt|asc">最早更新</a-select-option>
         <a-select-option value="createdAt|desc">最近创建</a-select-option>
-        <a-select-option value="createdAt|asc">最久创建</a-select-option>
+        <a-select-option value="createdAt|asc">最早创建</a-select-option>
       </a-select>
       <router-link to="/groups/new">
         <a-button type="primary" style="marginLeft: 8px;">新建群组</a-button>

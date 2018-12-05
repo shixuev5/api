@@ -36,10 +36,16 @@ export default class ProjectService extends BaseService {
   }
   /* 查找项目包含的接口数 */
   async countInterface(projects) {
-    const counts = await Promise.all(projects.map((project) => this.service.interface.count({
-      interface_id: project._id,
-    })));
-    return projects.map((project, index) => Object.assign({ interface_num: counts[index]}, project.toJSON()));
+    const counts = await Promise.all(
+      projects.map((project) =>
+        this.service.interface.count({
+          interface_id: project._id,
+        }),
+      ),
+    );
+    return projects.map((project, index) =>
+      Object.assign({ interface_num: counts[index] }, project.toJSON()),
+    );
   }
   /* 创建项目 */
   create(payload) {

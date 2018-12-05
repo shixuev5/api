@@ -6,12 +6,14 @@ export default class Base {
     this.module = module;
   }
 
-  paging(num = 0, size = 10, sort = { createdAt: "desc" }) {
+  paging({ page = 0, per_page = 10, sort = 'createdAt', order = "desc", ...conditions }) {
     return this.fetch.get(this.module, {
       params: {
-        num,
-        size,
-        sort
+        page,
+        per_page,
+        sort,
+        order,
+        ...conditions,
       }
     });
   }

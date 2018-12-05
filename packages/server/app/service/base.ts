@@ -16,23 +16,31 @@ export default class BaseService extends Service {
     return this.db.estimatedDocumentCount();
   }
 
-  count(conditions) {
+  count(conditions = {}) {
     return this.db.countDocuments(conditions);
   }
 
-  async paging({ num = 0, size = 10, sort = { createdAt: 'desc' }}) {
-    const total = await this.total();
-    const list = await this.db.find({}).skip(num * size).limit(size).sort(sort);
+  async paging({ conditions = {}, page = 0, per_page = 10, sort = 'createdAt', order = 'desc' }) {
+    const total = await this.count(conditions);
+    const list = await this.db.find(conditions).skip(page * per_page).limit(per_page).sort({
+      [sort]: order,
+    });
     return {
       total,
-      num,
-      size,
+      page,
+      per_page,
       list,
     };
   }
 
   find(...args) {
     return this.db.find(...args);
+  }
+
+  findAndSort({ sort = 'createdAt', order = 'desc', ...args }) {
+    return this.db.find(args).sort({
+      [sort]: order,
+    });
   }
 
   findById(_id) {

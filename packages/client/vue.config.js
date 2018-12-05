@@ -5,9 +5,9 @@ module.exports = {
   outputDir: "../../static",
   chainWebpack: config => {
     config.resolve.alias.set("$root", path.join(__dirname, "../../"));
-    config.plugin('monaco').use(MonacoWebpackPlugin, {
+    config.plugin('monaco').use(MonacoWebpackPlugin, [{
       languages: ['javascript', 'json', 'markdown', 'typescript', 'yaml']
-    });
+    }]);
   },
   devServer: {
     proxy: "http://localhost:7001"

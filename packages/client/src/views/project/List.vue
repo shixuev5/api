@@ -1,34 +1,33 @@
 <template>
   <a-tabs :activeKey="activeKey" @change="onChange">
     <a-tab-pane tab="我的项目" key="owner">
-      <a-tabs v>
+      <a-tabs @change="onOwnerChange">
         <a-tab-pane tab="全部" key="all">
-          <List :value="listValue" type="project"></List>
+          <List :value="project.owner" type="project"></List>
         </a-tab-pane>
         <a-tab-pane tab="个人" key="person">
-          <List :value="listValue" type="project"></List>
+          <List :value="owner.person" type="project"></List>
         </a-tab-pane>
       </a-tabs>
     </a-tab-pane>
     <a-tab-pane tab="关注项目" key="star">
-      <List :value="listValue" type="project"></List>
+      <List :value="project.star" type="project"></List>
     </a-tab-pane>
     <a-tab-pane tab="探索项目" key="explore">
       <a-tabs>
         <a-tab-pane tab="趋势" key="trend">
-          <List :value="listValue" type="project"></List>
+          <List :value="explore.trend" type="project"></List>
         </a-tab-pane>
         <a-tab-pane tab="关注" key="star">
-          <List :value="listValue" type="project"></List>
+          <List :value="explore.star" type="project"></List>
         </a-tab-pane>
         <a-tab-pane tab="全部" key="all">
-          <List :value="listValue" type="project"></List>
+          <List :value="project.explore" type="project"></List>
         </a-tab-pane>
         <span slot="tabBarExtraContent">
           <a-select
-            defaultValue="all"
+            v-model="filter.permission"
             style="width: 120px"
-            @change="handleChange"
           >
             <a-select-opt-group label="权限">
               <a-select-option value="all">全部</a-select-option>
@@ -53,9 +52,9 @@
       </a-select>
       <a-select v-model="filter.sort" style="width: 120px; marginLeft: 8px;">
         <a-select-option value="updatedAt|desc">最近更新</a-select-option>
-        <a-select-option value="updatedAt|asc">最久更新</a-select-option>
+        <a-select-option value="updatedAt|asc">最早更新</a-select-option>
         <a-select-option value="createdAt|desc">最近创建</a-select-option>
-        <a-select-option value="createdAt|asc">最久创建</a-select-option>
+        <a-select-option value="createdAt|asc">最早创建</a-select-option>
       </a-select>
       <router-link to="/projects/new">
         <a-button type="primary" style="marginLeft: 8px;">新建项目</a-button>
@@ -65,8 +64,8 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import before from "lodash-es/before";
+import { mapState, mapGetters } from "vuex";
+import once from "lodash-es/once";
 import Types from "vue-types";
 import Fuse from "fuse.js";
 import * as types from "@/store/types";
@@ -75,7 +74,8 @@ function initFilter() {
   return {
     name: "",
     sort: "updatedAt|desc",
-    achive: "true"
+    achive: "true",
+    permission: "all"
   };
 }
 
@@ -90,17 +90,23 @@ export default {
   },
   computed: {
     ...mapState(["project"]),
+    ...mapGetters({
+      "owner.person": "person",
+      "explore.trend": "trend",
+      "explore.star": "star"
+    }),
     activeKey() {
       return this.type ? this.type : "owner";
-    },
-    listValue() {
-      return this.project[this.type];
     }
   },
   watch: {
     type: {
       handler(val) {
-        this.$store.dispatch(types.PROJECT_LIST, val);
+        if (!this.cache) this.cache = [val];
+        if (!this.cache.includes(val)) {
+          this.cache.push(val);
+          this.$store.dispatch(types.PROJECT_LIST, { type: val });
+        }
       },
       immediate: true
     }
@@ -110,7 +116,18 @@ export default {
       this.filter = initFilter();
       this.$router.push({ path: "/projects", query: { type: key } });
     },
-    handleChange() {}
+    onOwnerChange(key) {
+      if (key === "person") {
+        this.$router.push({
+          path: "/projects",
+          query: { person: true }
+        });
+        // this.$store.dispatch(types.PROJECT_LIST, {
+        //   type: this.type,
+        //   person: true
+        // });
+      }
+    }
   }
 };
 </script>
