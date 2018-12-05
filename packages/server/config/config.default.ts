@@ -1,5 +1,28 @@
-import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
+import { Context, EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
 import { db, secret } from '../../../config.json';
+
+function ignore(ctx: Context): boolean {
+  const routes = [
+    {
+      method: ['POST', 'PUT'],
+      path: /users$/,
+    },
+    {
+      method: '*',
+      path: /users\/count$/,
+    },
+  ];
+  return routes.some((route) => {
+    if (route.method === '*') {
+      return route.path.test(ctx.path);
+    } else {
+      if (typeof route.method === 'string') {
+        route.method = [route.method];
+      }
+      return route.method.map((item) => item.toUpperCase()).includes(ctx.method);
+    }
+  });
+}
 
 export default (_appInfo: EggAppInfo) => {
 
@@ -44,7 +67,7 @@ export default (_appInfo: EggAppInfo) => {
   config.jwt = {
     enable: true,
     secret: config.keys,
-    ignore: [ (ctx) => ctx.path.endsWith('users') && ['POST', 'PUT'].includes(ctx.method), /users\/count$/],
+    ignore,
   };
 
   config.io = {

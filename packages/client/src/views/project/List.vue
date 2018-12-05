@@ -46,25 +46,16 @@
         placeholder="通过名称搜索"
         style="width: 200px"
       />
-      <a-select
-        v-model="filter.sort"
-        mode="multiple"
-        style="width: 160px; marginLeft: 8px;"
-      >
-        <a-select-opt-group>
-          <span slot="label"> <a-icon type="swap" />排序 </span>
-          <a-select-option value="updatedAt|desc">最近更新</a-select-option>
-          <a-select-option value="updatedAt|asc">最久更新</a-select-option>
-          <a-select-option value="createdAt|desc">最近创建</a-select-option>
-          <a-select-option value="createdAt|asc">最久创建</a-select-option>
-        </a-select-opt-group>
-        <a-select-opt-group label="归档">
-          <a-select-option value="achive|false">隐藏归档项目</a-select-option>
-          <a-select-option value="achive|true">显示归档项目</a-select-option>
-          <a-select-option value="achive|true|only"
-            >只显示归档项目</a-select-option
-          >
-        </a-select-opt-group>
+      <a-select v-model="filter.achive" style="width: 160px; marginLeft: 8px;">
+        <a-select-option value="false">隐藏归档项目</a-select-option>
+        <a-select-option value="true">显示归档项目</a-select-option>
+        <a-select-option value="only">只显示归档项目</a-select-option>
+      </a-select>
+      <a-select v-model="filter.sort" style="width: 120px; marginLeft: 8px;">
+        <a-select-option value="updatedAt|desc">最近更新</a-select-option>
+        <a-select-option value="updatedAt|asc">最久更新</a-select-option>
+        <a-select-option value="createdAt|desc">最近创建</a-select-option>
+        <a-select-option value="createdAt|asc">最久创建</a-select-option>
       </a-select>
       <router-link to="/projects/new">
         <a-button type="primary" style="marginLeft: 8px;">新建项目</a-button>
@@ -83,7 +74,8 @@ import * as types from "@/store/types";
 function initFilter() {
   return {
     name: "",
-    sort: "updatedAt|desc"
+    sort: "updatedAt|desc",
+    achive: "true"
   };
 }
 
@@ -123,11 +115,10 @@ export default {
 };
 </script>
 
-<style lang="less">
-.ant-tabs-bar {
-  margin: 0;
-}
-.ant-select-dropdown-menu {
-  max-height: 360px;
+<style lang="less" scoped>
+.ant-tabs {
+  /deep/ &-bar {
+    margin: 0;
+  }
 }
 </style>

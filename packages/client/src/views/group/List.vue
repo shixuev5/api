@@ -12,14 +12,11 @@
         placeholder="通过名称搜索"
         style="width: 200px"
       />
-      <a-select v-model="filter.sort" style="width: 160px; marginLeft: 8px;">
-        <a-select-opt-group>
-          <span slot="label"> <a-icon type="swap" />排序 </span>
-          <a-select-option value="updatedAt|desc">最近更新</a-select-option>
-          <a-select-option value="updatedAt|asc">最久更新</a-select-option>
-          <a-select-option value="createdAt|desc">最近创建</a-select-option>
-          <a-select-option value="createdAt|asc">最久创建</a-select-option>
-        </a-select-opt-group>
+      <a-select v-model="filter.sort" style="width: 120px; marginLeft: 8px;">
+        <a-select-option value="updatedAt|desc">最近更新</a-select-option>
+        <a-select-option value="updatedAt|asc">最久更新</a-select-option>
+        <a-select-option value="createdAt|desc">最近创建</a-select-option>
+        <a-select-option value="createdAt|asc">最久创建</a-select-option>
       </a-select>
       <router-link to="/groups/new">
         <a-button type="primary" style="marginLeft: 8px;">新建群组</a-button>
@@ -86,8 +83,10 @@ export default {
 };
 </script>
 
-<style lang="less">
-.ant-tabs-bar {
-  margin: 0;
+<style lang="less" scoped>
+.ant-tabs {
+  /deep/ &-bar {
+    margin: 0;
+  }
 }
 </style>
