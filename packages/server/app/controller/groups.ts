@@ -31,4 +31,14 @@ export default class GroupsController extends Controller {
     const { _id } = await service.group.remove(ctx.params.id);
     ctx.helper.success({ _id });
   }
+  async createMember() {
+
+  }
+  async updateMember() {
+
+  }
+  async removeMember() {
+
+  }
+
 }

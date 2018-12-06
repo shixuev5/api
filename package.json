@@ -1,7 +1,7 @@
 {
   "name": "api",
   "description": "api manage system",
-  "author": "yanhao",
+  "author": "yanhao <136393414@qq.com>",
   "private": true,
   "scripts": {
     "init": "yarn && lerna bootstrap",

@@ -1,5 +1,4 @@
 import project from "@/api/project";
-import user from './user';
 import * as types from "../types";
 
 export default {
@@ -9,18 +8,7 @@ export default {
     star: [],
     explore: []
   },
-  getters: {
-    person: state =>
-      state.owner.filter(
-        project =>
-          !project.members.some(
-            member =>
-              member._id === user.info._id && member.role === "owner"
-          )
-      ),
-    trend: state => state.explore,
-    star: state => state.explore.sort((a, b) => a.star.length - b.star.length)
-  },
+  getters: {},
   mutations: {
     [types.SET_PROJECT_INFO](state, payload) {
       state.info = Object.assign({}, state.info, payload);

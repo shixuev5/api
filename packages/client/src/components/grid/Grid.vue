@@ -5,7 +5,24 @@
     :dataSource="value"
   >
     <a-list-item slot="renderItem" slot-scope="item, index">
-      <a-card :title="item.title">Card content</a-card>
+      <a-card hoverable>
+        <img
+          alt="example"
+          src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+          slot="cover"
+        />
+        <template class="ant-card-actions" slot="actions">
+          <a-icon type="setting" />
+          <a-icon type="edit" />
+          <a-icon type="ellipsis" />
+        </template>
+        <a-card-meta title="Card title" description="This is the description">
+          <a-avatar
+            slot="avatar"
+            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+          />
+        </a-card-meta>
+      </a-card>
     </a-list-item>
   </a-list>
 </template>
@@ -48,7 +65,7 @@ export default {
         onChange: page => {
           console.log(page);
         },
-        pageSize: 3
+        pageSize: 8
       }
     };
   }

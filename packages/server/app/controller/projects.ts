@@ -30,4 +30,22 @@ export default class ProjectsController extends Controller {
     const { _id } = await service.project.remove(ctx.params.id);
     ctx.helper.success({ _id });
   }
+  async createMember() {
+
+  }
+  async updateMember() {
+
+  }
+  async removeMember() {
+
+  }
+  async createEnv() {
+
+  }
+  async updateEnv() {
+
+  }
+  async removeEnv() {
+
+  }
 }

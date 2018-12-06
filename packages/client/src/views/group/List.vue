@@ -8,11 +8,11 @@
     </a-tab-pane>
     <span slot="tabBarExtraContent">
       <a-input-search
-        v-model="filter.name"
+        v-model="condition.name"
         placeholder="通过名称搜索"
         style="width: 200px"
       />
-      <a-select v-model="filter.sort" style="width: 120px; marginLeft: 8px;">
+      <a-select v-model="condition.sort" style="width: 120px; marginLeft: 8px;">
         <a-select-option value="updatedAt|desc">最近更新</a-select-option>
         <a-select-option value="updatedAt|asc">最早更新</a-select-option>
         <a-select-option value="createdAt|desc">最近创建</a-select-option>
@@ -31,7 +31,7 @@ import Types from "vue-types";
 import Fuse from "fuse.js";
 import * as types from "@/store/types";
 
-function initFilter() {
+function initCondition() {
   return {
     name: "",
     sort: "updatedAt|desc"
@@ -44,7 +44,7 @@ export default {
   },
   data() {
     return {
-      filter: initFilter()
+      condition: initCondition()
     };
   },
   computed: {
@@ -53,14 +53,14 @@ export default {
       return this.type ? this.type : "owner";
     },
     listValue() {
-      const [key, sortord] = this.filter.sort.split("|");
+      const [key, sortord] = this.condition.sort.split("|");
       const sortFn = (a, b) =>
         sortord === "desc" ? b[key] - a[key] : a[key] - b[key];
-      if (this.filter.name) {
+      if (this.condition.name) {
         const fuse = new Fuse(this.group[this.activeKey], {
           keys: ["name", "desc"]
         });
-        return fuse.search(this.filter.name).sort(sortFn);
+        return fuse.search(this.condition.name).sort(sortFn);
       } else {
         return this.group[this.activeKey].slice().sort(sortFn);
       }
@@ -69,14 +69,18 @@ export default {
   watch: {
     type: {
       handler(val) {
-        this.$store.dispatch(types.GROUP_LIST, val);
+        if (!this.cache) this.cache = [];
+        if (!this.cache.includes(val)) {
+          this.cache.push(val);
+          this.$store.dispatch(types.GROUP_LIST, { type: val });
+        }
       },
       immediate: true
     }
   },
   methods: {
     onChange(key) {
-      this.filter = initFilter();
+      this.condition = initCondition();
       this.$router.push({ path: "/groups", query: { type: key } });
     }
   }

@@ -7,7 +7,6 @@ export default (app: Application) => {
       name: { type: String },
       key: { type: String, required: true },
       value: { type: String, required: true },
-      default: String,
       global: { type: Boolean, default: false },
     },
     {
@@ -39,6 +38,8 @@ export default (app: Application) => {
         enum: ['private', 'shared', 'public'],
         default: 'private',
       },
+      before_script: String,
+      after_script: String,
       archive: { type: Boolean, default: false },
     },
     {

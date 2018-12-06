@@ -7,29 +7,27 @@
       </div>
       <div class="group-filter">
         <a-input-search
+          v-model="condition.name"
           placeholder="通过名称搜索"
           style="width: 200px"
-          @search="onSearch"
         />
         <div class="group-filter__right">
           <a-select
-            defaultValue="lastUpdate"
+            v-model="condition.achive"
             style="width: 160px; marginLeft: 8px;"
-            @change="handleChange"
           >
-            <a-select-opt-group>
-              <span slot="label"> <a-icon type="swap" />排序 </span>
-              <a-select-option value="lastUpdate">最近更新</a-select-option>
-              <a-select-option value="name">项目名</a-select-option>
-              <a-select-option value="oldUpdate">最久更新</a-select-option>
-              <a-select-option value="oldCreate">最久创建</a-select-option>
-              <a-select-option value="lastCreate">最近创建</a-select-option>
-            </a-select-opt-group>
-            <a-select-opt-group label="归档">
-              <a-select-option value="hide">隐藏归档项目</a-select-option>
-              <a-select-option value="show">显示归档项目</a-select-option>
-              <a-select-option value="onlyShow">只显示归档项目</a-select-option>
-            </a-select-opt-group>
+            <a-select-option value="false">隐藏归档项目</a-select-option>
+            <a-select-option value="true">显示归档项目</a-select-option>
+            <a-select-option value="only">只显示归档项目</a-select-option>
+          </a-select>
+          <a-select
+            v-model="condition.sort"
+            style="width: 120px; marginLeft: 8px;"
+          >
+            <a-select-option value="updatedAt|desc">最近更新</a-select-option>
+            <a-select-option value="updatedAt|asc">最早更新</a-select-option>
+            <a-select-option value="createdAt|desc">最近创建</a-select-option>
+            <a-select-option value="createdAt|asc">最早创建</a-select-option>
           </a-select>
           <a-button icon="plus" type="primary">新建项目</a-button>
           <a-tooltip
@@ -43,6 +41,9 @@
           </a-tooltip>
         </div>
       </div>
+      <keep-alive>
+        <component :is="showGrid ? 'Grid' : 'List'" type="project"></component>
+      </keep-alive>
     </section>
   </div>
 </template>
@@ -57,6 +58,11 @@ export default {
   },
   data() {
     return {
+      condition: {
+        name: "",
+        sort: "updatedAt|desc",
+        achive: "false"
+      },
       showGrid: true
     };
   },
@@ -91,6 +97,7 @@ export default {
     display: flex;
     justify-content: space-between;
     padding: 8px;
+    margin-bottom: 16px;
     border-top: 1px solid #e8e8e8;
     border-bottom: 1px solid #e8e8e8;
 
