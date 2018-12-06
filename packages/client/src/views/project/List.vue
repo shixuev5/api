@@ -43,7 +43,7 @@
         style="width: 200px"
       />
       <a-select
-        v-model="condition.achive"
+        v-model="condition.archive"
         style="width: 160px; marginLeft: 8px;"
       >
         <a-select-option value="false">隐藏归档项目</a-select-option>
@@ -73,7 +73,7 @@ function initCondition() {
   return {
     name: "",
     sort: "updatedAt|desc",
-    achive: "true",
+    archive: "true",
     permission: "all"
   };
 }

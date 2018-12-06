@@ -1,9 +1,5 @@
 <template>
-  <div class="project">
-    <section>
-      {{project.name}}
-    </section>
-  </div>
+  <section>{{ project.name }}</section>
 </template>
 
 <script>
@@ -35,12 +31,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.project {
-  flex: 1;
-  section {
-    max-width: 1280px;
-    margin: 0 auto;
-    text-align: center;
-  }
+section {
+  max-width: 1280px;
+  margin: 0 auto;
+  text-align: center;
 }
 </style>

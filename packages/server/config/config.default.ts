@@ -4,22 +4,22 @@ import { db, secret } from '../../../config.json';
 function ignore(ctx: Context): boolean {
   const routes = [
     {
-      method: ['POST', 'PUT'],
+      method: 'POST',
       path: /users$/,
     },
     {
-      method: '*',
-      path: /users\/count$/,
+      method: 'POST',
+      path: /users\/session$/,
     },
   ];
-  return routes.some((route) => {
+  return routes.some((route: { method: string | string[], path: RegExp }): boolean => {
     if (route.method === '*') {
       return route.path.test(ctx.path);
     } else {
       if (typeof route.method === 'string') {
         route.method = [route.method];
       }
-      return route.method.map((item) => item.toUpperCase()).includes(ctx.method);
+      return route.method.includes(ctx.method) && route.path.test(ctx.path);
     }
   });
 }

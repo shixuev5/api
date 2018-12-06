@@ -77,25 +77,19 @@ export default {
 <style lang="less" scoped>
 .ant-list-item {
   padding: 8px;
-  transition: background-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 
   &:hover {
     cursor: pointer;
-    background-color: #e6f7ff;
+    .ant-list-item-meta-title {
+      color: #1890ff;
+    }
   }
   &-meta {
     align-items: center;
     &-title {
-      a {
-        color: rgba(0, 0, 0, 0.65);
-      }
+      transition: color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
       .ant-tag {
         margin: 0 8px;
-      }
-      .anticon {
-        color: #faad14;
-        font-size: 16px;
-        vertical-align: middle;
       }
     }
   }

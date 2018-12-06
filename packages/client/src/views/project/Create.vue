@@ -19,6 +19,28 @@
         <a-input></a-input>
       </a-form-item>
       <a-form-item
+        label="所属群组"
+        fieldDecoratorId="group_id"
+        :fieldDecoratorOptions="{
+          initialValue: from
+        }"
+      >
+        <a-select
+          showSearch
+          allowClear
+          optionFilterProp="children"
+          :disabled="from"
+          :filterOption="filterOption"
+        >
+          <a-select-option
+            v-for="group in groups"
+            :key="group._id"
+            :value="group._id"
+            >{{ group.name }}</a-select-option
+          >
+        </a-select>
+      </a-form-item>
+      <a-form-item
         label="基础路径"
         fieldDecoratorId="path"
         :fieldDecoratorOptions="{
@@ -76,13 +98,20 @@ function hasErrors(fieldsError) {
 }
 
 export default {
+  props: {
+    from: String
+  },
   data() {
     return {
       hasErrors,
-      form: null
+      form: null,
+      groups: []
     };
   },
   methods: {
+    filterOption(input, option) {
+      return option.componentOptions.children[0].text.indexOf(input) >= 0;
+    },
     handleSubmit() {
       this.form.validateFields(async (err, values) => {
         if (!err) {
@@ -94,6 +123,11 @@ export default {
         }
       });
     }
+  },
+  async created() {
+    this.groups = await this.$store.dispatch(types.GROUP_LIST, {
+      type: "owner"
+    });
   }
 };
 </script>

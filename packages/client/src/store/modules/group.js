@@ -31,7 +31,10 @@ export default {
     },
     async [types.GROUP_LIST]({commit}, payload) {
       const response = await group.find(payload);
-      commit(types[`SET_GROUP_${payload.type.toUpperCase()}`], response);
+      if(payload.type) {
+        commit(types[`SET_GROUP_${payload.type.toUpperCase()}`], response);
+      }
+      return response;
     }
   }
 };

@@ -8,7 +8,7 @@
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
-    <router-view></router-view>
+    <div><router-view></router-view></div>
   </main>
 </template>
 
@@ -56,6 +56,10 @@ main {
   display: flex;
   align-items: stretch;
   height: calc(100vh - 48px);
+
+  > div {
+    flex: 1;
+  }
 }
 .ant-layout-sider {
   border-right: 1px solid #e8e8e8;
