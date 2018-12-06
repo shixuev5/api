@@ -2,20 +2,26 @@ import { Application } from 'egg';
 
 export default (app: Application) => {
   const mongoose = app.mongoose;
+  const envSchema = new mongoose.Schema(
+    {
+      name: { type: String },
+      key: { type: String, required: true },
+      value: { type: String, required: true },
+      default: String,
+      global: { type: Boolean, default: false },
+    },
+    {
+      id: false,
+      timestamps: true,
+    },
+  );
+
   const projectSchema = new mongoose.Schema(
     {
       name: { type: String, required: true },
       path: String,
       desc: String,
-      env: [
-        {
-          name: { type: String, required: true },
-          key: { type: String, required: true },
-          value: { type: String, required: true },
-          initial: String,
-          global: { type: Boolean, default: false },
-        },
-      ],
+      envs: [envSchema],
       group_id: { type: mongoose.Schema.Types.ObjectId },
       members: [
         {

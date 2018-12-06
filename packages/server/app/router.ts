@@ -9,19 +9,14 @@ const routes = {
       action: 'index',
     },
     {
-      path: 'count',
-      method: 'get',
-      action: 'count',
-    },
-    {
       path: '',
       method: 'post',
       action: 'create',
     },
     {
-      path: '',
-      method: 'put',
-      action: 'login',
+      path: 'session',
+      method: 'post',
+      action: 'createToken',
     },
     {
       path: ':id',
@@ -30,7 +25,7 @@ const routes = {
     },
     {
       path: ':id',
-      method: 'patch',
+      method: 'put',
       action: 'update',
     },
     {
@@ -51,13 +46,28 @@ const routes = {
       action: 'create',
     },
     {
+      path: 'members',
+      method: 'post',
+      action: 'createMember',
+    },
+    {
+      path: 'members',
+      method: 'put',
+      action: 'updateMember',
+    },
+    {
+      path: 'members',
+      method: 'delete',
+      action: 'removeMember',
+    },
+    {
       path: ':id',
       method: 'get',
       action: 'show',
     },
     {
       path: ':id',
-      method: 'patch',
+      method: 'put',
       action: 'update',
     },
     {
@@ -78,13 +88,43 @@ const routes = {
       action: 'create',
     },
     {
+      path: 'envs',
+      method: 'post',
+      action: 'createEnv',
+    },
+    {
+      path: 'envs',
+      method: 'put',
+      action: 'updateEnv',
+    },
+    {
+      path: 'envs',
+      method: 'delete',
+      action: 'removeEnv',
+    },
+    {
+      path: 'members',
+      method: 'post',
+      action: 'createMember',
+    },
+    {
+      path: 'members',
+      method: 'put',
+      action: 'updateMember',
+    },
+    {
+      path: 'members',
+      method: 'delete',
+      action: 'removeMember',
+    },
+    {
       path: ':id',
       method: 'get',
       action: 'show',
     },
     {
       path: ':id',
-      method: 'patch',
+      method: 'put',
       action: 'update',
     },
     {
@@ -111,7 +151,7 @@ const routes = {
     },
     {
       path: ':id',
-      method: 'patch',
+      method: 'put',
       action: 'update',
     },
     {
@@ -138,7 +178,7 @@ const routes = {
     },
     {
       path: ':id',
-      method: 'patch',
+      method: 'put',
       action: 'update',
     },
     {

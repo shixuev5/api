@@ -4,25 +4,24 @@ export default class UsersController extends Controller {
   /* 条件过滤用户 */
   async index() {
     const { ctx, service } = this;
-    const res = await service.user.find(ctx.query).select('-password -salt');
+    let res;
+    if (this.ctx.state.user) {
+      res = await service.user.find(ctx.query).select('-password -salt');
+    } else {
+      res = await service.user.find(ctx.query).select('_id');
+    }
     ctx.helper.success(res);
-  }
-  /* 用户是否存在 */
-  async count() {
-    const { ctx, service } = this;
-    const count = await service.user.count(ctx.query);
-    ctx.helper.success({ count });
   }
   /* 用户注册 */
   async create() {
     const { ctx, service } = this;
-    const { _id } = await service.user.signup(ctx.request.body);
+    const { _id } = await service.user.create(ctx.request.body);
     ctx.helper.success({ _id });
   }
-  /* 用户登陆 */
-  async login() {
+  /* 用户登陆 生成 token */
+  async createToken() {
     const { app, ctx, service } = this;
-    const { _id } = await service.user.login(ctx.request.body);
+    const { _id } = await service.user.verify(ctx.request.body);
     const token = await app.jwt.sign({ _id }, app.config.jwt.secret, {
       expiresIn: '1d',
     });

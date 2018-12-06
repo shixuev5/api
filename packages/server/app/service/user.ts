@@ -5,14 +5,14 @@ export default class UserService extends BaseService {
   constructor(ctx) {
     super(ctx, 'User');
   }
-  signup(payload) {
+  create(payload) {
     payload.salt = payload.salt || this.app.config.keys;
     const hmac = createHmac('sha256', payload.salt);
     hmac.update(payload.password);
     payload.password = hmac.digest('hex');
-    return this.db.create(payload);
+    return super.create(payload);
   }
-  async login({ name, email, password }) {
+  async verify({ name, email, password }) {
     const res = await this.find(email ? { email } : { name });
     if (!res.length) {
       this.ctx.throw(email ? '邮箱未注册!' : '用户名未注册!');

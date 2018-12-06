@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import nprogress from "nprogress";
+import isEmpty from "lodash-es/isEmpty";
 import routes from "./routes";
 import store from "@/store";
 import * as types from "@/store/types";
@@ -18,7 +19,7 @@ router.beforeEach(async function(to, from, next) {
   const user = store.state.user;
   if (to.meta.auth) {
     if (user.isLogin) {
-      if (!user.info) await store.dispatch(types.USER_INFO);
+      if (isEmpty(user.info)) await store.dispatch(types.USER_INFO);
       next();
     } else {
       next("/login");

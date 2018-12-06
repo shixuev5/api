@@ -6,18 +6,6 @@ export default class Base {
     this.module = module;
   }
 
-  paging({ page = 0, per_page = 10, sort = 'createdAt', order = "desc", ...conditions }) {
-    return this.fetch.get(this.module, {
-      params: {
-        page,
-        per_page,
-        sort,
-        order,
-        ...conditions,
-      }
-    });
-  }
-
   find(payload) {
     return this.fetch.get(this.module, {
       params: payload

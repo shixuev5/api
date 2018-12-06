@@ -5,7 +5,7 @@ import * as types from "../types";
 export default {
   state: {
     isLogin: verifyJwt(),
-    info: null
+    info: {}
   },
   getters: {},
   mutations: {
@@ -26,8 +26,8 @@ export default {
       commit(types.SET_USER_LOGIN_STATUS, true);
     },
     async [types.USER_EXSIT](_, payload) {
-      const { count } = await user.count(payload);
-      return Boolean(count);
+      const response = await user.find(payload);
+      return Boolean(response.length);
     },
     [types.USER_CREATE](_, payload) {
       return user.create(payload);

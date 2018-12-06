@@ -5,17 +5,19 @@ export default class GroupService extends BaseService {
     super(ctx, 'Group');
   }
   /* 我的群组 */
-  owner() {
+  owner(args) {
     return this.db.find({
       'members._id': this.ctx.state.user._id,
+      ...args,
     });
   }
   /* 探索群组 */
-  explore() {
+  explore(args) {
     return this.db.find({
       permission: {
         $in: ['shared', 'public'],
       },
+      ...args,
     });
   }
   /* 统计群组包含的项目数 */

@@ -1,3 +1,4 @@
+import { uniqBy } from 'lodash';
 import BaseService from './base';
 
 export default class ProjectService extends BaseService {
@@ -5,33 +6,36 @@ export default class ProjectService extends BaseService {
     super(ctx, 'Project');
   }
   /* 我的项目 */
-  async owner() {
-    const groupIds = await this.service.group.owner().select('_id');
+  async owner(args) {
+    const groupIds = await this.service.group.owner(args).select('_id');
     // 查找从我的群组继承权限的项目
     const inheritProjects = await this.db.find({
       group_id: {
         $in: groupIds,
       },
+      ...args,
     });
     // 查找项目成员中包含我的项目
     const ownerProjects = await this.db.find({
       'members._id': this.ctx.state.user._id,
     });
     // 对项目列表去重
-    return inheritProjects.concat(ownerProjects);
+    return uniqBy(inheritProjects.concat(ownerProjects), '_id');
   }
   /* 关注项目 */
-  star() {
+  star(args) {
     return this.db.find({
       'stars._id': this.ctx.state.user._id,
+      ...args,
     });
   }
   /* 探索项目 */
-  explore() {
+  explore(args) {
     return this.db.find({
       permission: {
         $in: ['shared', 'public'],
       },
+      ...args,
     });
   }
   /* 查找项目包含的接口数 */
@@ -39,7 +43,7 @@ export default class ProjectService extends BaseService {
     const counts = await Promise.all(
       projects.map((project) =>
         this.service.interface.count({
-          interface_id: project._id,
+          project_id: project._id,
         }),
       ),
     );

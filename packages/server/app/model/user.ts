@@ -10,7 +10,6 @@ export default (app: Application) => {
       salt: { type: String, required: true },
       avatar: { type: String },
       guide: { type: Boolean, default: true },
-      star: { type: [Object] },
       role: {
         type: String,
         enum: ['fe', 'be', 'qa', 'other'],
