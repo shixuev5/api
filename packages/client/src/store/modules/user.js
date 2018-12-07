@@ -25,8 +25,8 @@ export default {
         : sessionStorage.setItem("api-token", token);
       commit(types.SET_USER_LOGIN_STATUS, true);
     },
-    async [types.USER_EXSIT](_, payload) {
-      const response = await user.find(payload);
+    async [types.USER_CHECK](_, payload) {
+      const response = await user.check(payload);
       return Boolean(response.length);
     },
     [types.USER_CREATE](_, payload) {

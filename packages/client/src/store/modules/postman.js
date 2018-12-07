@@ -53,7 +53,7 @@ export default {
       try {
         response = await axios({
           url: api.path,
-          method: api.method
+          method: api.method,
         });
       } catch (error) {
         response = error;

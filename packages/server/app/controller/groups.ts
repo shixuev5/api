@@ -1,11 +1,11 @@
 import { Controller } from 'egg';
 
 export default class GroupsController extends Controller {
-  /* 根据 type 显示分类列表 */
+  /* 根据 tab 显示分类列表 */
   async index() {
     const { ctx, service } = this;
-    const { type, ...args } = ctx.query;
-    const groups = await service.group[type ? type : 'find'](args);
+    const { tab, ...args } = ctx.query;
+    const groups = await service.group[tab ? tab : 'find'](args);
     const res = await service.group.countProject(groups);
     ctx.helper.success(res);
   }

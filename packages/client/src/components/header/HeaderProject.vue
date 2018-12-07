@@ -7,14 +7,14 @@
         </a-list-item>
         <a-list-item>
           <router-link
-            :to="{ path: '/projects', query: { type: 'star' } }"
+            :to="{ path: '/projects', query: { tab: 'star' } }"
             tag="span"
             >关注项目</router-link
           >
         </a-list-item>
         <a-list-item>
           <router-link
-            :to="{ path: '/projects', query: { type: 'explore' } }"
+            :to="{ path: '/projects', query: { tab: 'explore' } }"
             tag="span"
             >探索项目</router-link
           >

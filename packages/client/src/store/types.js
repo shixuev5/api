@@ -4,7 +4,7 @@ export const SET_USER_INFO = "SET_USER_INFO";
 
 /* user action */
 export const USER_LOGIN = "USER_LOGIN";
-export const USER_EXSIT = "USER_EXSIT";
+export const USER_CHECK = "USER_CHECK";
 export const USER_CREATE = "USER_CREATE";
 export const USER_INFO = "USER_INFO";
 export const USER_UPDATE = "USER_UPDATE";
@@ -25,25 +25,18 @@ export const POSTMAN_SEND = "POSTMAN_SEND";
 
 /* group mutation */
 export const SET_GROUP_INFO = "SET_GROUP_INFO";
-export const SET_GROUP_OWNER = "SET_GROUP_OWNER";
-export const SET_GROUP_EXPLORE = "SET_GROUP_EXPLORE";
 
 /* group action */
 export const GROUP_CREATE = "GROUP_CREATE";
 export const GROUP_INFO = "GROUP_INFO";
-export const GROUP_LIST = "GROUP_LIST";
 export const GROUP_UPDATE = "GROUP_UPDATE";
 export const GROUP_DELETE = "GROUP_DELETE";
 
 /* project mutation */
 export const SET_PROJECT_INFO = "SET_PROJECT_INFO";
-export const SET_PROJECT_OWNER = "SET_PROJECT_OWNER";
-export const SET_PROJECT_STAR = "SET_PROJECT_STAR";
-export const SET_PROJECT_EXPLORE = "SET_PROJECT_EXPLORE";
 
 /* project action */
 export const PROJECT_CREATE = "PROJECT_CREATE";
 export const PROJECT_INFO = "PROJECT_INFO";
-export const PROJECT_LIST = "PROJECT_LIST";
 export const PROJECT_UPDATE = "PROJECT_UPDATE";
 export const PROJECT_DELETE = "PROJECT_DELETE";

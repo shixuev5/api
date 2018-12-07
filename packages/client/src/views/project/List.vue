@@ -1,33 +1,33 @@
 <template>
-  <a-tabs :activeKey="activeKey" @change="onChange">
+  <a-tabs :activeKey="activeKey" @change="onTabChange">
     <a-tab-pane tab="我的项目" key="owner">
-      <a-tabs>
-        <a-tab-pane tab="全部" key="all">
-          <List :value="filter(project.owner)" type="project"></List>
+      <a-tabs defaultActiveKey="" @change="onTypeChange">
+        <a-tab-pane tab="全部" key="">
+          <List :value="listValue" type="project"></List>
         </a-tab-pane>
         <a-tab-pane tab="个人" key="person">
-          <List :value="filter(ownerPerson)" type="project"></List>
+          <List :value="listValue" type="project"></List>
         </a-tab-pane>
       </a-tabs>
     </a-tab-pane>
     <a-tab-pane tab="关注项目" key="star">
-      <List :value="filter(project.star)" type="project"></List>
+      <List :value="listValue" type="project"></List>
     </a-tab-pane>
     <a-tab-pane tab="探索项目" key="explore">
-      <a-tabs>
+      <a-tabs defaultActiveKey="" @change="onTypeChange">
         <a-tab-pane tab="趋势" key="trend">
-          <List :value="filter(exploreTrend)" type="project"></List>
+          <List :value="listValue" type="project"></List>
         </a-tab-pane>
         <a-tab-pane tab="关注" key="star">
-          <List :value="filter(exploreStar)" type="project"></List>
+          <List :value="listValue" type="project"></List>
         </a-tab-pane>
-        <a-tab-pane tab="全部" key="all">
-          <List :value="filter(project.explore)" type="project"></List>
+        <a-tab-pane tab="全部" key="">
+          <List :value="listValue" type="project"></List>
         </a-tab-pane>
         <span slot="tabBarExtraContent">
           <a-select v-model="condition.permission" style="width: 120px">
             <a-select-opt-group label="权限">
-              <a-select-option value="all">全部</a-select-option>
+              <a-select-option value="">全部</a-select-option>
               <a-select-option value="private">私有</a-select-option>
               <a-select-option value="shared">内部</a-select-option>
               <a-select-option value="public">公开</a-select-option>
@@ -46,8 +46,8 @@
         v-model="condition.archive"
         style="width: 160px; marginLeft: 8px;"
       >
+        <a-select-option value="">显示归档项目</a-select-option>
         <a-select-option value="false">隐藏归档项目</a-select-option>
-        <a-select-option value="true">显示归档项目</a-select-option>
         <a-select-option value="only">只显示归档项目</a-select-option>
       </a-select>
       <a-select v-model="condition.sort" style="width: 120px; marginLeft: 8px;">
@@ -64,67 +64,36 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import project from "@/api/project";
 import Types from "vue-types";
 import Fuse from "fuse.js";
-import * as types from "@/store/types";
 
 function initCondition() {
   return {
     name: "",
     sort: "updatedAt|desc",
-    archive: "true",
-    permission: "all"
+    archive: "",
+    permission: ""
   };
 }
 
 export default {
   props: {
-    type: Types.string.def("owner")
+    tab: Types.string.def("owner"),
+    type: Types.string.def("")
   },
   data() {
     return {
+      projectList: [],
       condition: initCondition()
     };
   },
   computed: {
-    ...mapState(["project"]),
     activeKey() {
-      return this.type ? this.type : "owner";
+      return this.tab ? this.tab : "owner";
     },
-    ownerPerson() {
-      return this.project.owner.filter(project =>
-        project.members.some(
-          member =>
-            member._id === this.$user.info._id && member.role === "owner"
-        )
-      );
-    },
-    // TODO: 等待服务端实现项目活动统计
-    exploreTrend() {
-      return this.project.explore;
-    },
-    exploreStar() {
-      return this.project.explore
-        .slice()
-        .sort((a, b) => a.stars.length - b.stars.length);
-    }
-  },
-  watch: {
-    type: {
-      handler(val) {
-        if (!this.cache) this.cache = [];
-        if (!this.cache.includes(val)) {
-          this.cache.push(val);
-          this.$store.dispatch(types.PROJECT_LIST, { type: val });
-        }
-      },
-      immediate: true
-    }
-  },
-  methods: {
-    filter(list) {
-      let result = list.slice();
+    listValue() {
+      let result = this.projectList;
 
       const [key, sortord] = this.condition.sort.split("|");
       const sortFn = (a, b) =>
@@ -136,7 +105,7 @@ export default {
         });
         result = fuse.search(this.condition.name);
       }
-      if (this.condition.permission !== "all") {
+      if (this.condition.permission !== "") {
         result = result.filter(
           item => item.permission === this.condition.permission
         );
@@ -148,10 +117,30 @@ export default {
       }
 
       return result.sort(sortFn);
+    }
+  },
+  watch: {
+    tab: {
+      async handler(val) {
+        this.projectList = await project.find({ tab: val });
+      },
+      immediate: true
     },
-    onChange(key) {
+    async type(val) {
+      this.projectList = await project.find({ tab: this.tab, type: val });
+    }
+  },
+  methods: {
+    onTabChange(key) {
       this.condition = initCondition();
-      this.$router.push({ path: "/projects", query: { type: key } });
+      this.$router.push({ path: "/projects", query: { tab: key } });
+    },
+    onTypeChange(key) {
+      this.condition.permission = "";
+      this.$router.push({
+        path: "/projects",
+        query: { tab: this.tab, type: key }
+      });
     }
   }
 };

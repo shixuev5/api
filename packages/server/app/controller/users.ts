@@ -4,12 +4,13 @@ export default class UsersController extends Controller {
   /* 条件过滤用户 */
   async index() {
     const { ctx, service } = this;
-    let res;
-    if (this.ctx.state.user) {
-      res = await service.user.find(ctx.query).select('-password -salt');
-    } else {
-      res = await service.user.find(ctx.query).select('_id');
-    }
+    const res = await service.user.find(ctx.query).select('-password -salt');
+    ctx.helper.success(res);
+  }
+  /* 检查用户名、邮箱是否已注册 */
+  async check() {
+    const { ctx, service } = this;
+    const res = await service.user.find(ctx.query).select('_id');
     ctx.helper.success(res);
   }
   /* 用户注册 */

@@ -26,10 +26,9 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import Types from "vue-types";
 import Fuse from "fuse.js";
-import * as types from "@/store/types";
+import group from "@/api/group";
 
 function initCondition() {
   return {
@@ -40,40 +39,36 @@ function initCondition() {
 
 export default {
   props: {
-    type: Types.string.def("owner")
+    tab: Types.string.def("owner")
   },
   data() {
     return {
+      groupList: [],
       condition: initCondition()
     };
   },
   computed: {
-    ...mapState(["group"]),
     activeKey() {
-      return this.type ? this.type : "owner";
+      return this.tab ? this.tab : "owner";
     },
     listValue() {
       const [key, sortord] = this.condition.sort.split("|");
       const sortFn = (a, b) =>
         sortord === "desc" ? b[key] - a[key] : a[key] - b[key];
       if (this.condition.name) {
-        const fuse = new Fuse(this.group[this.activeKey], {
+        const fuse = new Fuse(this.groupList, {
           keys: ["name", "desc"]
         });
         return fuse.search(this.condition.name).sort(sortFn);
       } else {
-        return this.group[this.activeKey].slice().sort(sortFn);
+        return this.groupList.slice().sort(sortFn);
       }
     }
   },
   watch: {
-    type: {
-      handler(val) {
-        if (!this.cache) this.cache = [];
-        if (!this.cache.includes(val)) {
-          this.cache.push(val);
-          this.$store.dispatch(types.GROUP_LIST, { type: val });
-        }
+    tab: {
+      async handler(val) {
+        this.groupList = await group.find({ tab: val });
       },
       immediate: true
     }
@@ -81,7 +76,7 @@ export default {
   methods: {
     onChange(key) {
       this.condition = initCondition();
-      this.$router.push({ path: "/groups", query: { type: key } });
+      this.$router.push({ path: "/groups", query: { tab: key } });
     }
   }
 };

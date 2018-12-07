@@ -164,7 +164,7 @@ export default {
   },
   data() {
     return {
-      path: "",
+      path: this.value.path,
       newTabIndex: 0,
       columns,
       dataSource,

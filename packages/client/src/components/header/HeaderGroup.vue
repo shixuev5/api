@@ -7,7 +7,7 @@
         </a-list-item>
         <a-list-item>
           <router-link
-            :to="{ path: '/groups', query: { type: 'explore' } }"
+            :to="{ path: '/groups', query: { tab: 'explore' } }"
             tag="span"
             >探索群组</router-link
           >

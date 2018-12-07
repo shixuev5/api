@@ -1,11 +1,11 @@
 import { Controller } from 'egg';
 
 export default class ProjectsController extends Controller {
-   /* 根据 type 显示分类列表 */
+   /* 根据 tab 显示分类列表 */
   async index() {
     const { ctx, service } = this;
-    const { type, ...args } = ctx.query;
-    const projects = await service.project[type ? type : 'find'](args);
+    const { tab, ...args } = ctx.query;
+    const projects = await service.project[tab ? tab : 'find'](args);
     const res = await service.project.countInterface(projects);
     ctx.helper.success(res);
   }

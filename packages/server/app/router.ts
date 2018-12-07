@@ -14,6 +14,11 @@ const routes = {
       action: 'create',
     },
     {
+      path: 'check',
+      method: 'get',
+      action: 'check',
+    },
+    {
       path: 'session',
       method: 'post',
       action: 'createToken',

@@ -11,6 +11,7 @@
       <a-form-item
         fieldDecoratorId="name"
         :fieldDecoratorOptions="{
+          validateFirst: true,
           rules: [
             { required: true, whitespace: true, message: '请输入您的用户名!' },
             {
@@ -28,6 +29,7 @@
       <a-form-item
         fieldDecoratorId="email"
         :fieldDecoratorOptions="{
+          validateFirst: true,
           rules: [
             { required: true, message: '请输入您的邮箱!' },
             { type: 'email', message: '请输入有效的邮箱地址!' },
@@ -107,11 +109,12 @@ export default {
     };
   },
   methods: {
-    exsitCheck: debounce(async function(rule, value, callback) {
-      const isExist = await this.$store.dispatch(types.USER_EXSIT, {
-        [rule.field]: value
-      });
-      isExist ? callback(false) : callback();
+    exsitCheck: debounce(function(rule, value, callback) {
+      this.$store
+        .dispatch(types.USER_CHECK, {
+          [rule.field]: value
+        })
+        .then(isExist => (isExist ? callback(false) : callback()));
     }, 300),
     handleConfirmBlur(e) {
       const value = e.target.value;

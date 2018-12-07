@@ -4,6 +4,10 @@ import { db, secret } from '../../../config.json';
 function ignore(ctx: Context): boolean {
   const routes = [
     {
+      method: 'GET',
+      path: /users\/check$/,
+    },
+    {
       method: 'POST',
       path: /users$/,
     },
