@@ -8,6 +8,7 @@ import Types from "vue-types";
 
 export default {
   inheritAttrs: false,
+  // refs: https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditorconstructionoptions.html
   props: {
     language: Types.oneOf([
       "javascript",
@@ -15,10 +16,12 @@ export default {
       "markdown",
       "typescript",
       "yaml"
-    ]).def("javascript"),
+    ]).def("json"),
     value: Types.string.def(""),
     focus: Types.bool.def(false),
-    option: Types.object.def({})
+    option: Types.object.def({}),
+    readOnly: Types.bool.def(false),
+    theme: Types.string.def("vs")
   },
   watch: {
     value(val) {
@@ -31,15 +34,33 @@ export default {
       deep: true
     }
   },
+  methods: {
+    setJsonDefault() {
+      monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+        allowComments: true,
+        validate: true
+      });
+    }
+  },
   mounted() {
+    this.setJsonDefault();
     const option = Object.assign(
       {
         value: this.value,
         language: this.language,
+        autoIndent: true,
+        formatOnPaste: true,
+        formatOnType: true,
         minimap: {
-          enable: false
+          enabled: false
         },
-        lineNumbers: "off"
+        scrollbar: {
+          horizontal: "hidden"
+        },
+        tabSize: 2,
+        fontSize: 14,
+        readOnly: this.readOnly,
+        theme: this.theme
       },
       this.option
     );

@@ -1,6 +1,5 @@
 import * as types from "../types";
-import axios from "axios";
-import { createInterface } from "@/utils/postman";
+import { createInterface, sendRequest } from "@/utils/postman";
 
 const api = createInterface();
 
@@ -49,24 +48,8 @@ export default {
     },
     async [types.POSTMAN_SEND]({ dispatch, state }, payload) {
       const api = state.list.find(item => item.key === payload);
-      let response;
-      try {
-        response = await axios({
-          url: api.path,
-          method: api.method,
-        });
-      } catch (error) {
-        response = error;
-      }
-      // dispatch(types.POSTMAN_UPDATE, {
-      //   type: "update",
-      //   payload: {
-      //     key: payload,
-      //     response: {
-
-      //     }
-      //   }
-      // });
+      const response = await sendRequest(api);
+      console.log(response);
     }
   }
 };
