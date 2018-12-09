@@ -27,3 +27,6 @@ yarn-error.log*
 server/**/*.js
 server/**/*.map
 !.autod.conf.js
+
+# extension
+*.pem
