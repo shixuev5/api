@@ -27,7 +27,7 @@ export default {
     },
     async [types.USER_CHECK](_, payload) {
       const response = await user.check(payload);
-      return Boolean(response.length);
+      return Boolean(response);
     },
     [types.USER_CREATE](_, payload) {
       return user.create(payload);

@@ -12,8 +12,8 @@ export default class Base {
     });
   }
 
-  findById(_id, payload = {}) {
-    return this.fetch.get(`${this.module}/${_id}`, {
+  findById(id, payload = {}) {
+    return this.fetch.get(`${this.module}/${id}`, {
       params: payload
     });
   }
@@ -22,11 +22,11 @@ export default class Base {
     return this.fetch.post(this.module, payload);
   }
 
-  update(_id, payload) {
-    return this.fetch.patch(`${this.module}/${_id}`, payload);
+  update(id, payload) {
+    return this.fetch.put(`${this.module}/${id}`, payload);
   }
 
-  remove(_id) {
-    return this.fetch.delete(`${this.module}/${_id}`);
+  remove(id) {
+    return this.fetch.delete(`${this.module}/${id}`);
   }
 }

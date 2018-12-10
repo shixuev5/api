@@ -39,21 +39,34 @@ export default class GroupsController extends Controller {
     const { _id } = await ctx.model.Group.remove(ctx.params.id);
     ctx.helper.success({ _id });
   }
+  /* 获取可添加的用户列表 */
+  async groupUsers() {
+    const { ctx, service } = this;
+    const users = await service.group.groupUsers(ctx.params.id, ctx.query);
+    ctx.helper.success(users);
+  }
   /* 添加群组成员 */
   async createMember() {
     const { ctx, service } = this;
+    const groupRole = await service.group.getGroupRole(ctx.params.id);
+    if (!Array.isArray(ctx.request.body)) {
+      ctx.request.body = [ctx.request.body];
+    }
+    ctx.request.body.forEach((item) => service.group.checkPermission(groupRole, item.role));
     const res = await service.group.createMember(ctx.params.id, ctx.request.body);
     ctx.helper.success(res);
   }
   /* 更新群组成员 */
   async updateMember() {
     const { ctx, service } = this;
+    service.group.checkPermission(await service.group.getGroupRole(ctx.params.id), ctx.request.body.role);
     await service.group.updateMember(ctx.params.id, ctx.params.member_id, ctx.request.body);
     ctx.helper.success(ctx.request.body);
   }
   /* 删除群组成员 */
   async removeMember() {
     const { ctx, service } = this;
+    service.group.checkPermission(await service.group.getGroupRole(ctx.params.id), ctx.request.body.role);
     const { _id } = await service.group.removeMember(ctx.params.id, ctx.params.member_id);
     ctx.helper.success({ _id });
   }

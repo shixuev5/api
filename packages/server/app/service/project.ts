@@ -4,6 +4,16 @@ export default class ProjectService extends BaseService {
   constructor(ctx) {
     super(ctx, 'Project');
   }
+  /* 创建项目 */
+  create(payload) {
+    return this.db.create({
+      members: {
+        _id: this.ctx.state.user._id,
+        role: 'owner',
+      },
+      ...payload,
+    });
+  }
   /* 我的项目 */
   async owner({ type }) {
     let personExtra = {};
@@ -48,6 +58,7 @@ export default class ProjectService extends BaseService {
     // if (type === 'trend') {
 
     // }
+
     if (type === 'star') {
       projects.sort((a, b) => a.stars.length - b.stars.length);
     }
@@ -67,33 +78,46 @@ export default class ProjectService extends BaseService {
       Object.assign({ interface_num: counts[index] }, project.toJSON()),
     );
   }
+  /* 获取可添加的用户列表 */
+  async projectUsers(_id, { q, limit = 10 }) {
+    // 通过项目查找群组id
+    const project = await this.db.findOne({ _id });
+    const group = await this.app.model.Group.findOne({ _id: project.group_id });
+
+    const memberIds = group.members
+      .map((item) => item._id)
+      .concat(project.members.map((item) => item._id));
+
+    return this.app.model.User.find({
+      _id: {
+        $nin: memberIds,
+      },
+      name: { $regex: new RegExp(q, 'i') },
+    }).limit(limit).select('-password -salt');
+  }
   /* 添加项目成员 */
-  createMember(_id, payload) {
+  createMember(_id: string, payload: Array<object>) {
     return this.db.update({ _id }, {
       $push: {
-        members: payload,
+        members: {
+          $each: payload,
+        },
       },
     });
   }
   /* 更新项目成员角色 */
-  async updateMember(_id, memberId, payload) {
-    this.checkPermission(this.getCurrentRole(_id), payload.role);
+  updateMember(_id, memberId, { role }) {
     return this.db.update({
       _id,
       'members._id': memberId,
     }, {
       $set: {
-        'members.$.role': payload.role,
+        'members.$.role': role,
       },
     });
   }
   /* 删除项目成员 */
-  async removeMember(_id, memberId) {
-    const group = await this.db.findOne({
-      _id,
-      'members._id': memberId,
-    });
-    this.checkPermission(this.getCurrentRole(_id), group.members[0].role);
+  removeMember(_id, memberId) {
     return this.db.update({ _id }, {
       $pull: {
         members: {
@@ -102,30 +126,11 @@ export default class ProjectService extends BaseService {
       },
     });
   }
-  /* 创建项目 */
-  create(payload) {
-    return this.db.create({
-      members: {
-        _id: this.ctx.state.user._id,
-        role: 'owner',
-      },
-      ...payload,
-    });
-  }
   /* 获取当前用户的项目成员角色 */
-  async getCurrentRole(_id) {
-    const project = await this.db.findOne({
-      _id,
-      'members._id': this.ctx.state.user._id,
-    });
-    if (project) {
-      return project.members[0].role;
-    }
-    const group = await this.db.findOne({
-      _id: project.group_id,
-      'members._id': this.ctx.state.user._id,
-    });
-    return group.members[0].role;
+  async getProjectRole(_id) {
+    const project = await this.db.findOne({ _id });
+    const member = project.members.find((item) => item._id === this.ctx.state.user._id);
+    return member ? member.role : this.service.group.getGroupRole(project.group_id);
   }
   /* 操作权限检查 */
   checkPermission(currentRole, updateRole) {

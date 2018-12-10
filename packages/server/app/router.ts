@@ -66,6 +66,11 @@ const routes = {
       action: 'remove',
     },
     {
+      path: ':id/users',
+      method: 'get',
+      action: 'groupUsers',
+    },
+    {
       path: ':id/members',
       method: 'post',
       action: 'createMember',
@@ -121,6 +126,11 @@ const routes = {
       path: ':id/envs/:env_id',
       method: 'delete',
       action: 'removeEnv',
+    },
+    {
+      path: ':id/users',
+      method: 'get',
+      action: 'projectUsers',
     },
     {
       path: ':id/members',

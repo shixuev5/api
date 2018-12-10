@@ -1,7 +1,7 @@
 <template>
   <a-card :bordered="false" style="width: 260px">
-    <div class="title">
-      <span>项目名称</span>
+    <div class="header">
+      <span class="title">项目名称</span>
       <div>
         <a-tooltip title="新建接口" placement="top">
           <a-icon type="file-add" />
@@ -103,14 +103,11 @@ export default {
     padding: 0;
   }
 
-  .title {
+  .header {
     display: flex;
     justify-content: space-between;
     padding: 8px;
-    > span {
-      border-left: 2px solid #1890ff;
-      text-indent: 8px;
-    }
+
     .anticon {
       margin: 0 4px;
       opacity: 0;
@@ -122,7 +119,7 @@ export default {
   }
 
   &:hover {
-    .title .anticon {
+    .header .anticon {
       opacity: 1;
     }
   }

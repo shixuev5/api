@@ -28,7 +28,7 @@
           <a-select-option value="createdAt|desc">最近创建</a-select-option>
           <a-select-option value="createdAt|asc">最早创建</a-select-option>
         </a-select>
-        <router-link :to="{ path: '/projects/new', query: { from: id } }">
+        <router-link :to="{ path: '/projects/new', query: { from: info.id } }">
           <a-button icon="plus" type="primary">新建项目</a-button>
         </router-link>
         <a-tooltip :title="showGrid ? '卡片展示' : '列表展示'" placement="top">
@@ -50,13 +50,7 @@
 </template>
 
 <script>
-import Types from "vue-types";
-import * as types from "@/store/types";
-
 export default {
-  props: {
-    id: Types.string.required
-  },
   data() {
     return {
       projects: [],
@@ -76,9 +70,6 @@ export default {
   methods: {
     onSearch() {},
     handleChange() {}
-  },
-  created() {
-    this.$store.dispatch(types.GROUP_INFO, this.id);
   }
 };
 </script>

@@ -18,10 +18,10 @@ importAll(require.context("./modules", false, /\.js$/));
 const store = new Vuex.Store({
   modules,
   plugins: [
-    // createPersistedState({
-    //   key: "api-cache",
-    //   storage: sessionStorage
-    // }),
+    createPersistedState({
+      key: "api-cache",
+      storage: sessionStorage
+    }),
     createPersistedState({
       key: "api-cache",
       paths: ['postman']

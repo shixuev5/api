@@ -34,32 +34,35 @@ export default class ProjectsController extends Controller {
     const { _id } = await ctx.model.Project.remove(ctx.params.id);
     ctx.helper.success({ _id });
   }
+  /* 获取可添加的用户列表 */
+  async projectUsers() {
+    const { ctx, service } = this;
+    const users = await service.project.projectUsers(ctx.params.id, ctx.query);
+    ctx.helper.success(users);
+  }
   /* 添加项目成员 */
   async createMember() {
     const { ctx, service } = this;
-    const res = await service.project.createMember(
-      ctx.params.id,
-      ctx.request.body,
-    );
+    const groupRole = await service.project.getProjectRole(ctx.params.id);
+    if (!Array.isArray(ctx.request.body)) {
+      ctx.request.body = [ctx.request.body];
+    }
+    ctx.request.body.forEach((item) => service.project.checkPermission(groupRole, item.role));
+    const res = await service.project.createMember(ctx.params.id, ctx.request.body);
     ctx.helper.success(res);
   }
   /* 更新项目成员 */
   async updateMember() {
     const { ctx, service } = this;
-    await service.project.updateMember(
-      ctx.params.id,
-      ctx.params.member_id,
-      ctx.request.body,
-    );
+    service.project.checkPermission(await service.project.getProjectRole(ctx.params.id), ctx.request.body.role);
+    await service.project.updateMember(ctx.params.id, ctx.params.member_id, ctx.request.body);
     ctx.helper.success(ctx.request.body);
   }
   /* 删除项目成员 */
   async removeMember() {
     const { ctx, service } = this;
-    const { _id } = await service.project.removeMember(
-      ctx.params.id,
-      ctx.params.member_id,
-    );
+    service.project.checkPermission(await service.project.getProjectRole(ctx.params.id), ctx.request.body.role);
+    const { _id } = await service.project.removeMember(ctx.params.id, ctx.params.member_id);
     ctx.helper.success({ _id });
   }
   async createEnv() {

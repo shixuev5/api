@@ -3,21 +3,14 @@ import { Controller } from 'egg';
 export default class UsersController extends Controller {
   /* 条件过滤用户 */
   async index() {
-    const { ctx, service } = this;
-    let res;
-    if (ctx.query.group) {
-      res = await service.user.groupUsers(ctx.query.group);
-    } else if (ctx.query.project) {
-      res = await service.user.projectUsers(ctx.query.project);
-    } else {
-      res = await ctx.model.User.find(ctx.query).select('-password -salt');
-    }
+    const { ctx } = this;
+    const res = await ctx.model.User.find(ctx.query).select('-password -salt');
     ctx.helper.success(res);
   }
   /* 检查用户名、邮箱是否已注册 */
   async check() {
     const { ctx } = this;
-    const res = await ctx.model.User.find(ctx.query).select('_id');
+    const res = await ctx.model.User.findOne(ctx.query).select('_id');
     ctx.helper.success(res);
   }
   /* 用户注册 */
@@ -45,7 +38,7 @@ export default class UsersController extends Controller {
   /* 局部更新用户信息 */
   async update() {
     const { ctx } = this;
-    await ctx.model.User.update(ctx.params.id, ctx.request.body);
+    await ctx.model.User.update({ _id: ctx.params.id }, ctx.request.body);
     ctx.helper.success(ctx.request.body);
   }
   /* 删除用户 */

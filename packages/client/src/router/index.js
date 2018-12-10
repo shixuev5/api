@@ -11,16 +11,15 @@ Vue.use(Router);
 
 const router = new Router({
   routes: resolveRoutes(routes),
-  strict: process.env.NODE_ENV !== 'production'
+  strict: process.env.NODE_ENV !== "production"
 });
 
-router.beforeEach(async function(to, from, next) {
-  if(to.path !== from.path) nprogress.start();
+router.beforeEach(function(to, from, next) {
+  if (to.path !== from.path) nprogress.start();
   const user = store.state.user;
   if (to.meta.auth) {
     if (user.isLogin) {
-      if (isEmpty(user.info)) await store.dispatch(types.USER_INFO);
-      next();
+      check(to).then(() => next());
     } else {
       next("/login");
     }
@@ -32,5 +31,22 @@ router.beforeEach(async function(to, from, next) {
 router.afterEach(function() {
   nprogress.done();
 });
+
+function check(to) {
+  if (isEmpty(store.state.user.info)) {
+    return store.dispatch(types.USER_INFO);
+  }
+  if (to.params.id && /groups/.test(to.path) && isEmpty(store.state.group.info)) {
+    return store.dispatch(types.GROUP_INFO);
+  }
+  if (
+    to.params.id &&
+    /projects/.test(to.path) &&
+    isEmpty(store.state.project.info)
+  ) {
+    return store.dispatch(types.PROJECT_INFO);
+  }
+  return Promise.resolve();
+}
 
 export default router;

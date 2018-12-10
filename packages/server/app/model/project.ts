@@ -4,9 +4,9 @@ export default (app: Application) => {
   const mongoose = app.mongoose;
   const envSchema = new mongoose.Schema(
     {
-      name: { type: String },
-      key: { type: String, required: true },
+      name: { type: String, required: true },
       value: { type: String, required: true },
+      desc: String,
       global: { type: Boolean, default: false },
     },
     {
