@@ -4,13 +4,20 @@ export default class UsersController extends Controller {
   /* 条件过滤用户 */
   async index() {
     const { ctx, service } = this;
-    const res = await service.user.find(ctx.query).select('-password -salt');
+    let res;
+    if (ctx.query.group) {
+      res = await service.user.groupUsers(ctx.query.group);
+    } else if (ctx.query.project) {
+      res = await service.user.projectUsers(ctx.query.project);
+    } else {
+      res = await ctx.model.User.find(ctx.query).select('-password -salt');
+    }
     ctx.helper.success(res);
   }
   /* 检查用户名、邮箱是否已注册 */
   async check() {
-    const { ctx, service } = this;
-    const res = await service.user.find(ctx.query).select('_id');
+    const { ctx } = this;
+    const res = await ctx.model.User.find(ctx.query).select('_id');
     ctx.helper.success(res);
   }
   /* 用户注册 */
@@ -30,22 +37,21 @@ export default class UsersController extends Controller {
   }
   /* 查询单个用户信息 */
   async show() {
-    const { ctx, service } = this;
-    const res = await service.user
-      .findById(ctx.params.id)
+    const { ctx } = this;
+    const res = await ctx.model.User.findById(ctx.params.id)
       .select('-password -salt');
     ctx.helper.success(res);
   }
   /* 局部更新用户信息 */
   async update() {
-    const { ctx, service } = this;
-    await service.user.update(ctx.params.id, ctx.request.body);
+    const { ctx } = this;
+    await ctx.model.User.update(ctx.params.id, ctx.request.body);
     ctx.helper.success(ctx.request.body);
   }
   /* 删除用户 */
   async remove() {
-    const { ctx, service } = this;
-    const { _id } = await service.user.remove(ctx.params.id);
+    const { ctx } = this;
+    const { _id } = await ctx.model.User.remove(ctx.params.id);
     ctx.helper.success({ _id });
   }
 }

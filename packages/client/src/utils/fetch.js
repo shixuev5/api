@@ -1,5 +1,6 @@
 import axios from "axios";
 import nprogress from "nprogress";
+import qs from 'qs';
 import store from "@/store";
 import router from "@/router";
 import * as types from "@/store/types";
@@ -8,7 +9,10 @@ import { readJwt } from "@/utils/auth";
 
 const fetch = axios.create({
   baseURL: "/api/v1",
-  timeout: 0
+  timeout: 0,
+  paramsSerializer(params) {
+    return qs.stringify(params, {arrayFormat: 'repeat'})
+  },
 });
 
 fetch.interceptors.request.use(

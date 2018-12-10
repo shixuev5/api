@@ -29,12 +29,13 @@
           showSearch
           allowClear
           optionFilterProp="children"
-          :disabled="from"
+          :disabled="Boolean(from)"
           :filterOption="filterOption"
         >
           <a-select-option
             v-for="group in groups"
             :key="group._id"
+            :title="group.name"
             :value="group._id"
             >{{ group.name }}</a-select-option
           >
@@ -92,6 +93,7 @@
 
 <script>
 import * as types from "@/store/types";
+import group from "@/api/group";
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -125,8 +127,8 @@ export default {
     }
   },
   async created() {
-    this.groups = await this.$store.dispatch(types.GROUP_LIST, {
-      type: "owner"
+    this.groups = await group.find({
+      tab: "permission"
     });
   }
 };

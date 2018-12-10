@@ -1,11 +1,16 @@
 import { Controller } from 'egg';
 
 export default class ProjectsController extends Controller {
-   /* 根据 tab 显示分类列表 */
+  /* 根据 tab 显示分类列表 */
   async index() {
     const { ctx, service } = this;
     const { tab, ...args } = ctx.query;
-    const projects = await service.project[tab ? tab : 'find'](args);
+    let projects;
+    if (tab) {
+      projects = await service.project[tab](args);
+    } else {
+      projects = await ctx.app.model.Project.find(...args);
+    }
     const res = await service.project.countInterface(projects);
     ctx.helper.success(res);
   }
@@ -15,29 +20,47 @@ export default class ProjectsController extends Controller {
     ctx.helper.success(res);
   }
   async show() {
-    const { ctx, service } = this;
-    const res = await service.project
-      .findById(ctx.params.id);
+    const { ctx } = this;
+    const res = await ctx.model.Project.findById(ctx.params.id);
     ctx.helper.success(res);
   }
   async update() {
-    const { ctx, service } = this;
-    await service.project.update(ctx.params.id, ctx.request.body);
+    const { ctx } = this;
+    await ctx.model.Project.update(ctx.params.id, ctx.request.body);
     ctx.helper.success(ctx.request.body);
   }
   async remove() {
-    const { ctx, service } = this;
-    const { _id } = await service.project.remove(ctx.params.id);
+    const { ctx } = this;
+    const { _id } = await ctx.model.Project.remove(ctx.params.id);
     ctx.helper.success({ _id });
   }
+  /* 添加项目成员 */
   async createMember() {
-
+    const { ctx, service } = this;
+    const res = await service.project.createMember(
+      ctx.params.id,
+      ctx.request.body,
+    );
+    ctx.helper.success(res);
   }
+  /* 更新项目成员 */
   async updateMember() {
-
+    const { ctx, service } = this;
+    await service.project.updateMember(
+      ctx.params.id,
+      ctx.params.member_id,
+      ctx.request.body,
+    );
+    ctx.helper.success(ctx.request.body);
   }
+  /* 删除项目成员 */
   async removeMember() {
-
+    const { ctx, service } = this;
+    const { _id } = await service.project.removeMember(
+      ctx.params.id,
+      ctx.params.member_id,
+    );
+    ctx.helper.success({ _id });
   }
   async createEnv() {
 

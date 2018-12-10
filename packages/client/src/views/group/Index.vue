@@ -77,11 +77,8 @@ export default {
     onSearch() {},
     handleChange() {}
   },
-  async created() {
-    await this.$store.dispatch(types.GROUP_INFO, this.id);
-    this.projects = await this.$store.dispatch(types.PROJECT_LIST, {
-      group_id: this.id
-    });
+  created() {
+    this.$store.dispatch(types.GROUP_INFO, this.id);
   }
 };
 </script>

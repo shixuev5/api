@@ -51,21 +51,6 @@ const routes = {
       action: 'create',
     },
     {
-      path: 'members',
-      method: 'post',
-      action: 'createMember',
-    },
-    {
-      path: 'members',
-      method: 'put',
-      action: 'updateMember',
-    },
-    {
-      path: 'members',
-      method: 'delete',
-      action: 'removeMember',
-    },
-    {
       path: ':id',
       method: 'get',
       action: 'show',
@@ -79,6 +64,21 @@ const routes = {
       path: ':id',
       method: 'delete',
       action: 'remove',
+    },
+    {
+      path: ':id/members',
+      method: 'post',
+      action: 'createMember',
+    },
+    {
+      path: ':id/members/:member_id',
+      method: 'put',
+      action: 'updateMember',
+    },
+    {
+      path: ':id/members/:member_id',
+      method: 'delete',
+      action: 'removeMember',
     },
   ],
   projects: [
@@ -93,36 +93,6 @@ const routes = {
       action: 'create',
     },
     {
-      path: 'envs',
-      method: 'post',
-      action: 'createEnv',
-    },
-    {
-      path: 'envs',
-      method: 'put',
-      action: 'updateEnv',
-    },
-    {
-      path: 'envs',
-      method: 'delete',
-      action: 'removeEnv',
-    },
-    {
-      path: 'members',
-      method: 'post',
-      action: 'createMember',
-    },
-    {
-      path: 'members',
-      method: 'put',
-      action: 'updateMember',
-    },
-    {
-      path: 'members',
-      method: 'delete',
-      action: 'removeMember',
-    },
-    {
       path: ':id',
       method: 'get',
       action: 'show',
@@ -136,6 +106,36 @@ const routes = {
       path: ':id',
       method: 'delete',
       action: 'remove',
+    },
+    {
+      path: ':id/envs',
+      method: 'post',
+      action: 'createEnv',
+    },
+    {
+      path: ':id/envs/:env_id',
+      method: 'put',
+      action: 'updateEnv',
+    },
+    {
+      path: ':id/envs/:env_id',
+      method: 'delete',
+      action: 'removeEnv',
+    },
+    {
+      path: ':id/members',
+      method: 'post',
+      action: 'createMember',
+    },
+    {
+      path: ':id/members/:member_id',
+      method: 'put',
+      action: 'updateMember',
+    },
+    {
+      path: ':id/members/:member_id',
+      method: 'delete',
+      action: 'removeMember',
     },
   ],
   modules: [
