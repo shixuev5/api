@@ -51,6 +51,11 @@ const routes = {
       action: 'create',
     },
     {
+      path: 'check',
+      method: 'get',
+      action: 'check',
+    },
+    {
       path: ':id',
       method: 'get',
       action: 'show',
@@ -96,6 +101,11 @@ const routes = {
       path: '',
       method: 'post',
       action: 'create',
+    },
+    {
+      path: 'check',
+      method: 'get',
+      action: 'check',
     },
     {
       path: ':id',
@@ -160,6 +170,11 @@ const routes = {
       action: 'create',
     },
     {
+      path: 'check',
+      method: 'get',
+      action: 'check',
+    },
+    {
       path: ':id',
       method: 'get',
       action: 'show',
@@ -185,6 +200,11 @@ const routes = {
       path: '',
       method: 'post',
       action: 'create',
+    },
+    {
+      path: 'check',
+      method: 'get',
+      action: 'check',
     },
     {
       path: ':id',

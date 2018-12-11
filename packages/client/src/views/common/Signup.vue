@@ -1,94 +1,98 @@
 <template>
-  <a-form
-    @submit.prevent="signup"
-    :autoFormCreate="
-      form => {
-        this.form = form;
-      }
-    "
-  >
-    <template v-if="form">
-      <a-form-item
-        fieldDecoratorId="name"
-        :fieldDecoratorOptions="{
-          validateFirst: true,
-          rules: [
-            { required: true, whitespace: true, message: '请输入您的用户名!' },
-            {
-              validator: exsitCheck,
-              message: '用户名已注册!'
-            }
-          ]
-        }"
-        hasFeedback
+  <a-form @submit.prevent="signup" :form="form">
+    <a-form-item hasFeedback>
+      <a-input
+        v-decorator="[
+          'name',
+          {
+            validateFirst: true,
+            rules: [
+              {
+                required: true,
+                whitespace: true,
+                message: '请输入您的用户名!'
+              },
+              {
+                validator: exsitCheck,
+                message: '用户名已注册!'
+              }
+            ]
+          }
+        ]"
+        placeholder="用户名"
       >
-        <a-input placeholder="用户名">
-          <a-icon slot="prefix" type="user" style="color:rgba(0,0,0,.25)" />
-        </a-input>
-      </a-form-item>
-      <a-form-item
-        fieldDecoratorId="email"
-        :fieldDecoratorOptions="{
-          validateFirst: true,
-          rules: [
-            { required: true, message: '请输入您的邮箱!' },
-            { type: 'email', message: '请输入有效的邮箱地址!' },
-            { validator: exsitCheck, message: '邮箱已注册!' }
-          ]
-        }"
-        hasFeedback
+        <a-icon slot="prefix" type="user" style="color:rgba(0,0,0,.25)" />
+      </a-input>
+    </a-form-item>
+    <a-form-item hasFeedback>
+      <a-input
+        v-decorator="[
+          'email',
+          {
+            validateFirst: true,
+            rules: [
+              { required: true, message: '请输入您的邮箱!' },
+              { type: 'email', message: '请输入有效的邮箱地址!' },
+              { validator: exsitCheck, message: '邮箱已注册!' }
+            ]
+          }
+        ]"
+        type="email"
+        placeholder="邮箱"
       >
-        <a-input type="email" placeholder="邮箱">
-          <a-icon slot="prefix" type="mail" style="color:rgba(0,0,0,.25)" />
-        </a-input>
-      </a-form-item>
-      <a-form-item
-        fieldDecoratorId="password"
-        help="密码不少于6个字符"
-        :fieldDecoratorOptions="{
-          rules: [
-            { required: true, message: '请输入您的密码!' },
-            {
-              validator: this.validateToNextPassword
-            },
-            { min: 6, message: '密码不少于6个字符!' }
-          ]
-        }"
+        <a-icon slot="prefix" type="mail" style="color:rgba(0,0,0,.25)" />
+      </a-input>
+    </a-form-item>
+    <a-form-item help="密码不少于6个字符">
+      <a-input
+        v-decorator="[
+          'password',
+          {
+            rules: [
+              { required: true, message: '请输入您的密码!' },
+              {
+                validator: this.validateToNextPassword
+              },
+              { min: 6, message: '密码不少于6个字符!' }
+            ]
+          }
+        ]"
+        type="password"
+        placeholder="密码"
       >
-        <a-input type="password" placeholder="密码">
-          <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)" />
-        </a-input>
-      </a-form-item>
-      <a-form-item
-        fieldDecoratorId="confirm"
-        :fieldDecoratorOptions="{
-          rules: [
-            { required: true, message: '请再次输入您的密码!' },
-            {
-              validator: this.compareToFirstPassword
-            }
-          ]
-        }"
+        <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)" />
+      </a-input>
+    </a-form-item>
+    <a-form-item>
+      <a-input
+        v-decorator="[
+          'confirm',
+          {
+            rules: [
+              { required: true, message: '请再次输入您的密码!' },
+              {
+                validator: this.compareToFirstPassword
+              }
+            ]
+          }
+        ]"
+        type="password"
+        placeholder="确认密码"
+        @blur="handleConfirmBlur"
       >
-        <a-input
-          type="password"
-          placeholder="确认密码"
-          @blur="handleConfirmBlur"
-        >
-          <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)" />
-        </a-input>
-      </a-form-item>
-      <a-form-item>
-        <a-button
-          type="primary"
-          htmlType="submit"
-          :disabled="hasErrors(form.getFieldsError())"
-          block
-          >注册</a-button
-        >
-        <router-link to="/login">已有账号？现在登陆</router-link>
-      </a-form-item>
-    </template>
+        <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)" />
+      </a-input>
+    </a-form-item>
+    <a-form-item>
+      <a-button
+        type="primary"
+        htmlType="submit"
+        :disabled="hasErrors(form.getFieldsError())"
+        block
+        >注册</a-button
+      >
+      <router-link to="/login">已有账号？现在登陆</router-link>
+    </a-form-item>
   </a-form>
 </template>
 
@@ -105,7 +109,7 @@ export default {
     return {
       hasErrors,
       confirmDirty: false,
-      form: null
+      form: this.$form.createForm(this)
     };
   },
   methods: {

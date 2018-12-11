@@ -11,7 +11,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "ant-design-vue": "^1.1.8",
+    "ant-design-vue": "^1.1.10",
     "axios": "^0.18.0",
     "clipboard": "^2.0.4",
     "dayjs": "^1.7.7",

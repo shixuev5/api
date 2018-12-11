@@ -5,7 +5,7 @@
       <p>您当前的群组角色为：访客</p>
     </div>
     <h3 class="title">新增成员</h3>
-    <a-form layout="inline" :form="form" @submit="handleSubmit">
+    <a-form layout="inline" @submit.prevent="handleSubmit" :form="form">
       <a-form-item>
         <a-select
           v-decorator="[
@@ -58,9 +58,14 @@
 </template>
 
 <script>
+import Types from "vue-types";
+import * as types from "@/store/types";
 import group from "@/api/group";
 
 export default {
+  props: {
+    id: Types.string.required
+  },
   data() {
     return {
       fetching: false,
@@ -77,7 +82,7 @@ export default {
   methods: {
     async fetchUser(value) {
       this.fetching = true;
-      const response = await group.searchUsers(this.info.id, { q: value });
+      const response = await group.searchUsers(this.id, { q: value });
       this.fetching = false;
       this.users = response.map(item => ({ text: item.name, value: item._id }));
     },
@@ -90,6 +95,9 @@ export default {
         }
       });
     }
+  },
+  created() {
+    this.$store.dispatch(types.GROUP_INFO, this.id);
   }
 };
 </script>

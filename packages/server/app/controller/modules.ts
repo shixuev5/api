@@ -1,4 +1,4 @@
-import { Controller } from 'egg';
+import { Controller } from "egg";
 
 export default class ModulesController extends Controller {
   async index() {
@@ -6,6 +6,8 @@ export default class ModulesController extends Controller {
     const res = await ctx.model.Module.find(ctx.query);
     ctx.helper.success(res);
   }
+  /* 模块名称检查 */
+  async check() {}
   async create() {
     const { ctx } = this;
     const res = await ctx.model.Module.create(ctx.request.body);
@@ -13,8 +15,7 @@ export default class ModulesController extends Controller {
   }
   async show() {
     const { ctx } = this;
-    const res = await ctx.model.Module
-      .findById(ctx.params.id);
+    const res = await ctx.model.Module.findById(ctx.params.id);
     ctx.helper.success(res);
   }
   async update() {

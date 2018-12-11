@@ -1,12 +1,74 @@
+<template>
+  <a-form @submit.prevent="handleSubmit" :form="form">
+    <a-form-item>
+      <a-input
+        v-decorator="[
+          'name',
+          {
+            rules: [{ required: true, message: '请输入您的用户名或邮箱!' }]
+          }
+        ]"
+        placeholder="用户名 | 邮箱"
+      >
+        <a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)" />
+      </a-input>
+    </a-form-item>
+    <a-form-item>
+      <a-input
+        v-decorator="[
+          'password',
+          {
+            rules: [
+              { required: true, message: '请输入您的密码!' },
+              { min: 6, message: '密码不少于6个字符!' }
+            ]
+          }
+        ]"
+        type="password"
+        placeholder="密码"
+      >
+        <a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)" />
+      </a-input>
+    </a-form-item>
+    <a-form-item>
+      <a-checkbox
+        v-decorator="[
+          'remember',
+          {
+            valuePropName: 'checked',
+            initialValue: true
+          }
+        ]"
+        >记住我</a-checkbox
+      >
+      <router-link to="" style="float: right"> 忘记密码 </router-link>
+      <a-button
+        :disabled="hasErrors(form.getFieldsError())"
+        type="primary"
+        htmlType="submit"
+        block
+      >
+        登陆
+      </a-button>
+      或 <router-link to="/signup">现在注册</router-link>
+    </a-form-item>
+  </a-form>
+</template>
+
 <script>
-import { Form } from "ant-design-vue";
 import * as types from "@/store/types";
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
 
-const LoginForm = {
+export default {
+  data() {
+    return {
+      hasErrors,
+      form: this.$form.createForm(this)
+    };
+  },
   methods: {
     handleSubmit(e) {
       e.preventDefault();
@@ -20,67 +82,10 @@ const LoginForm = {
       });
     }
   },
-
   mounted() {
     this.$nextTick(() => {
       this.form.validateFields();
     });
-  },
-
-  render() {
-    const { getFieldDecorator } = this.form;
-    return (
-      <a-form onSubmit={this.handleSubmit}>
-        <a-form-item>
-          {getFieldDecorator("name", {
-            rules: [{ required: true, message: "请输入您的用户名或邮箱!" }]
-          })(
-            <a-input
-              prefix={
-                <a-icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
-              }
-              placeholder="用户名 | 邮箱"
-            />
-          )}
-        </a-form-item>
-        <a-form-item>
-          {getFieldDecorator("password", {
-            rules: [
-              { required: true, message: "请输入您的密码!" },
-              { min: 6, message: "密码不少于6个字符!" }
-            ]
-          })(
-            <a-input
-              prefix={
-                <a-icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
-              }
-              type="password"
-              placeholder="密码"
-            />
-          )}
-        </a-form-item>
-        <a-form-item>
-          {getFieldDecorator("remember", {
-            valuePropName: "checked",
-            initialValue: true
-          })(<a-checkbox>记住我</a-checkbox>)}
-          <router-link to="" style={{ float: "right" }}>
-            忘记密码
-          </router-link>
-          <a-button
-            disabled={hasErrors(this.form.getFieldsError())}
-            type="primary"
-            htmlType="submit"
-            block
-          >
-            登陆
-          </a-button>
-          或 <router-link to="/signup">现在注册</router-link>
-        </a-form-item>
-      </a-form>
-    );
   }
 };
-
-export default Form.create()(LoginForm);
 </script>

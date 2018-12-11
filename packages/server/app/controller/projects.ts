@@ -14,6 +14,15 @@ export default class ProjectsController extends Controller {
     const res = await service.project.countInterface(projects);
     ctx.helper.success(res);
   }
+  /* 项目名称检查 */
+  async check() {
+    const { ctx } = this;
+    const project = await ctx.app.model.Project.findOne({
+      name: ctx.query.name,
+      group_id: ctx.query.group_id,
+    });
+    ctx.helper.success(project && project._id);
+  }
   async create() {
     const { ctx, service } = this;
     const res = await service.project.create(ctx.request.body);
@@ -47,31 +56,43 @@ export default class ProjectsController extends Controller {
     if (!Array.isArray(ctx.request.body)) {
       ctx.request.body = [ctx.request.body];
     }
-    ctx.request.body.forEach((item) => service.project.checkPermission(groupRole, item.role));
-    const res = await service.project.createMember(ctx.params.id, ctx.request.body);
+    ctx.request.body.forEach((item) =>
+      service.project.checkPermission(groupRole, item.role),
+    );
+    const res = await service.project.createMember(
+      ctx.params.id,
+      ctx.request.body,
+    );
     ctx.helper.success(res);
   }
   /* 更新项目成员 */
   async updateMember() {
     const { ctx, service } = this;
-    service.project.checkPermission(await service.project.getProjectRole(ctx.params.id), ctx.request.body.role);
-    await service.project.updateMember(ctx.params.id, ctx.params.member_id, ctx.request.body);
+    service.project.checkPermission(
+      await service.project.getProjectRole(ctx.params.id),
+      ctx.request.body.role,
+    );
+    await service.project.updateMember(
+      ctx.params.id,
+      ctx.params.member_id,
+      ctx.request.body,
+    );
     ctx.helper.success(ctx.request.body);
   }
   /* 删除项目成员 */
   async removeMember() {
     const { ctx, service } = this;
-    service.project.checkPermission(await service.project.getProjectRole(ctx.params.id), ctx.request.body.role);
-    const { _id } = await service.project.removeMember(ctx.params.id, ctx.params.member_id);
+    service.project.checkPermission(
+      await service.project.getProjectRole(ctx.params.id),
+      ctx.request.body.role,
+    );
+    const { _id } = await service.project.removeMember(
+      ctx.params.id,
+      ctx.params.member_id,
+    );
     ctx.helper.success({ _id });
   }
-  async createEnv() {
-
-  }
-  async updateEnv() {
-
-  }
-  async removeEnv() {
-
-  }
+  async createEnv() {}
+  async updateEnv() {}
+  async removeEnv() {}
 }

@@ -14,6 +14,12 @@ export default class GroupsController extends Controller {
     const res = await service.group.countProject(groups);
     ctx.helper.success(res);
   }
+  /* 群组名称检查 */
+  async check() {
+    const { ctx } = this;
+    const group = await ctx.app.model.Group.findOne({ name: ctx.query.name });
+    ctx.helper.success(group && group._id);
+  }
   /* 创建群组 */
   async create() {
     const { ctx, service } = this;

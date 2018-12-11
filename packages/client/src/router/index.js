@@ -19,7 +19,7 @@ router.beforeEach(function(to, from, next) {
   const user = store.state.user;
   if (to.meta.auth) {
     if (user.isLogin) {
-      check(to).then(() => next());
+      check().then(() => next());
     } else {
       next("/login");
     }
@@ -32,19 +32,9 @@ router.afterEach(function() {
   nprogress.done();
 });
 
-function check(to) {
+function check() {
   if (isEmpty(store.state.user.info)) {
     return store.dispatch(types.USER_INFO);
-  }
-  if (to.params.id && /groups/.test(to.path) && isEmpty(store.state.group.info)) {
-    return store.dispatch(types.GROUP_INFO);
-  }
-  if (
-    to.params.id &&
-    /projects/.test(to.path) &&
-    isEmpty(store.state.project.info)
-  ) {
-    return store.dispatch(types.PROJECT_INFO);
   }
   return Promise.resolve();
 }

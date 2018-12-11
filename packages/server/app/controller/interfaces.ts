@@ -1,4 +1,4 @@
-import { Controller } from 'egg';
+import { Controller } from "egg";
 
 export default class InterfacesController extends Controller {
   async index() {
@@ -6,6 +6,8 @@ export default class InterfacesController extends Controller {
     const res = await ctx.model.Interface.find(ctx.query);
     ctx.helper.success(res);
   }
+  /* 接口名称检查 */
+  async check() {}
   async create() {
     const { ctx } = this;
     const res = await ctx.model.Interface.create(ctx.request.body);
