@@ -1,22 +1,18 @@
 <template>
   <a-select
     showSearch
-    placeholder="请求头"
     optionFilterProp="children"
     @change="handleChange"
     :filterOption="filterOption"
   >
-    <a-select-option
-      v-for="header in requestHeaders"
-      :key="header"
-      :value="header"
-      >{{ header }}</a-select-option
-    >
+    <a-select-option v-for="item in headerFields" :key="item" :value="item">{{
+      item
+    }}</a-select-option>
   </a-select>
 </template>
 
 <script>
-const requestHeaders = [
+const headerFields = [
   "Accept",
   "Accept-Charset",
   "Accept-Encoding",
@@ -72,7 +68,7 @@ const requestHeaders = [
 export default {
   data() {
     return {
-      requestHeaders
+      headerFields
     };
   },
   methods: {

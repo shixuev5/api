@@ -10,7 +10,7 @@
     size="small"
   >
     <template slot="name" slot-scope="text, record">
-      <RequestHeaderName></RequestHeaderName>
+      <HeaderFields></HeaderFields>
     </template>
   </a-table>
 </template>
