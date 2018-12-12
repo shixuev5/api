@@ -16,7 +16,7 @@ export async function json2schema(content, name = "root") {
     lang: "json-schema",
     inputData
   });
-  return resolveSchemaRef(jsonParse(result.lines.join("\n").trim()));
+  return jsonParse(result.lines.join("\n").trim());
 }
 
 export function isValidSchema(schema) {

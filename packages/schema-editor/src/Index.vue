@@ -1,14 +1,16 @@
 <template>
-  <div id="editor">
+  <Multipane :style="style">
     <SchemaTree :value="jsonSchema"></SchemaTree>
-    <!-- <Schema type="array"></Schema> -->
-  </div>
+    <MultipaneResizer></MultipaneResizer>
+    <SchemaForm type="array"></SchemaForm>
+  </Multipane>
 </template>
 
 <script>
 import { isValidSchema, json2schema, jsonParse } from "./utils";
+import { Multipane, MultipaneResizer } from "vue-multipane";
 import SchemaTree from "./component/SchemaTree.vue";
-// import SchemaEditor from "./component/SchemaEditor.vue";
+import SchemaForm from "./component/SchemaForm.vue";
 // import Preview from "./component/Preview.vue";
 
 export default {
@@ -16,16 +18,35 @@ export default {
     value: {
       type: [String, Object],
       default: ""
+    },
+    height: {
+      type: [Number, String],
+      default: "100%"
     }
   },
   components: {
-    SchemaTree
-    // SchemaEditor
+    Multipane,
+    MultipaneResizer,
+    SchemaTree,
+    SchemaForm
   },
   data() {
     return {
       jsonSchema: {}
     };
+  },
+  computed: {
+    style() {
+      if (typeof this.height === "string" && this.height.indexOf("%") > -1) {
+        return {
+          height: this.height
+        };
+      } else {
+        return {
+          height: `${parseFloat(this.height)}px`
+        };
+      }
+    }
   },
   watch: {
     value: {
@@ -43,9 +64,31 @@ export default {
 </script>
 
 <style lang="less" scoped>
-#editor {
-  display: flex;
-  width: 100%;
-  height: 400px;
+.schema-tree,
+.scheme-form {
+  width: 50%;
+}
+.multipane-resizer {
+  margin: 0;
+  left: 0;
+  position: relative;
+  &:before {
+    display: block;
+    content: "";
+    width: 3px;
+    height: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -20px;
+    margin-left: -1.5px;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+  }
+  &:hover {
+    &:before {
+      border-color: #999;
+    }
+  }
 }
 </style>

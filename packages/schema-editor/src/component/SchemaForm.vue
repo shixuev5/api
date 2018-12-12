@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="schema-form">
     <keep-alive> <component :is="componentName"></component> </keep-alive>
   </div>
 </template>
@@ -49,4 +49,5 @@ export default {
 };
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+</style>
