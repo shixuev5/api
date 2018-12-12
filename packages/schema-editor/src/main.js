@@ -1,8 +1,8 @@
 import { Tree, Form, Input, InputNumber, Switch } from "ant-design-vue";
-import SchemaEditor from './SchemaEditor.vue';
+import Index from './Index.vue';
 
 function install(Vue, options = {}) {
-  Vue.component('SchemaEditor', SchemaEditor);
+  Vue.component('SchemaEditor', Index);
   Vue.use(Tree);
   Vue.use(Form);
   Vue.use(Input);

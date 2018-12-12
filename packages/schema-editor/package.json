@@ -17,7 +17,9 @@
   },
   "dependencies": {
     "ajv": "^6.6.1",
-    "ant-design-vue": "^1.1.10"
+    "ant-design-vue": "^1.1.10",
+    "json-schema-ref-parser": "^6.0.2",
+    "quicktype-core": "^6.0.19"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.5",

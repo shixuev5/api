@@ -1,19 +1,17 @@
 <template>
   <div>
-    <keep-alive>
-      <component :is="componentName"></component>
-    </keep-alive>
+    <keep-alive> <component :is="componentName"></component> </keep-alive>
   </div>
 </template>
 
 <script>
-import SchemaArray from './SchemaArray';
-import SchemaObject from './SchemaObject';
-import SchemaString from './SchemaString';
-import SchemaBoolean from './SchemaBoolean';
-import SchemaNumber from './SchemaNumber';
-import SchemaInteger from './SchemaInteger';
-import SchemaNull from './SchemaNull';
+import SchemaArray from "./SchemaArray";
+import SchemaObject from "./SchemaObject";
+import SchemaString from "./SchemaString";
+import SchemaBoolean from "./SchemaBoolean";
+import SchemaNumber from "./SchemaNumber";
+import SchemaInteger from "./SchemaInteger";
+import SchemaNull from "./SchemaNull";
 
 export default {
   props: {
@@ -41,7 +39,7 @@ export default {
     SchemaBoolean,
     SchemaNumber,
     SchemaInteger,
-    SchemaNull,
+    SchemaNull
   },
   computed: {
     componentName() {
@@ -51,5 +49,4 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>
