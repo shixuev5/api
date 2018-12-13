@@ -1,6 +1,8 @@
 <template>
   <main>
-    <div class="editor-wrap"><SchemaEditor v-model="value"></SchemaEditor></div>
+    <div class="editor-wrap">
+      <SchemaEditor v-model="schemaV4"></SchemaEditor>
+    </div>
   </main>
 </template>
 
@@ -8,7 +10,7 @@
 export default {
   data() {
     return {
-      value: {
+      value: JSON.stringify({
         album_type: "album",
         artists: [
           {
@@ -222,8 +224,242 @@ export default {
         },
         type: "album",
         uri: "spotify:album:0sNOF9WDwhWunNAHPD3Baj"
-      },
-      schema: `{
+      }),
+      schemaV4: `{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "album_type": {
+      "type": "string"
+    },
+    "artists": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "external_urls": {
+            "type": "object",
+            "properties": {
+              "spotify": {
+                "type": "string"
+              }
+            }
+          },
+          "href": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "uri": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "available_markets": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "copyrights": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "external_ids": {
+      "type": "object",
+      "properties": {
+        "upc": {
+          "type": "string"
+        }
+      }
+    },
+    "external_urls": {
+      "type": "object",
+      "properties": {
+        "spotify": {
+          "type": "string"
+        }
+      }
+    },
+    "genres": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "href": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "height": {
+            "type": "number"
+          },
+          "url": {
+            "type": "string"
+          },
+          "width": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "height",
+          "url",
+          "width"
+        ]
+      }
+    },
+    "name": {
+      "type": "string"
+    },
+    "popularity": {
+      "type": "number"
+    },
+    "release_date": {
+      "type": "string"
+    },
+    "release_date_precision": {
+      "type": "string"
+    },
+    "tracks": {
+      "type": "object",
+      "properties": {
+        "href": {
+          "type": "string"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "artists": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "external_urls": {
+                      "type": "object",
+                      "properties": {
+                        "spotify": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "href": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "uri": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "available_markets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "disc_number": {
+                "type": "number"
+              },
+              "duration_ms": {
+                "type": "number"
+              },
+              "explicit": {
+                "type": "boolean"
+              },
+              "external_urls": {
+                "type": "object",
+                "properties": {
+                  "spotify": {
+                    "type": "string"
+                  }
+                }
+              },
+              "href": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "preview_url": {
+                "type": "string"
+              },
+              "track_number": {
+                "type": "number"
+              },
+              "type": {
+                "type": "string"
+              },
+              "uri": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "limit": {
+          "type": "number"
+        },
+        "next": {
+          "type": "null"
+        },
+        "offset": {
+          "type": "number"
+        },
+        "previous": {
+          "type": "null"
+        },
+        "total": {
+          "type": "number"
+        }
+      }
+    },
+    "type": {
+      "type": "string"
+    },
+    "uri": {
+      "type": "string"
+    }
+  }
+}`,
+      schemaV6: `{
     "$schema": "http://json-schema.org/draft-06/schema#",
     "$ref": "#/definitions/Root",
     "definitions": {

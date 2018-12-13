@@ -1,4 +1,4 @@
-<template>
+<a-directory-tree>
   <a-card :bordered="false" style="width: 260px">
     <div class="header">
       <span class="title">项目名称</span>
@@ -29,26 +29,26 @@
           >态势大屏</template
         >
         <a-tree-node key="0-0-0" isLeaf>
-          <template slot="title"
-            ><Method type="Get" /> 用户配置</template
-          >
+          <template slot="title">
+            <Method type="Get" />用户配置
+          </template>
         </a-tree-node>
         <a-tree-node key="0-0-7" isLeaf>
-          <template slot="title"
-            ><Method type="Post" /> 菜单</template
-          >
+          <template slot="title">
+            <Method type="Post" />菜单
+          </template>
         </a-tree-node>
       </a-tree-node>
       <a-tree-node title="资产风险" key="0-1">
         <a-tree-node key="0-1-0" isLeaf>
-          <template slot="title"
-            ><Method type="Put" /> 菜单1</template
-          >
+          <template slot="title">
+            <Method type="Put" />菜单1
+          </template>
         </a-tree-node>
         <a-tree-node key="0-1-1" isLeaf>
-          <template slot="title"
-            ><Method type="Delete" /> 菜单2</template
-          >
+          <template slot="title">
+            <Method type="Delete" />菜单2
+          </template>
         </a-tree-node>
         <a-tree-node key="0-1-2" isLeaf>
           <template slot="title">
@@ -59,14 +59,14 @@
           </template>
         </a-tree-node>
         <a-tree-node key="0-1-3" isLeaf>
-          <template slot="title"
-            ><Method type="Copy" /> 菜单4</template
-          >
+          <template slot="title">
+            <Method type="Copy" />菜单4
+          </template>
         </a-tree-node>
         <a-tree-node key="0-1-4" isLeaf>
-          <template slot="title"
-            ><Method type="Options" /> 菜单5</template
-          >
+          <template slot="title">
+            <Method type="Options" />菜单5
+          </template>
         </a-tree-node>
       </a-tree-node>
     </a-directory-tree>

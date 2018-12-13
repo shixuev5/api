@@ -1,10 +1,13 @@
 <template>
   <div class="schema-form">
-    <keep-alive> <component :is="componentName"></component> </keep-alive>
+    <keep-alive>
+      <component :is="componentName" :value="value"></component>
+    </keep-alive>
   </div>
 </template>
 
 <script>
+import { capitalize } from "@/utils";
 import SchemaArray from "./SchemaArray";
 import SchemaObject from "./SchemaObject";
 import SchemaString from "./SchemaString";
@@ -12,24 +15,13 @@ import SchemaBoolean from "./SchemaBoolean";
 import SchemaNumber from "./SchemaNumber";
 import SchemaInteger from "./SchemaInteger";
 import SchemaNull from "./SchemaNull";
+import SchemaAny from "./SchemaAny";
 
 export default {
   props: {
-    type: {
-      required: true,
-      validator(val) {
-        return (
-          [
-            "array",
-            "object",
-            "string",
-            "number",
-            "integer",
-            "boolean",
-            "null"
-          ].indexOf(val) > -1
-        );
-      }
+    value: {
+      type: Object,
+      required: true
     }
   },
   components: {
@@ -39,15 +31,16 @@ export default {
     SchemaBoolean,
     SchemaNumber,
     SchemaInteger,
-    SchemaNull
+    SchemaNull,
+    SchemaAny
   },
   computed: {
     componentName() {
-      return `Schema${this.type[0].toUpperCase() + this.type.slice(1)}`;
+      const type = this.value.dataRef ? this.value.dataRef.type : "any";
+      return `Schema${capitalize(type)}`;
     }
   }
 };
 </script>
 
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>

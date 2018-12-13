@@ -1,22 +1,28 @@
 <template>
   <Multipane :style="style">
-    <SchemaTree :value="jsonSchema"></SchemaTree>
+    <SchemaTree @select="onSelect"></SchemaTree>
     <MultipaneResizer></MultipaneResizer>
-    <SchemaForm type="array"></SchemaForm>
+    <SchemaForm :value="nodeSchema"></SchemaForm>
   </Multipane>
 </template>
 
 <script>
-import { isValidSchema, json2schema, jsonParse } from "./utils";
 import { Multipane, MultipaneResizer } from "vue-multipane";
+import { resolveSchema } from "./utils";
+import Manager from "./utils/manager";
 import SchemaTree from "./component/SchemaTree.vue";
-import SchemaForm from "./component/SchemaForm.vue";
+import SchemaForm from "./component/schema-form/SchemaForm.vue";
 // import Preview from "./component/Preview.vue";
 
 export default {
+  provide() {
+    return {
+      store: new Manager(resolveSchema(this.value))
+    };
+  },
   props: {
     value: {
-      type: [String, Object],
+      type: String,
       default: ""
     },
     height: {
@@ -32,7 +38,7 @@ export default {
   },
   data() {
     return {
-      jsonSchema: {}
+      nodeSchema: {}
     };
   },
   computed: {
@@ -48,16 +54,9 @@ export default {
       }
     }
   },
-  watch: {
-    value: {
-      async handler(val) {
-        // if (isValidSchema(val)) {
-        //   this.jsonSchema = jsonParse(val);
-        // } else {
-        //   }
-        this.jsonSchema = await json2schema(val);
-      },
-      immediate: true
+  methods: {
+    onSelect(selectedKeys, { node }) {
+      this.nodeSchema = node;
     }
   }
 };

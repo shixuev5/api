@@ -1,29 +1,25 @@
 import nanoid from "nanoid";
-// import array2tree from "performant-array-to-tree";
-
-function clone(obj) {
-  return JSON.parse(JSON.stringify(obj));
-}
+import { clone, capitalize } from "./index";
 
 function array2tree(items, config) {
   config = Object.assign({ id: "id", parentId: "parentId", root: 0 }, config);
   const rootItems = [];
   const lookup = {};
-  for (let _i = 0, items_1 = items; _i < items_1.length; _i++) {
-    const item = items_1[_i];
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
     const itemId = item[config.id];
     const parentId = item[config.parentId];
 
-    if (!Object.prototype.hasOwnProperty.call(lookup, itemId)) {
-      lookup[itemId] = { data: null, children: [] };
+    if (!lookup[itemId]) {
+      lookup[itemId] = item;
+      item.children = [];
     }
-    lookup[itemId].data = item;
-    var TreeItem = lookup[itemId];
-    if (parentId === root) {
+    const TreeItem = lookup[itemId];
+    if (parentId === config.root) {
       rootItems.push(TreeItem);
     } else {
-      if (!Object.prototype.hasOwnProperty.call(lookup, parentId)) {
-        lookup[parentId] = { data: null, children: [] };
+      if (!lookup[parentId]) {
+        lookup[parentId] = { children: [] };
       }
       lookup[parentId].children.push(TreeItem);
     }
@@ -33,42 +29,114 @@ function array2tree(items, config) {
 
 class Manager {
   constructor(schema) {
+    this._init(schema);
+  }
+  _init(schema) {
+    // TODO: schema validate
+    if (!schema.$ref) return;
     this._schema = clone(schema);
     this._root = this.getRootNode();
+    this._rootKey = this._resolveRefName(this._schema.$ref);
     this._treeNodes = {};
-    this.walk(this._root);
+    this._walk(this._rootKey, this._root);
     this._treeData = array2tree(Object.values(this._treeNodes));
   }
-  getRootNode() {
-    return this.resolveRef(this._schema.$ref);
+  get treeData() {
+    return this._treeData;
   }
-  walk(node, parentId = 0) {
+  setSchema(schema) {
+    this._init(schema);
+  }
+  getRootNode() {
+    return this._resolveRef(this._schema.$ref);
+  }
+  _walk(key, node, parentId = 0) {
     node.id = nanoid();
     node.parentId = parentId;
+    node.title = key;
+    node.scopedSlots = { title: 'title' };
     if (node.$ref) {
-      Object.assign(node, this.resolveRef(node.$ref));
+      Object.assign(node, this._resolveRef(node.$ref));
     }
+    this._createTreeNode(node);
     this._treeNodes[node.id] = node;
     if (node.properties) {
       for (const key in node.properties) {
-        this.walk(node.properties[key], node.id);
+        this._walk(key, node.properties[key], node.id);
       }
     }
     if (node.items) {
       if (node.items.$ref) {
-        this.walk(this.resolveRef(node.items.$ref), node.id);
+        this._walk(`[0]`, this._resolveRef(node.items.$ref), node.id);
       } else if (Array.isArray(node.items)) {
-        node.items.forEach(item => this.walk(item, node.id));
+        node.items.forEach((item, index) =>
+          this._walk(`[${index}]`, item, node.id)
+        );
       } else {
-        this.walk(node.items, node.id);
+        this._walk(`[0]`, node.items, node.id);
       }
     }
   }
-  createTreeNode(value) {
-    return {};
+  _createTreeNode(node) {
+    if (!node.type) node.type = "any";
+    this[`_create${capitalize(node.type)}TreeNode`](node);
   }
-  resolveRef(ref) {
-    return this._schema.definitions[ref.match(/#\/definitions\/(.+)/)[1]];
+  _createObjectTreeNode(node) {
+    Object.assign(node, {
+      icon: "{}",
+    });
+  }
+  _createArrayTreeNode(node) {
+    Object.assign(node, {
+      icon: "[]",
+      // maxItems: 0,
+      // minItems: 0,
+      // uniqueItems: true,
+      // items: []
+    });
+  }
+  _createStringTreeNode(node) {
+    Object.assign(node, {
+      icon: `""`,
+      // maxLength: 0,
+      // minLength: 0,
+      // pattern: '',
+      // format: ''
+    });
+  }
+  _createNumberTreeNode(node) {
+    Object.assign(node, {
+      icon: "num",
+      // exclusiveMinimum: 0,
+      // exclusiveMinimum: 0,
+      // multipleOf: 0,
+    });
+  }
+  _createIntegerTreeNode(node) {
+    Object.assign(node, {
+      icon: "int"
+    });
+  }
+  _createBooleanTreeNode(node) {
+    Object.assign(node, {
+      icon: "bol"
+    });
+  }
+  _createNullTreeNode(node) {
+    Object.assign(node, {
+      icon: "nul"
+    });
+  }
+  _createAnyTreeNode(node) {
+    Object.assign(node, {
+      icon: "*"
+    });
+  }
+  _resolveRef(ref) {
+    return this._schema.definitions[this._resolveRefName(ref)];
+  }
+  _resolveRefName(ref) {
+    return ref.match(/#\/definitions\/(.+)/)[1];
   }
 }
 
