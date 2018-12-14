@@ -1,24 +1,39 @@
 <template>
-  <Multipane :style="style">
-    <SchemaTree @select="onSelect"></SchemaTree>
-    <MultipaneResizer></MultipaneResizer>
-    <SchemaForm :value="nodeSchema"></SchemaForm>
-  </Multipane>
+  <a-tabs size="small">
+    <a-tab-pane tab="Editor" key="Editor">
+      <a-table
+        :columns="columns"
+        :dataSource="dataSource"
+        :pagination="false"
+        :showHeader="false"
+        defaultExpandAllRows
+        rowKey="$id"
+        size="small"
+        :scroll="{ y: height }"
+      >
+        <span
+          class="table-custom-row"
+          slot="custom"
+          slot-scope="text, record"
+          @click="record.show = true"
+        >
+          <Icon :type="record.type"></Icon> <span>{{ text }}</span>
+          <div v-if="record.show" style="height: 200px"></div>
+        </span>
+      </a-table>
+    </a-tab-pane>
+    <a-tab-pane tab="Schema" key="Schema"> </a-tab-pane>
+    <a-tab-pane tab="Mock" key="Mock">Content of tab 3</a-tab-pane>
+  </a-tabs>
 </template>
 
 <script>
-import { Multipane, MultipaneResizer } from "vue-multipane";
-import { resolveSchema } from "./utils";
-import Manager from "./utils/manager";
-import SchemaTree from "./component/SchemaTree.vue";
-import SchemaForm from "./component/schema-form/SchemaForm.vue";
-// import Preview from "./component/Preview.vue";
+import Schema from "./utils/generate-schema.js";
+import Icon from "./Icon";
 
 export default {
-  provide() {
-    return {
-      store: new Manager(resolveSchema(this.value))
-    };
+  components: {
+    Icon
   },
   props: {
     value: {
@@ -26,68 +41,59 @@ export default {
       default: ""
     },
     height: {
-      type: [Number, String],
-      default: "100%"
+      type: Number,
+      default: 600
     }
-  },
-  components: {
-    Multipane,
-    MultipaneResizer,
-    SchemaTree,
-    SchemaForm
   },
   data() {
     return {
-      nodeSchema: {}
+      columns: [
+        {
+          title: "title",
+          dataIndex: "title",
+          scopedSlots: { customRender: "custom" }
+        }
+      ],
+      showDetail: false
     };
   },
   computed: {
-    style() {
-      if (typeof this.height === "string" && this.height.indexOf("%") > -1) {
-        return {
-          height: this.height
-        };
-      } else {
-        return {
-          height: `${parseFloat(this.height)}px`
-        };
-      }
+    dataSource() {
+      const schema = new Schema(this.value);
+      schema.registerHook(node => {
+        if (node.type === "array") {
+          if (node.items) {
+            node.children = Array.isArray(node.items)
+              ? node.items
+              : [node.items];
+          }
+        } else if (node.type === "object") {
+          node.children = Object.values(node.properties);
+        }
+      });
+      return [schema.getSchema()];
     }
   },
-  methods: {
-    onSelect(selectedKeys, { node }) {
-      this.nodeSchema = node;
-    }
-  }
+  methods: {}
 };
 </script>
 
 <style lang="less" scoped>
-.schema-tree,
-.scheme-form {
-  width: 50%;
-}
-.multipane-resizer {
-  margin: 0;
-  left: 0;
-  position: relative;
-  &:before {
-    display: block;
-    content: "";
-    width: 3px;
-    height: 40px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top: -20px;
-    margin-left: -1.5px;
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
+/deep/ .ant-table {
+  &-small {
+    border: none;
   }
-  &:hover {
-    &:before {
-      border-color: #999;
-    }
+  &-row td {
+    display: flex;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+  }
+  &-row-expand-icon {
+    margin-right: 0 !important;
+  }
+  .table-custom-row {
+    flex: 1;
   }
 }
 </style>

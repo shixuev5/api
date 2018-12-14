@@ -18,12 +18,11 @@
   "dependencies": {
     "ajv": "^6.6.1",
     "ant-design-vue": "^1.1.10",
+    "ip-regex": "^3.0.0",
+    "is-uri": "^1.2.0",
+    "isemail": "^3.2.0",
     "json-schema-ref-parser": "^6.0.2",
-    "nanoid": "^2.0.0",
-    "quicktype-core": "^6.0.19",
-    "v-contextmenu": "^2.8.0",
-    "vue-multipane": "^0.9.5",
-    "vuebar": "^0.0.20"
+    "nanoid": "^2.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.5",

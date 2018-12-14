@@ -1,8 +1,6 @@
 <template>
   <main>
-    <div class="editor-wrap">
-      <SchemaEditor v-model="schemaV4"></SchemaEditor>
-    </div>
+    <div class="editor-wrap"><SchemaEditor v-model="value"></SchemaEditor></div>
   </main>
 </template>
 
@@ -802,7 +800,6 @@ main {
   .editor-wrap {
     width: 960px;
     height: 600px;
-    border: 1px solid #eee;
   }
 }
 </style>

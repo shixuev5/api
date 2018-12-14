@@ -1,34 +1,5 @@
-import {
-  quicktype,
-  InputData,
-  jsonInputForTargetLanguage,
-  JSONSchemaInput
-} from "quicktype-core";
 import ajv from "ajv";
 import refParser from "json-schema-ref-parser";
-
-export async function resolveSchema(content, name = "root") {
-  const inputData = new InputData();
-  if (isJsonSchema(content)) {
-    isValidSchema(content);
-    await inputData.addSource(
-      "schema",
-      { name, schema: content },
-      () => new JSONSchemaInput(undefined)
-    );
-  } else {
-    await inputData.addSource("json", { name, samples: [content] }, () =>
-      jsonInputForTargetLanguage("json-schema")
-    );
-  }
-  const result = await quicktype({
-    lang: "json-schema",
-    inputData
-  });
-  const res = jsonParse(result.lines.join("\n").trim());
-  console.log(res);
-  return res;
-}
 
 function isValidSchema(schema) {
   try {
@@ -74,10 +45,6 @@ async function resolveSchemaRef(schema) {
   } catch (error) {
     throw error;
   }
-}
-
-export function clone(obj) {
-  return JSON.parse(JSON.stringify(obj));
 }
 
 export function capitalize(string) {
