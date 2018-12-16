@@ -144,4 +144,34 @@ export default class ProjectService extends BaseService {
       this.ctx.throw('您没有权限进行此项操作!');
     }
   }
+  /* 关注项目 */
+  async starProject(_id, userId) {
+    if (!userId) {
+      this.ctx.throw('用户id为空！');
+    }
+    const project = this.db.find({_id, 'stars._id': userId });
+    if(project) {
+      this.ctx.throw('您已关注此项目！');
+    }
+    return this.db.findByIdAndUpdate(_id, {
+      $push: {
+        stars: { _id: userId },
+      },
+    });
+  }
+  /* 取消关注 */
+  unStarProject(_id, userId) {
+    if (!userId) {
+      this.ctx.throw('用户id为空！');
+    }
+    const project = this.db.find({_id, 'stars._id': userId });
+    if (!project) {
+      this.ctx.throw('您还未关注此项目！');
+    }
+    return this.db.findByIdAndUpdate(_id, {
+      $pull: {
+        stars: { _id: userId },
+      },
+    });
+  }
 }

@@ -40,3 +40,26 @@ export const PROJECT_CREATE = "PROJECT_CREATE";
 export const PROJECT_INFO = "PROJECT_INFO";
 export const PROJECT_UPDATE = "PROJECT_UPDATE";
 export const PROJECT_DELETE = "PROJECT_DELETE";
+
+/* module mutation */
+export const SET_MODULE_INFO = "SET_MODULE_INFO";
+export const SET_MODULE_LIST = "SET_MODULE_LIST";
+
+/* module action */
+export const MODULE_CREATE = "MODULE_CREATE";
+export const MODULE_INFO = "MODULE_INFO";
+export const MODULE_LIST = "MODULE_LIST";
+export const MODULE_UPDATE = "MODULE_UPDATE";
+export const MODULE_DELETE = "MODULE_DELETE";
+
+
+/* interface mutation */
+export const SET_INTERFACE_INFO = "SET_INTERFACE_INFO";
+export const SET_INTERFACE_LIST = "SET_INTERFACE_LIST";
+
+/* interface action */
+export const INTERFACE_CREATE = "INTERFACE_CREATE";
+export const INTERFACE_INFO = "INTERFACE_INFO";
+export const INTERFACE_LIST = "INTERFACE_LIST";
+export const INTERFACE_UPDATE = "INTERFACE_UPDATE";
+export const INTERFACE_DELETE = "INTERFACE_DELETE";

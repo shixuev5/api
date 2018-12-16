@@ -9,7 +9,7 @@ export default class GroupsController extends Controller {
     if (tab) {
       groups = await service.group[tab](args);
     } else {
-      groups = await ctx.app.model.Group.find(...args);
+      groups = await ctx.app.model.Group.find(args);
     }
     const res = await service.group.countProject(groups);
     ctx.helper.success(res);

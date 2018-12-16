@@ -18,6 +18,12 @@ class Project extends Base {
   deleteMember(id, memberId) {
     return this.fetch.delete(`${this.module}/${id}/members/${memberId}`);
   }
+  star(id, payload) {
+    return this.fetch.post(`${this.module}/${id}/star`, payload);
+  }
+  unStar(id, payload) {
+    return this.fetch.delete(`${this.module}/${id}/star`, payload);
+  }
 }
 
 export default new Project();

@@ -5,7 +5,7 @@
       onChange: onSelectChange
     }"
     :columns="columns"
-    :dataSource="value"
+    :dataSource="dataSource"
     :pagination="false"
     size="small"
   >
@@ -42,7 +42,8 @@ export default {
           dataIndex: "operation",
           scopedSlots: { customRender: "operation" }
         }
-      ]
+      ],
+      dataSource: this.value
     };
   },
   methods: {

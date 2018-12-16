@@ -4,7 +4,7 @@
       <Indicator>群组成员管理</Indicator>
       <p>您当前的群组角色为：访客</p>
     </div>
-    <h3 class="title">新增成员</h3>
+    <h3 class="title-bar">新增成员</h3>
     <a-form layout="inline" @submit.prevent="handleSubmit" :form="form">
       <a-form-item>
         <a-select
@@ -53,7 +53,7 @@
         <a-button type="primary" htmlType="submit">加入群组</a-button>
       </a-form-item>
     </a-form>
-    <h3 class="title">成员列表</h3>
+    <h3 class="title-bar">成员列表</h3>
   </section>
 </template>
 
@@ -64,7 +64,7 @@ import group from "@/api/group";
 
 export default {
   props: {
-    id: Types.string.required
+    id: Types.string.isRequired
   },
   data() {
     return {

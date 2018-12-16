@@ -5,7 +5,8 @@ function resolveConfig(route) {
   const value = config.length
     ? config.reduce((prev, curr) => prev[curr], result)
     : result[name];
-  route.props = route => Object.assign({ [name]: value }, route.query, route.params);
+  route.props = route =>
+    Object.assign({ [name]: value }, route.query, route.params);
 }
 
 function resolveLayout(route) {
@@ -34,6 +35,15 @@ function resolveComponent(route) {
     : () => import(`@/views/${path}.vue`);
 }
 
+function resolveComponents(route) {
+  for (const key in route.components) {
+    if (route.components.hasOwnProperty(key)) {
+      const path = route.components[key];
+      route.components[key] = () => import(`@/views/${path}.vue`);
+    }
+  }
+}
+
 export function resolveRoutes(routes, auth = true) {
   routes.forEach(route => {
     if (route.children) {
@@ -41,8 +51,9 @@ export function resolveRoutes(routes, auth = true) {
     }
     route.props = route => Object.assign({}, route.query, route.params);
     route.meta = Object.assign({ auth }, route.meta);
-    resolveComponent(route);
 
+    if (route.component) resolveComponent(route);
+    if (route.components) resolveComponents(route);
     if (route.layout) resolveLayout(route);
     if (route.config) resolveConfig(route);
   });

@@ -68,11 +68,11 @@ export default {
     handleSubmit() {
       this.form.validateFields(async (err, values) => {
         if (!err) {
-          const { _id } = await this.$store.dispatch(
-            types.GROUP_CREATE,
-            values
-          );
-          this.$router.push({ name: "group", params: { id: _id } });
+          await this.$store.dispatch(types.GROUP_CREATE, values);
+          this.$router.push({
+            name: "group",
+            params: { id: this.$store.state.group.info._id }
+          });
         }
       });
     }

@@ -1,9 +1,9 @@
 <template>
-  <a-tabs size="small">
+  <a-tabs>
     <a-tab-pane tab="Editor" key="Editor">
       <a-table
         :columns="columns"
-        :dataSource="dataSource"
+        :dataSource="[schema]"
         :pagination="false"
         :showHeader="false"
         defaultExpandAllRows
@@ -17,28 +17,27 @@
           slot-scope="text, record"
           @click="record.show = true"
         >
-          <Icon :type="record.type"></Icon> <span>{{ text }}</span>
-          <div v-if="record.show" style="height: 200px"></div>
+          <span class="icon">{{ formatType(record.type) }}</span>
+          <span>{{ text }}</span>
         </span>
       </a-table>
     </a-tab-pane>
-    <a-tab-pane tab="Schema" key="Schema"> </a-tab-pane>
+    <a-tab-pane tab="Schema" key="Schema">
+      <MonacoEditor :value="JSON.stringify(schema, null, 2)"></MonacoEditor>
+    </a-tab-pane>
     <a-tab-pane tab="Mock" key="Mock">Content of tab 3</a-tab-pane>
   </a-tabs>
 </template>
 
 <script>
-import Schema from "./utils/generate-schema.js";
-import Icon from "./Icon";
+import Schema from "./generate-schema.js";
+import { formatType } from "./schema-util.js";
 
 export default {
-  components: {
-    Icon
-  },
   props: {
     value: {
       type: String,
-      default: ""
+      default: '""'
     },
     height: {
       type: Number,
@@ -47,20 +46,20 @@ export default {
   },
   data() {
     return {
+      formatType,
       columns: [
         {
           title: "title",
           dataIndex: "title",
           scopedSlots: { customRender: "custom" }
         }
-      ],
-      showDetail: false
+      ]
     };
   },
   computed: {
-    dataSource() {
-      const schema = new Schema(this.value);
-      schema.registerHook(node => {
+    schema() {
+      const instance = new Schema(this.value);
+      instance.registerHook(node => {
         if (node.type === "array") {
           if (node.items) {
             node.children = Array.isArray(node.items)
@@ -71,7 +70,7 @@ export default {
           node.children = Object.values(node.properties);
         }
       });
-      return [schema.getSchema()];
+      return instance.getSchema();
     }
   },
   methods: {}
@@ -80,9 +79,6 @@ export default {
 
 <style lang="less" scoped>
 /deep/ .ant-table {
-  &-small {
-    border: none;
-  }
   &-row td {
     display: flex;
     align-items: center;
@@ -94,6 +90,15 @@ export default {
   }
   .table-custom-row {
     flex: 1;
+    .icon {
+      margin: 0 8px;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      display: inline-block;
+      text-align: center;
+      color: #1890ff;
+    }
   }
 }
 </style>

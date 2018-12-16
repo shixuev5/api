@@ -45,7 +45,7 @@ import { resolveRequestParams, createRequestParams } from "@/utils/postman";
 
 export default {
   props: {
-    value: Types.object.required
+    value: Types.object.isRequired
   },
   data() {
     return {

@@ -8,6 +8,7 @@
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
+    <aside><router-view name="aside"></router-view></aside>
     <div><router-view></router-view></div>
   </main>
 </template>
@@ -56,7 +57,6 @@ main {
   display: flex;
   align-items: stretch;
   height: calc(100vh - 48px);
-
   > div {
     flex: 1;
   }

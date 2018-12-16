@@ -47,7 +47,7 @@ import config from "./config.js";
 
 export default {
   props: {
-    type: Types.oneOf(["project", "group"]).required,
+    type: Types.oneOf(["project", "group"]).isRequired,
     value: Types.array.def([])
   },
   data() {

@@ -1,4 +1,4 @@
-import regex from "ip-regex";
+import ip from "ip-regex";
 import email from "isemail";
 import uri from "is-uri";
 
@@ -20,11 +20,11 @@ function isUUID(val) {
 }
 
 function isIpv4(val) {
-  return regex.v4({ exact: true }).test(val);
+  return ip.v4({ exact: true }).test(val);
 }
 
 function isIpv6(val) {
-  return regex.v6({ exact: true }).test(val);
+  return ip.v6({ exact: true }).test(val);
 }
 
 function isEmail(val) {

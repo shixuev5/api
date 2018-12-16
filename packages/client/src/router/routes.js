@@ -42,14 +42,10 @@ const routes = [
           {
             path: "modules",
             name: "project_modules",
-            component: "module/List",
-            // children: [
-            //   {
-            //     path: ":id",
-            //     name: "module_interfaces",
-            //     component: "interface/List"
-            //   }
-            // ]
+            components: {
+              aside: "module/Aside",
+              default: "interface/Tab"
+            },
           },
           {
             path: "test",

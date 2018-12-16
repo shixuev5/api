@@ -9,15 +9,10 @@
       <a-tab-pane tab="参数" key="params">
         <RequestParam></RequestParam>
       </a-tab-pane>
-      <a-tab-pane tab="请求头" key="headers" forceRender>
+      <a-tab-pane tab="请求头" key="headers">
         <RequestHeader></RequestHeader>
       </a-tab-pane>
-      <a-tab-pane
-        tab="请求体"
-        key="body"
-        :disabled="value.method === 'GET'"
-        forceRender
-      >
+      <a-tab-pane tab="请求体" key="body" :disabled="value.method === 'GET'">
         <RequestBody></RequestBody>
       </a-tab-pane>
     </a-tabs>

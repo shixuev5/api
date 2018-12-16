@@ -143,6 +143,16 @@ const routes = {
       action: 'projectUsers',
     },
     {
+      path: ':id/star',
+      method: 'post',
+      action: 'projectStar',
+    },
+    {
+      path: ':id/star',
+      method: 'delete',
+      action: 'projectUnStar',
+    },
+    {
       path: ':id/members',
       method: 'post',
       action: 'createMember',

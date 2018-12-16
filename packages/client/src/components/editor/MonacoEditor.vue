@@ -1,5 +1,9 @@
 <template>
-  <div class="editor" ref="editor"></div>
+  <div
+    class="monaco-editor"
+    :style="{ height: `${this.height}px` }"
+    ref="editor"
+  ></div>
 </template>
 
 <script>
@@ -21,7 +25,8 @@ export default {
     focus: Types.bool.def(false),
     option: Types.object.def({}),
     readOnly: Types.bool.def(false),
-    theme: Types.string.def("vs")
+    theme: Types.string.def("vs"),
+    height: Types.number.def(300)
   },
   watch: {
     value(val) {
@@ -57,6 +62,7 @@ export default {
         scrollbar: {
           horizontal: "hidden"
         },
+        lineNumbersMinChars: 4,
         tabSize: 2,
         fontSize: 14,
         readOnly: this.readOnly,
@@ -81,8 +87,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.editor {
-  width: 100%;
-  height: 100%;
+.monaco-editor {
+  max-width: 100%;
+  border: 1px solid #e8e8e8;
 }
 </style>
