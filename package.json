@@ -27,9 +27,5 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  },
-  "dependencies": {
-    "performant-array-to-tree": "^1.1.2",
-    "vue-multipane": "^0.9.5"
   }
 }

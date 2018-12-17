@@ -3,12 +3,13 @@
     :visible="value"
     title="从模版新建"
     :maskClosable="false"
+    :bodyStyle="{ padding: 0 }"
     @cancel="$emit('input', false)"
   >
-    <p>
+    <!-- <p>
       通过模版快速创建同一类型的接口
       <router-link to="#"><a-icon type="question-circle"/></router-link>
-    </p>
+    </p> -->
     <a-table
       :columns="columns"
       :dataSource="dataSource"

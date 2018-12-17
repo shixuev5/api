@@ -11,7 +11,7 @@
       defaultValue="none"
       size="small"
       :dropdownMatchSelectWidth="false"
-      change="handleChange"
+      @change="handleChange"
     >
       <a-select-option value="none">Text</a-select-option>
       <a-select-option value="text/plain">Text(text/plain)</a-select-option>
@@ -41,7 +41,43 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      value: "none",
+      columns: [
+        {
+          title: "键",
+          dataIndex: "name"
+        },
+        {
+          title: "值",
+          dataIndex: "value"
+        },
+        {
+          title: "描述",
+          dataIndex: "desc"
+        },
+        {
+          title: "操作",
+          dataIndex: "operation",
+          scopedSlots: { customRender: "operation" }
+        }
+      ],
+      dataSource: [],
+      selectedRowKeys: []
+    };
+  },
+  methods: {
+    onChange() {},
+    onSelectChange() {},
+    handleChange() {}
+  }
+};
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+/deep/ .ant-table-small {
+  border: none;
+}
+</style>

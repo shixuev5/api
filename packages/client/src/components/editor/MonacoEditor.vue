@@ -88,7 +88,7 @@ export default {
 
 <style lang="less" scoped>
 .monaco-editor {
-  max-width: 100%;
+  // max-width: 100%;
   border: 1px solid #e8e8e8;
 }
 </style>

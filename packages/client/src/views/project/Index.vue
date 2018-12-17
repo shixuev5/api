@@ -3,7 +3,13 @@
 </template>
 
 <script>
+import Types from "vue-types";
+import * as types from "@/store/types";
+
 export default {
+  props: {
+    id: Types.string.isRequired
+  },
   data() {
     return {
       showGrid: true
@@ -17,6 +23,9 @@ export default {
   methods: {
     onSearch() {},
     handleChange() {}
+  },
+  created() {
+    this.$store.dispatch(types.PROJECT_INFO, this.id);
   }
 };
 </script>

@@ -1,5 +1,8 @@
 <template>
   <a-tabs>
+    <a-tab-pane tab="JSON" key="JSON">
+      <MonacoEditor :value="json"></MonacoEditor>
+    </a-tab-pane>
     <a-tab-pane tab="Editor" key="Editor">
       <a-table
         :columns="columns"
@@ -47,6 +50,7 @@ export default {
   data() {
     return {
       formatType,
+      json: this.value,
       columns: [
         {
           title: "title",

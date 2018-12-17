@@ -1,10 +1,6 @@
 <template>
   <a-table
-    :rowSelection="{
-      selectedRowKeys: selectedRowKeys,
-      onChange: onSelectChange
-    }"
-    :columns="headersColumns"
+    :columns="columns"
     :dataSource="dataSource"
     :pagination="false"
     size="small"
@@ -16,7 +12,37 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      columns: [
+        {
+          title: "键",
+          dataIndex: "name"
+        },
+        {
+          title: "值",
+          dataIndex: "value"
+        },
+        {
+          title: "描述",
+          dataIndex: "desc"
+        },
+        {
+          title: "操作",
+          dataIndex: "operation",
+          scopedSlots: { customRender: "operation" }
+        }
+      ],
+      dataSource: []
+    };
+  },
+  methods: {}
+};
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+/deep/ .ant-table-small {
+  border: none;
+}
+</style>

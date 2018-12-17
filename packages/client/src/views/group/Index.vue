@@ -51,7 +51,6 @@
 
 <script>
 import Types from "vue-types";
-import project from "@/api/project";
 import * as types from "@/store/types";
 import Grid from "./Grid";
 

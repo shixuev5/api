@@ -7,7 +7,7 @@
     hideAdd
   >
     <a-tab-pane v-for="item in interfaces" :tab="item.name" :key="item._id">
-      <Edit></Edit>
+      <Edit :value="item"></Edit>
     </a-tab-pane>
   </a-tabs>
 </template>
