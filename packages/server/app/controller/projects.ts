@@ -95,14 +95,16 @@ export default class ProjectsController extends Controller {
   async createEnv() {}
   async updateEnv() {}
   async removeEnv() {}
+  /* 项目关注 */
   async projectStar() {
     const { ctx, service } = this;
-    const res = await service.project.starProject(ctx.params.id, ctx.request.body.user_id);
+    const res = await service.project.starProject(ctx.params.id, ctx.request.body._id);
     ctx.helper.success(res);
   }
+  /* 项目取消关注 */
   async projectUnStar() {
     const { ctx, service } = this;
-    const res = await service.project.unStarProject(ctx.params.id, ctx.request.body.user_id);
+    const res = await service.project.unStarProject(ctx.params.id, ctx.request.body._id);
     ctx.helper.success(res);
   }
 }

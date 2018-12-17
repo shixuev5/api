@@ -12,17 +12,21 @@ class Project extends Base {
   createMember(id, payload) {
     return this.fetch.post(`${this.module}/${id}/members`, payload);
   }
-  updateMember(id, memberId, payload) {
-    return this.fetch.put(`${this.module}/${id}/members/${memberId}`, payload);
+  updateMember(id, payload) {
+    return this.fetch.put(`${this.module}/${id}/members`, payload);
   }
-  deleteMember(id, memberId) {
-    return this.fetch.delete(`${this.module}/${id}/members/${memberId}`);
+  deleteMember(id, payload) {
+    return this.fetch.delete(`${this.module}/${id}/members`, {
+      data: payload
+    });
   }
   star(id, payload) {
-    return this.fetch.post(`${this.module}/${id}/star`, payload);
+    return this.fetch.post(`${this.module}/${id}/stars`, payload);
   }
   unStar(id, payload) {
-    return this.fetch.delete(`${this.module}/${id}/star`, payload);
+    return this.fetch.delete(`${this.module}/${id}/stars`, {
+      data: payload
+    });
   }
 }
 

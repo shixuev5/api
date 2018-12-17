@@ -11,6 +11,7 @@
     "lint": "lerna run --no-bail lint",
     "docs": "vuepress dev docs",
     "docs:build": "vuepress build docs",
+    "clean": "lerna clean --yes",
     "commit": "git add . && git-cz --no-verify"
   },
   "devDependencies": {

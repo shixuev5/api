@@ -3,7 +3,7 @@
     <div>
       <Icon type="placeholder" :size="size"></Icon>
       <div>
-        <h3>{{ placeholder }}</h3>
+        <p>{{ placeholder }}</p>
         <slot></slot>
       </div>
     </div>
@@ -15,7 +15,7 @@ import Types from "vue-types";
 
 export default {
   props: {
-    size: Types.number.def(80),
+    size: Types.number.def(40),
     height: Types.oneOfType([String, Number]).def(200),
     placeholder: Types.string.def("暂无数据")
   },
@@ -36,6 +36,10 @@ export default {
     align-items: center;
     > div {
       margin-left: 24px;
+      p {
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
     }
   }
 }

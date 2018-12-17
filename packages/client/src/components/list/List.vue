@@ -42,7 +42,7 @@
 <script>
 import Types from "vue-types";
 import dayjs from "dayjs";
-import timeago from "timeago.js";
+import { format } from "timeago.js";
 import config from "./config.js";
 
 export default {
@@ -62,7 +62,7 @@ export default {
     },
     timeFormat(item) {
       if (this.type === "project") {
-        return `更新于：${new timeago().format(item.updatedAt, "zh_CN")}`;
+        return `更新于：${format(item.updatedAt, "zh_CN")}`;
       } else {
         return `创建于：${dayjs(item.createdAt).format("YYYY/MM/DD HH:mm")}`;
       }

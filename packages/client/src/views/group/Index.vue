@@ -41,7 +41,7 @@
     </div>
     <keep-alive>
       <component
-        :is="showGrid ? 'ProjectGrid' : 'List'"
+        :is="showGrid ? 'Grid' : 'List'"
         :value="projects"
         type="project"
       ></component>
@@ -53,18 +53,17 @@
 import Types from "vue-types";
 import project from "@/api/project";
 import * as types from "@/store/types";
-import ProjectGrid from "./ProjectGrid";
+import Grid from "./Grid";
 
 export default {
   components: {
-    ProjectGrid
+    Grid
   },
   props: {
     id: Types.string.isRequired
   },
   data() {
     return {
-      projects: [],
       condition: {
         name: "",
         sort: "updatedAt|desc",
@@ -76,6 +75,9 @@ export default {
   computed: {
     info() {
       return this.$store.state.group.info;
+    },
+    projects() {
+      return this.$store.state.project.list;
     }
   },
   methods: {
@@ -84,7 +86,7 @@ export default {
   },
   async created() {
     await this.$store.dispatch(types.GROUP_INFO, this.id);
-    this.projects = await project.find({ group_id: this.info._id });
+    await this.$store.dispatch(types.PROJECT_LIST, this.info._id);
   }
 };
 </script>

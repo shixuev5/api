@@ -81,12 +81,12 @@ const routes = {
       action: 'createMember',
     },
     {
-      path: ':id/members/:member_id',
+      path: ':id/members',
       method: 'put',
       action: 'updateMember',
     },
     {
-      path: ':id/members/:member_id',
+      path: ':id/members',
       method: 'delete',
       action: 'removeMember',
     },
@@ -128,12 +128,12 @@ const routes = {
       action: 'createEnv',
     },
     {
-      path: ':id/envs/:env_id',
+      path: ':id/envs',
       method: 'put',
       action: 'updateEnv',
     },
     {
-      path: ':id/envs/:env_id',
+      path: ':id/envs',
       method: 'delete',
       action: 'removeEnv',
     },
@@ -143,12 +143,12 @@ const routes = {
       action: 'projectUsers',
     },
     {
-      path: ':id/star',
+      path: ':id/stars',
       method: 'post',
       action: 'projectStar',
     },
     {
-      path: ':id/star',
+      path: ':id/stars',
       method: 'delete',
       action: 'projectUnStar',
     },
@@ -158,12 +158,12 @@ const routes = {
       action: 'createMember',
     },
     {
-      path: ':id/members/:member_id',
+      path: ':id/members',
       method: 'put',
       action: 'updateMember',
     },
     {
-      path: ':id/members/:member_id',
+      path: ':id/members',
       method: 'delete',
       action: 'removeMember',
     },

@@ -8,13 +8,14 @@ export default {
   getters: {},
   mutations: {
     [types.SET_GROUP_INFO](state, payload) {
-      state.info = Object.assign({}, state.info, payload);
+      state.info = payload;
     },
   },
   actions: {
     async [types.GROUP_CREATE]({ commit }, payload) {
       const response = await group.create(payload);
       commit(types.SET_GROUP_INFO, response);
+      return response;
     },
     async [types.GROUP_INFO]({commit}, id) {
       const response = await group.findById(id);

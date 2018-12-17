@@ -7,7 +7,7 @@ export function createInterface(option) {
   return Object.assign(
     {},
     {
-      key: nanoid(),
+      _id: nanoid(),
       name: "未命名请求",
       path: "",
       method: "GET",

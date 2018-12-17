@@ -5,7 +5,7 @@
     :dataSource="value"
   >
     <a-list-item slot="renderItem" slot-scope="item, index">
-      <a-card :class="{ archive: true }" hoverable>
+      <a-card :class="{ archive: item.archive }" hoverable>
         <template class="ant-card-actions" slot="actions">
           <a-tooltip title="复制" placement="top">
             <a-icon type="copy" @click="onCopy(item)" />
@@ -20,7 +20,10 @@
             <a-icon type="delete" @click="onDelete(item)" />
           </a-tooltip>
         </template>
-        <a-card-meta :description="item.desc" @click="onClick(item)">
+        <a-card-meta
+          :description="item.desc ? item.desc : '暂无简介'"
+          @click="onClick(item)"
+        >
           <div slot="title">
             {{ item.name }}
             <a-rate
@@ -39,7 +42,7 @@
 
 <script>
 import Types from "vue-types";
-import project from "@/api/project";
+import * as types from "@/store/types";
 
 export default {
   props: {
@@ -53,17 +56,41 @@ export default {
       return item.stars.find(star => star._id === this.$user.info._id) ? 1 : 0;
     },
     onCopy() {},
-    onArchive() {},
+    onArchive(item) {
+      // await project.update(item._id, { archive: true });
+    },
     onEdit() {},
     async onStar(item, num) {
       if (num) {
-        await project.unStar(item._id, { user_id: this.$user.info._id });
-      } else {
-        await project.star(item._id, { user_id: this.$user.info._id });
+        await this.$store.dispatch(types.PROJECT_STAR, item._id);
         this.$message.success("项目关注成功！");
+      } else {
+        await this.$store.dispatch(types.PROJECT_UNSTAR, item._id);
       }
     },
-    onDelete() {},
+    onDelete(project) {
+      const confirmMsg = `${this.$user.info.name}/${project.name}`;
+      this.$confirm({
+        title: "删除确认",
+        content: (
+          <div>
+            <p>删除操作将会清空项目包含的所有数据，且操作无法回滚！</p>
+            <p>
+              请输入
+              <strong>{confirmMsg}</strong>
+              进行确认：
+            </p>
+            <a-input placeholder={confirmMsg} />
+          </div>
+        ),
+        okType: "danger",
+        okText: "删除",
+        maskClosable: true,
+        onOk() {
+          return new Promise((resolve, reject) => {});
+        }
+      });
+    },
     onClick(item) {
       this.$router.push({
         name: "project",
@@ -77,6 +104,7 @@ export default {
 <style lang="less" scoped>
 .ant-list {
   margin-top: 16px;
+
   .archive {
     position: relative;
     overflow: hidden;

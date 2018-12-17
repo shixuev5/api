@@ -1,13 +1,13 @@
 <template>
   <a-card :bordered="false" style="width: 260px">
     <div class="header">
-      <span class="title-bar">项目名称</span>
+      <span class="title-bar">{{ info.name }}</span>
       <div>
         <a-tooltip title="新建接口" placement="top">
-          <a-icon type="file-add" @click="createInterface" />
+          <a-icon type="file-add" @click="interfaceModal = true" />
         </a-tooltip>
         <a-tooltip title="新建模块" placement="top">
-          <a-icon type="folder-add" @click="showModal = true" />
+          <a-icon type="folder-add" @click="moduleModal = true" />
         </a-tooltip>
         <a-tooltip title="刷新列表" placement="top">
           <a-icon type="reload" @click="reload" />
@@ -18,44 +18,55 @@
       </div>
     </div>
     <a-tree
+      v-if="treeData.length"
       :treeData="treeData"
       :loadData="onLoadData"
       :expandedKeys="expandedKeys"
       showIcon
       @select="onSelect"
     >
-      <template slot="icon" slot-scope="{ selected }">
-        <a-icon :type="selected ? 'folder-open' : 'folder'" />
+      <template slot="icon" slot-scope="{ expanded }">
+        <a-icon :type="expanded ? 'folder-open' : 'folder'" />
       </template>
-      <div slot="title" slot-scope="{ name, method }">
+      <div slot="module" slot-scope="{ name, path }">
+        {{ name }} <span class="right dodge">{{ path }}</span>
+      </div>
+      <div slot="interface" slot-scope="{ name, method }">
         <Method :type="method"></Method> {{ name }}
       </div>
     </a-tree>
-    <ModuleCreate v-model="showModal"></ModuleCreate>
+    <Placeholder v-else></Placeholder>
+    <InterfaceCreate v-model="interfaceModal"></InterfaceCreate>
+    <ModuleCreate v-model="moduleModal"></ModuleCreate>
   </a-card>
 </template>
 
 <script>
 import * as types from "@/store/types";
+import InterfaceCreate from "../interface/Create";
 import ModuleCreate from "./Create";
 
 export default {
   components: {
+    InterfaceCreate,
     ModuleCreate
   },
   data() {
     return {
-      showModal: false,
+      interfaceModal: false,
+      moduleModal: false,
       expandedKeys: []
     };
   },
   computed: {
+    info() {
+      return this.$store.state.project.info;
+    },
     treeData() {
       return this.$store.state.module.list.map(item => {
         return {
           key: item._id,
-          title: item.name,
-          scopedSlots: { icon: "icon" },
+          scopedSlots: { icon: "icon", title: "module" },
           ...item
         };
       });
@@ -65,7 +76,6 @@ export default {
     reload() {
       this.$store.dispatch(types.MODULE_LIST);
     },
-    createInterface() {},
     async onLoadData(treeNode) {
       if (treeNode.dataRef.children) return;
       const response = await this.$store.dispatch(
@@ -74,7 +84,7 @@ export default {
       );
       treeNode.dataRef.children = response.map(item => {
         return {
-          scopedSlots: { title: "title" },
+          scopedSlots: { title: "interface" },
           ...item
         };
       });
@@ -126,6 +136,7 @@ export default {
 /deep/ .ant-tree {
   &-node-content-wrapper {
     width: calc(100% - 24px);
+    padding-left: 0 !important;
 
     .ant-tree-title {
       display: inline-block;

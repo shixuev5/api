@@ -106,15 +106,7 @@ export default {
 section {
   max-width: 1080px;
   margin: 0 auto;
-  .header {
-    display: flex;
-    align-items: center;
-    height: 80px;
-    > * {
-      flex: 1;
-      text-align: center;
-    }
-  }
+
   h3 {
     margin: 24px 0;
   }

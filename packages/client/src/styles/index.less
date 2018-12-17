@@ -10,6 +10,27 @@
   align-items: center;
 }
 
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+
+.clearfix {
+  &:before, &:after {
+    display: table;
+    content: '';
+    height: 0;
+    clear: both;
+  }
+}
+
+.dodge {
+  color: rgba(0, 0, 0, 0.45);
+}
+
 .title-bar {
   border-left: 2px solid #1890ff;
   text-indent: 8px;

@@ -111,11 +111,21 @@ export default {
     handleSubmit() {
       this.form.validateFields(async (err, values) => {
         if (!err) {
-          await this.$store.dispatch(types.PROJECT_CREATE, values);
-          this.$router.push({
-            name: "project",
-            params: { id: this.$store.state.project.info._id }
-          });
+          const { _id } = await this.$store.dispatch(
+            types.PROJECT_CREATE,
+            values
+          );
+          if (this.from) {
+            this.$router.push({
+              name: "group",
+              params: { id: this.from }
+            });
+          } else {
+            this.$router.push({
+              name: "project",
+              params: { id: _id }
+            });
+          }
         }
       });
     }
