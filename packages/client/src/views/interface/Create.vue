@@ -6,15 +6,12 @@
     :bodyStyle="{ padding: 0 }"
     @cancel="$emit('input', false)"
   >
-    <!-- <p>
-      通过模版快速创建同一类型的接口
-      <router-link to="#"><a-icon type="question-circle"/></router-link>
-    </p> -->
     <a-table
       :columns="columns"
       :dataSource="dataSource"
       :pagination="false"
       :rowSelection="rowSelection"
+      :customRow="customRow"
       rowKey="_id"
       size="small"
     />
@@ -79,13 +76,22 @@ export default {
     onSelectChange(selectedRowKeys) {
       this.rowSelection.selectedRowKeys = selectedRowKeys;
     },
+    customRow(record) {
+      return {
+        on: {
+          click: () => {
+            this.rowSelection.selectedRowKeys = [record._id];
+          }
+        }
+      };
+    },
     onClick() {
       const interfaceTabs = this.$store.state.interface.tabs;
       const api = createInterface({
         name: "未命名接口",
         desc: "",
         request: {
-          params: [
+          query: [
             {
               name: "",
               example: "",

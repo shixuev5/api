@@ -12,8 +12,9 @@ export function createInterface(option) {
       path: "",
       method: "GET",
       request: {
+        path: [],
+        query: [],
         headers: [],
-        params: [],
         body: {}
       },
       response: {
@@ -23,16 +24,6 @@ export function createInterface(option) {
     },
     option
   );
-}
-
-export function createRequestParams(params) {
-  return params.map(param => {
-    return {
-      name: param,
-      value: "",
-      desc: "",
-    }
-  });
 }
 
 export function resolveRequestParams(url) {
