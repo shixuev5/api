@@ -81,7 +81,32 @@ export default {
     },
     onClick() {
       const interfaceTabs = this.$store.state.interface.tabs;
-      const api = createInterface({ name: "未命名接口" });
+      const api = createInterface({
+        name: "未命名接口",
+        desc: "",
+        request: {
+          params: [
+            {
+              name: "",
+              example: "",
+              desc: "",
+              required: true
+            }
+          ],
+          headers: [
+            {
+              name: "",
+              value: "",
+              desc: ""
+            }
+          ],
+          body: {
+            type: "none"
+          }
+        },
+        status: "define",
+        project_id: this.$store.state.project.info._id
+      });
       this.$store.commit(types.SET_INTERFACE_TABS, [...interfaceTabs, api]);
       this.$store.commit(types.SET_INTERFACE_ACTIVE_KEY, api._id);
       this.$emit("input", false);

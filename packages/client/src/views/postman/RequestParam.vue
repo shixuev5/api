@@ -6,16 +6,16 @@
     size="small"
   >
     <template slot="name" slot-scope="text, record">
-      <a-input v-model="record.name" size="small" />
+      <a-input v-model="record.name" />
     </template>
     <template slot="example" slot-scope="text, record">
-      <a-input v-model="record.example" size="small" />
+      <a-input v-model="record.example" />
     </template>
     <template slot="required" slot-scope="text, record">
-      <a-switch defaultChecked size="small" />
+      <a-switch defaultChecked />
     </template>
     <template slot="desc" slot-scope="text, record">
-      <a-input v-model="record.desc" size="small" />
+      <a-input v-model="record.desc" />
     </template>
     <template slot="operation" slot-scope="text, record">
       <a-icon type="delete" />

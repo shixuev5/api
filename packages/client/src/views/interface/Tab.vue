@@ -6,7 +6,8 @@
     type="editable-card"
     hideAdd
   >
-    <a-tab-pane v-for="item in interfaces" :tab="item.name" :key="item._id">
+    <a-tab-pane v-for="item in interfaces" :key="item._id">
+      <span slot="tab"> {{ item.name }} </span>
       <Edit :value="item"></Edit>
     </a-tab-pane>
   </a-tabs>

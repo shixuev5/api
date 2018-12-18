@@ -1,8 +1,10 @@
 <template>
   <div
-    class="monaco-editor"
-    :style="{ height: `${this.height}px` }"
     ref="editor"
+    class="monaco-editor"
+    :style="{
+      height: `${this.height}px`
+    }"
   ></div>
 </template>
 
@@ -56,6 +58,7 @@ export default {
         autoIndent: true,
         formatOnPaste: true,
         formatOnType: true,
+        contextmenu: false,
         minimap: {
           enabled: false
         },
@@ -88,7 +91,7 @@ export default {
 
 <style lang="less" scoped>
 .monaco-editor {
-  // max-width: 100%;
+  width: 100%;
   border: 1px solid #e8e8e8;
 }
 </style>

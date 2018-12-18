@@ -1,15 +1,20 @@
 <template>
   <div class="container" ref="container">
     <section>
-      <h2>{{ api.name }}</h2>
-      <p>{{ api.path }}</p>
-      <a-steps :current="0" size="small" style="text-align: left">
-        <a-step title="约定" />
-        <a-step title="开发" />
-        <a-step title="联调" />
-        <a-step title="测试" />
-        <a-step title="维护" />
-        <a-step title="弃用" />
+      <h2 style="min-height: 1.5em">{{ api.name }}</h2>
+      <p>
+        <Method :type="api.method" :size="16"></Method> {{ api.path }}
+        <Clipboard :value="api.path"></Clipboard>
+      </p>
+      <a-steps :current="step" size="small" style="text-align: left">
+        <a-step v-for="(key, value) in status" :key="key">
+          <span
+            slot="title"
+            @click="api.status = value"
+            style="cursor: pointer;"
+            >{{ key }}</span
+          >
+        </a-step>
       </a-steps>
     </section>
     <section>
@@ -64,13 +69,13 @@
       <h3 id="request" class="title-bar">请求</h3>
       <a-tabs defaultActiveKey="params">
         <a-tab-pane tab="参数" key="params">
-          <RequestParam></RequestParam>
+          <RequestParam v-model="api.request.params"></RequestParam>
         </a-tab-pane>
         <a-tab-pane tab="请求头" key="headers">
-          <RequestHeader></RequestHeader>
+          <RequestHeader v-model="api.request.headers"></RequestHeader>
         </a-tab-pane>
         <a-tab-pane tab="请求体" key="body" :disabled="api.method === 'GET'">
-          <RequestBody></RequestBody>
+          <RequestBody v-model="api.request.body"></RequestBody>
         </a-tab-pane>
       </a-tabs>
     </section>
@@ -79,12 +84,8 @@
       <SchemaEditor></SchemaEditor>
     </section>
     <section>
-      <h3 id="comment" class="title-bar">备注</h3>
+      <h3 id="desc" class="title-bar">备注</h3>
       <MarkdownEditor v-model="api.desc"></MarkdownEditor>
-    </section>
-    <section>
-      <h3 id="setting" class="title-bar">设置</h3>
-      <div style="height: 1000px"></div>
     </section>
     <a-anchor
       class="anchor"
@@ -94,8 +95,7 @@
       <a-anchor-link href="#basic" title="信息" />
       <a-anchor-link href="#request" title="请求" />
       <a-anchor-link href="#response" title="响应" />
-      <a-anchor-link href="#comment" title="备注" />
-      <a-anchor-link href="#setting" title="设置" />
+      <a-anchor-link href="#desc" title="备注" />
     </a-anchor>
     <a-back-top :target="() => $refs.container" />
   </div>
@@ -103,6 +103,7 @@
 
 <script>
 import Types from "vue-types";
+import { status } from "@/config/constant";
 import RequestParam from "../postman/RequestParam";
 import RequestHeader from "../postman/RequestHeader";
 import RequestBody from "../postman/RequestBody";
@@ -118,14 +119,19 @@ export default {
   },
   data() {
     return {
-      api: this.value
+      api: this.value,
+      status
     };
   },
   computed: {
     modules() {
       return this.$store.state.module.list;
+    },
+    step() {
+      return Object.keys(this.status).indexOf(this.api.status);
     }
-  }
+  },
+  methods: {}
 };
 </script>
 
@@ -133,15 +139,17 @@ export default {
 .container {
   position: relative;
   max-height: calc(100vh - 104px);
-  max-width: 100%;
-  padding: 0 160px;
+  max-width: 1080px;
+  padding: 0 40px;
+  margin: 0 auto;
+  box-sizing: content-box;
   overflow: auto;
 
   section:first-child {
     text-align: center;
   }
 
-  section:not(:last-child) {
+  section {
     margin-bottom: 24px;
   }
 
@@ -152,7 +160,7 @@ export default {
   .anchor {
     position: absolute;
     top: 0;
-    right: 80px;
+    right: -80px;
   }
 }
 </style>

@@ -2,8 +2,9 @@
   <a-select
     showSearch
     optionFilterProp="children"
-    @change="handleChange"
+    :defaultValue="value"
     :filterOption="filterOption"
+    @change="handleChange"
   >
     <a-select-option v-for="item in headerFields" :key="item" :value="item">{{
       item
@@ -12,68 +13,71 @@
 </template>
 
 <script>
-const headerFields = [
-  "Accept",
-  "Accept-Charset",
-  "Accept-Encoding",
-  "Accept-Language",
-  "Accept-Ranges",
-  "Age",
-  "Allow",
-  "Authorization",
-  "Cache-Control",
-  "Connection",
-  "Content-Encoding",
-  "Content-Language",
-  "Content-Length",
-  "Content-Location",
-  "Content-MD5",
-  "Content-Range",
-  "Content-Type",
-  "Cookie",
-  "Date",
-  "ETag",
-  "Expect",
-  "Expires",
-  "From",
-  "Host",
-  "If-Match",
-  "If-Modified-Since",
-  "If-None-Match",
-  "If-Range",
-  "If-Unmodified-Since",
-  "Last-Modified",
-  "Location",
-  "Max-Forwards",
-  "Pragma",
-  "Proxy-Authenticate",
-  "Proxy-Authorization",
-  "Range",
-  "Referer",
-  "Retry-After",
-  "Server",
-  "Set-Cookie",
-  "TE",
-  "Trailer",
-  "Transfer-Encoding",
-  "Upgrade",
-  "User-Agent",
-  "Vary",
-  "Via",
-  "WWW-Authenticate",
-  "Warning",
-  "refresh"
-];
+import Types from "vue-types";
 
 export default {
+  props: {
+    value: Types.string.def("")
+  },
   data() {
     return {
-      headerFields
+      headerFields: [
+        "Accept",
+        "Accept-Charset",
+        "Accept-Encoding",
+        "Accept-Language",
+        "Accept-Ranges",
+        "Age",
+        "Allow",
+        "Authorization",
+        "Cache-Control",
+        "Connection",
+        "Content-Encoding",
+        "Content-Language",
+        "Content-Length",
+        "Content-Location",
+        "Content-MD5",
+        "Content-Range",
+        "Content-Type",
+        "Cookie",
+        "Date",
+        "ETag",
+        "Expect",
+        "Expires",
+        "From",
+        "Host",
+        "If-Match",
+        "If-Modified-Since",
+        "If-None-Match",
+        "If-Range",
+        "If-Unmodified-Since",
+        "Last-Modified",
+        "Location",
+        "Max-Forwards",
+        "Pragma",
+        "Proxy-Authenticate",
+        "Proxy-Authorization",
+        "Range",
+        "Referer",
+        "Retry-After",
+        "Server",
+        "Set-Cookie",
+        "TE",
+        "Trailer",
+        "Transfer-Encoding",
+        "Upgrade",
+        "User-Agent",
+        "Vary",
+        "Via",
+        "WWW-Authenticate",
+        "Warning",
+        "refresh"
+      ]
     };
   },
   methods: {
     handleChange(value) {
-      console.log(`selected ${value}`);
+      this.$emit("input", value);
     },
     filterOption(input, option) {
       return (

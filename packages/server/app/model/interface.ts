@@ -20,10 +20,10 @@ export default (app: Application) => {
         body: {},
       },
     },
-    state: { type: String, enum: ['dev', 'debug', 'complete', 'mainten', 'drop'], default: 'dev'},
+    status: { type: String, enum: ['define', 'dev', 'debug', 'test', 'mainten', 'drop'], default: 'define'},
     mock: { type: Boolean, default: true },
     project_id: {type: mongoose.Schema.Types.ObjectId, required: true},
-    module_id: {type: mongoose.Schema.Types.ObjectId, required: true},
+    module_id: {type: mongoose.Schema.Types.ObjectId},
   }, {
     id: false,
     timestamps: true,

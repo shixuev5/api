@@ -1,6 +1,10 @@
 <template>
-  <span class="method" :class="type.toLowerCase()">
-    {{ text.toUpperCase() }}
+  <span
+    class="method"
+    :class="type.toLowerCase()"
+    :style="{ fontSize: size + 'px' }"
+  >
+    {{ text }}
   </span>
 </template>
 
@@ -11,6 +15,10 @@ export default {
       type: String,
       default: "Get"
     },
+    size: {
+      type: Number,
+      default: 12
+    },
     simple: {
       type: Boolean,
       default: true
@@ -18,19 +26,20 @@ export default {
   },
   computed: {
     text() {
+      const method = this.type.toUpperCase();
       if (this.simple) {
-        switch (this.type) {
-          case "Delete":
-            return "Del";
-          case "Patch":
-            return "Patc";
-          case "Options":
-            return "Opt";
+        switch (method) {
+          case "DELETE":
+            return "DEL";
+          case "PATCH":
+            return "PATC";
+          case "OPTIONS":
+            return "OPT";
           default:
-            return this.type;
+            return method;
         }
       } else {
-        return this.type;
+        return method;
       }
     }
   }
@@ -40,8 +49,7 @@ export default {
 <style lang="less" scoped>
 .method {
   display: inline-block;
-  width: 34px;
-  font-size: 12px;
+  min-width: 34px;
 }
 .get {
   color: #52c41a;

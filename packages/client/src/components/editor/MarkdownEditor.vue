@@ -64,6 +64,6 @@ export default {
 
 <style lang="less" scoped>
 .markdown-editor {
-  z-index: inherit !important;
+  z-index: 100 !important;
 }
 </style>

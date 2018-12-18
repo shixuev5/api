@@ -1,35 +1,24 @@
 <template>
-  <a-tabs>
-    <a-tab-pane tab="JSON" key="JSON">
-      <MonacoEditor :value="json"></MonacoEditor>
-    </a-tab-pane>
-    <a-tab-pane tab="Editor" key="Editor">
-      <a-table
-        :columns="columns"
-        :dataSource="[schema]"
-        :pagination="false"
-        :showHeader="false"
-        defaultExpandAllRows
-        rowKey="$id"
-        size="small"
-        :scroll="{ y: height }"
-      >
-        <span
-          class="table-custom-row"
-          slot="custom"
-          slot-scope="text, record"
-          @click="record.show = true"
-        >
-          <span class="icon">{{ formatType(record.type) }}</span>
-          <span>{{ text }}</span>
-        </span>
-      </a-table>
-    </a-tab-pane>
-    <a-tab-pane tab="Schema" key="Schema">
-      <MonacoEditor :value="JSON.stringify(schema, null, 2)"></MonacoEditor>
-    </a-tab-pane>
-    <a-tab-pane tab="Mock" key="Mock">Content of tab 3</a-tab-pane>
-  </a-tabs>
+  <a-table
+    :columns="columns"
+    :dataSource="[schema]"
+    :pagination="false"
+    :showHeader="false"
+    defaultExpandAllRows
+    rowKey="$id"
+    size="small"
+    :scroll="{ y: height }"
+  >
+    <span
+      class="table-custom-row"
+      slot="custom"
+      slot-scope="text, record"
+      @click="record.show = true"
+    >
+      <span class="icon">{{ formatType(record.type) }}</span>
+      <span>{{ text }}</span>
+    </span>
+  </a-table>
 </template>
 
 <script>
