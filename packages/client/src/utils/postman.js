@@ -1,4 +1,5 @@
 import nanoid from "nanoid";
+import { parseUrl } from "query-string";
 import EventEmitter from "wolfy87-eventemitter";
 
 const eventEmitter = new EventEmitter();
@@ -15,20 +16,46 @@ export function createInterface(option) {
         path: [],
         query: [],
         headers: [],
-        body: {}
+        body: {
+          type: "none"
+        }
       },
       response: {
         headers: [],
-        body: {}
-      },
+        body: {
+          type: "json"
+        }
+      }
     },
     option
   );
 }
 
-export function resolveRequestParams(url) {
-  const reg = /(?<=:)[\w_-]+(?=[\/?])|(?<=\{)[\w_-]+(?=})/g;
-  return url.match(reg);
+export function resolvePathParams(url) {
+  const path = url.match(/:\/\/(.+)\??/)[1];
+  const matches = path.match(/(?<=:)[\w_-]+(?=[\/?])|(?<=\{)[\w_-]+(?=})/g);
+  if (matches) {
+    return matches.map(item => ({
+      name: item,
+      example: "",
+      desc: ""
+    }));
+  }
+  return [];
+}
+
+export function resolveQueryParams(url) {
+  const res = [];
+  const { query } = parseUrl(url);
+  for (const key of Object.keys(query)) {
+    res.push({
+      name: key,
+      example: query[key],
+      desc: "",
+      required: true
+    });
+  }
+  return res;
 }
 
 // 转化 api 对象到 options

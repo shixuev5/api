@@ -90,26 +90,7 @@ export default {
       const api = createInterface({
         name: "未命名接口",
         desc: "",
-        request: {
-          query: [
-            {
-              name: "",
-              example: "",
-              desc: "",
-              required: true
-            }
-          ],
-          headers: [
-            {
-              name: "",
-              value: "",
-              desc: ""
-            }
-          ],
-          body: {
-            type: "none"
-          }
-        },
+        tags: [],
         status: "define",
         project_id: this.$store.state.project.info._id
       });

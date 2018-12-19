@@ -10,7 +10,7 @@ import { resolveRoutes } from "@/utils/routes";
 Vue.use(Router);
 
 const router = new Router({
-  mode: 'history',
+  mode: "history",
   routes: resolveRoutes(routes),
   strict: process.env.NODE_ENV !== "production"
 });

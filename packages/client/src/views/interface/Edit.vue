@@ -29,6 +29,28 @@
             <a-input v-model="api.name"></a-input>
           </a-form-item>
           <a-form-item
+            label="请求路径"
+            :labelCol="{ span: 2 }"
+            :wrapperCol="{ span: 22 }"
+          >
+            <a-input v-model="api.path">
+              <a-select
+                slot="addonBefore"
+                v-model="api.method"
+                style="width: 110px"
+              >
+                <a-select-option value="GET">GET</a-select-option>
+                <a-select-option value="POST">POST</a-select-option>
+                <a-select-option value="PUT">PUT</a-select-option>
+                <a-select-option value="PATCH">PATCH</a-select-option>
+                <a-select-option value="DELETE">DELETE</a-select-option>
+                <a-select-option value="COPY">COPY</a-select-option>
+                <a-select-option value="HEAD">HEAD</a-select-option>
+                <a-select-option value="OPTIONS">OPTIONS</a-select-option>
+              </a-select>
+            </a-input>
+          </a-form-item>
+          <a-form-item
             label="所属模块"
             :labelCol="{ span: 2 }"
             :wrapperCol="{ span: 22 }"
@@ -43,37 +65,22 @@
             </a-select>
           </a-form-item>
           <a-form-item
-            label="请求路径"
+            label="使用场景"
             :labelCol="{ span: 2 }"
             :wrapperCol="{ span: 22 }"
           >
-            <a-input v-model="api.path">
-              <a-select
-                slot="addonBefore"
-                v-model="api.method"
-                style="width: 120px"
-              >
-                <a-select-option value="GET">GET</a-select-option>
-                <a-select-option value="POST">POST</a-select-option>
-                <a-select-option value="PUT">PUT</a-select-option>
-                <a-select-option value="PATCH">PATCH</a-select-option>
-                <a-select-option value="DELETE">DELETE</a-select-option>
-                <a-select-option value="COPY">COPY</a-select-option>
-                <a-select-option value="HEAD">HEAD</a-select-option>
-                <a-select-option value="OPTIONS">OPTIONS</a-select-option>
-              </a-select>
-            </a-input>
+            <Tags v-model="api.tags"></Tags>
           </a-form-item>
         </a-form>
       </section>
       <section>
         <h3 id="request" class="title-bar">请求</h3>
-        <a-tabs defaultActiveKey="params">
+        <a-tabs defaultActiveKey="path">
           <a-tab-pane tab="路径参数" key="path">
-            <PathParam v-model="api.request.path"></PathParam>
+            <RequestPath v-model="api.request.path"></RequestPath>
           </a-tab-pane>
           <a-tab-pane tab="查询参数" key="params">
-            <QueryParam v-model="api.request.query"></QueryParam>
+            <RequestQuery v-model="api.request.query"></RequestQuery>
           </a-tab-pane>
           <a-tab-pane tab="请求头" key="headers">
             <RequestHeader v-model="api.request.headers"></RequestHeader>
@@ -85,12 +92,18 @@
       </section>
       <section>
         <h3 id="response" class="title-bar">响应</h3>
-        <SchemaEditor></SchemaEditor>
+        <a-tabs defaultActiveKey="body">
+          <a-tab-pane tab="响应头" key="headers">
+            <ResponseHeader v-model="api.response.headers"></ResponseHeader>
+          </a-tab-pane>
+          <a-tab-pane tab="响应体" key="body">
+            <ResponseBody v-model="api.response.body"></ResponseBody>
+          </a-tab-pane>
+        </a-tabs>
       </section>
       <section>
         <h3 id="desc" class="title-bar">备注</h3>
         <MarkdownEditor v-model="api.desc"></MarkdownEditor>
-        <div style="height: 800px"></div>
       </section>
       <a-anchor
         class="anchor"
@@ -110,17 +123,22 @@
 <script>
 import Types from "vue-types";
 import { status } from "@/config/constant";
-import PathParam from "../postman/PathParam";
-import QueryParam from "../postman/QueryParam";
-import RequestHeader from "../postman/RequestHeader";
-import RequestBody from "../postman/RequestBody";
+import { resolvePathParams, resolveQueryParams } from "@/utils/postman";
+import RequestPath from "./RequestPath";
+import RequestQuery from "./RequestQuery";
+import RequestHeader from "./RequestHeader";
+import RequestBody from "./RequestBody";
+import ResponseHeader from "./ResponseHeader";
+import ResponseBody from "./ResponseBody";
 
 export default {
   components: {
-    PathParam,
-    QueryParam,
+    RequestPath,
+    RequestQuery,
     RequestHeader,
-    RequestBody
+    RequestBody,
+    ResponseHeader,
+    ResponseBody
   },
   props: {
     value: Types.object.isRequired
@@ -138,6 +156,13 @@ export default {
     step() {
       return Object.keys(this.status).indexOf(this.api.status);
     }
+  },
+  watch: {
+    "api.path": function(val) {
+      this.api.request.path = resolvePathParams(val);
+      this.api.request.query = resolveQueryParams(val);
+    },
+    "api.request.body.type": function() {}
   },
   methods: {}
 };

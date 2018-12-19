@@ -9,10 +9,10 @@
       <a-input v-model="record.name" />
     </template>
     <template slot="example" slot-scope="text, record">
-      <a-input v-model="record.example" />
+      <MultiLine v-model="record.example" />
     </template>
     <template slot="desc" slot-scope="text, record">
-      <a-input v-model="record.desc" />
+      <MultiLine v-model="record.desc" />
     </template>
     <template slot="required" slot-scope="text, record">
       <a-switch v-model="record.required" />
@@ -34,14 +34,7 @@ import pick from "lodash-es/pick";
 
 export default {
   props: {
-    value: Types.array.def([
-      {
-        name: "",
-        example: "",
-        desc: "",
-        required: true
-      }
-    ])
+    value: Types.array.def([])
   },
   data() {
     return {
@@ -78,7 +71,7 @@ export default {
           scopedSlots: { customRender: "operation" }
         }
       ],
-      dataSource: cloneDeep(this.value)
+      dataSource: this.handleValue(this.value)
     };
   },
   computed: {
@@ -90,9 +83,15 @@ export default {
     }
   },
   watch: {
+    value: {
+      handler(val) {
+        this.dataSource = this.handleValue(val);
+      },
+      deep: true
+    },
     dataSource: {
       handler(val) {
-        this.$emit("input", val);
+        this.$emit("input", val.slice(0, -1));
       },
       deep: true
     },
@@ -108,9 +107,16 @@ export default {
     }
   },
   methods: {
+    handleValue(val) {
+      return cloneDeep(val).concat({
+        name: "",
+        example: "",
+        desc: "",
+        required: true
+      });
+    },
     onClick(index) {
       this.dataSource.splice(index, 1);
-      this.$emit("input", this.dataSource);
     }
   }
 };

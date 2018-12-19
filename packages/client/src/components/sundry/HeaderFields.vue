@@ -2,7 +2,7 @@
   <a-select
     showSearch
     optionFilterProp="children"
-    :defaultValue="value"
+    :value="value"
     :filterOption="filterOption"
     @change="handleChange"
   >

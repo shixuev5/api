@@ -1,7 +1,7 @@
 <template>
   <a-table
     :columns="columns"
-    :dataSource="dataSource"
+    :dataSource="value"
     :pagination="false"
     size="small"
   >
@@ -9,10 +9,10 @@
       <a-input :value="record.name" disabled />
     </template>
     <template slot="example" slot-scope="text, record">
-      <MultiLine v-model="record.example"></MultiLine>
+      <MultiLine v-model="record.example" :disabled="!record.name" />
     </template>
     <template slot="desc" slot-scope="text, record">
-      <a-input v-model="record.desc" />
+      <MultiLine v-model="record.desc" :disabled="!record.name" />
     </template>
   </a-table>
 </template>
@@ -23,13 +23,7 @@ import cloneDeep from "lodash-es/cloneDeep";
 
 export default {
   props: {
-    value: Types.array.def([
-      {
-        name: "",
-        example: "",
-        desc: ""
-      }
-    ])
+    value: Types.array.def([])
   },
   data() {
     return {
@@ -52,30 +46,30 @@ export default {
           scopedSlots: { customRender: "desc" }
         }
       ],
-      dataSource: cloneDeep(this.value)
+      dataSource: this.handleValue(this.value)
     };
   },
-  computed: {
-    isModify() {
-      const item = this.dataSource[this.dataSource.length - 1];
-      return Boolean(Object.values(item).join(""));
-    }
-  },
   watch: {
-    dataSource: {
+    value: {
       handler(val) {
-        this.$emit("input", val);
+        this.dataSource = this.handleValue(val);
       },
       deep: true
     },
-    isModify(val) {
-      if (val) {
-        this.dataSource.push({
-          name: "",
-          example: "",
-          desc: ""
-        });
-      }
+    dataSource: {
+      handler(val) {
+        this.$emit("input", val.slice(0, -1));
+      },
+      deep: true
+    }
+  },
+  methods: {
+    handleValue(val) {
+      return cloneDeep(val).concat({
+        name: "",
+        example: "",
+        desc: ""
+      });
     }
   }
 };

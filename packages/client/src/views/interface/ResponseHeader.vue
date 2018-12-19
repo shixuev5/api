@@ -6,7 +6,7 @@
     size="small"
   >
     <template slot="name" slot-scope="text, record">
-      <HeaderFields v-model="record.name"></HeaderFields>
+      <a-input v-model="record.name" />
     </template>
     <template slot="value" slot-scope="text, record">
       <a-input v-model="record.value" />
