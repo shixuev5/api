@@ -29,7 +29,6 @@
 
 <script>
 import Types from "vue-types";
-import cloneDeep from "lodash-es/cloneDeep";
 import pick from "lodash-es/pick";
 
 export default {
@@ -71,7 +70,7 @@ export default {
           scopedSlots: { customRender: "operation" }
         }
       ],
-      dataSource: this.handleValue(this.value)
+      dataSource: this.handlerValue(this.value)
     };
   },
   computed: {
@@ -85,30 +84,19 @@ export default {
   watch: {
     value: {
       handler(val) {
-        this.dataSource = this.handleValue(val);
-      },
-      deep: true
-    },
-    dataSource: {
-      handler(val) {
-        this.$emit("input", val.slice(0, -1));
+        this.dataSource = this.handlerValue(val);
       },
       deep: true
     },
     isModify(val) {
       if (val) {
-        this.dataSource.push({
-          name: "",
-          example: "",
-          desc: "",
-          required: true
-        });
+        this.value.push(this.dataSource[this.dataSource.length - 1]);
       }
     }
   },
   methods: {
-    handleValue(val) {
-      return cloneDeep(val).concat({
+    handlerValue(val) {
+      return val.concat({
         name: "",
         example: "",
         desc: "",
@@ -116,7 +104,7 @@ export default {
       });
     },
     onClick(index) {
-      this.dataSource.splice(index, 1);
+      this.value.splice(index, 1);
     }
   }
 };

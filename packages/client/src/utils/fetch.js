@@ -1,6 +1,6 @@
 import axios from "axios";
 import nprogress from "nprogress";
-import qs from 'qs';
+import qs from "qs";
 import store from "@/store";
 import router from "@/router";
 import * as types from "@/store/types";
@@ -11,8 +11,8 @@ const fetch = axios.create({
   baseURL: "/api/v1",
   timeout: 0,
   paramsSerializer(params) {
-    return qs.stringify(params, {arrayFormat: 'repeat'})
-  },
+    return qs.stringify(params, { arrayFormat: "repeat" });
+  }
 });
 
 fetch.interceptors.request.use(
@@ -41,7 +41,7 @@ fetch.interceptors.response.use(
   },
   error => {
     nprogress.done();
-    if(!error.response) {
+    if (!error.response) {
       message.error(error.message);
     } else if (error.response.status === 401) {
       router.replace("/login", function() {

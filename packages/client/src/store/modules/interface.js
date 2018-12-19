@@ -17,9 +17,7 @@ export default {
     },
     [types.UPDATE_INTERFACE_LIST](state, payload) {
       const item = state.list.find(item => item._id === payload._id);
-      item
-        ? Object.assign(item, payload)
-        : state.list.unshift(payload);
+      item ? Object.assign(item, payload) : state.list.unshift(payload);
     },
     [types.DELETE_INTERFACE_LIST](state, { _id }) {
       const index = state.list.findIndex(item => item._id === _id);
@@ -30,9 +28,7 @@ export default {
     },
     [types.UPDATE_INTERFACE_TABS](state, payload) {
       const item = state.tabs.find(item => item._id === payload._id);
-      item
-        ? Object.assign(item, payload)
-        : state.tabs.unshift(payload);
+      item ? Object.assign(item, payload) : state.tabs.unshift(payload);
     },
     [types.DELETE_INTERFACE_TABS](state, { _id }) {
       const index = state.tabs.findIndex(item => item._id === _id);

@@ -62,7 +62,6 @@ export const MODULE_LIST = "MODULE_LIST";
 export const MODULE_UPDATE = "MODULE_UPDATE";
 export const MODULE_DELETE = "MODULE_DELETE";
 
-
 /* interface mutation */
 export const SET_INTERFACE_ACTIVE_KEY = "SET_INTERFACE_ACTIVE_KEY";
 export const SET_INTERFACE_LIST = "SET_INTERFACE_LIST";

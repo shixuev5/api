@@ -1,4 +1,3 @@
-
 export const permission = {
   private: "私有",
   shared: "内部",

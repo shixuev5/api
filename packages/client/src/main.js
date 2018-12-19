@@ -1,14 +1,14 @@
 import Vue from "vue";
 import Antd from "ant-design-vue";
 import VueSocketio from "vue-socket.io-extended";
-import MavonEditor from 'mavon-editor'
+import MavonEditor from "mavon-editor";
 import io from "socket.io-client";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import "ant-design-vue/dist/antd.css";
 import "nprogress/nprogress.css";
-import 'mavon-editor/dist/css/index.css';
+import "mavon-editor/dist/css/index.css";
 import "./styles/index.less";
 
 Vue.config.productionTip = false;
@@ -24,8 +24,8 @@ Vue.use(
     },
     {
       store,
-      mutationPrefix: 'SET_SOCKET_',
-      actionPrefix: 'SOCKET_',
+      mutationPrefix: "SET_SOCKET_",
+      actionPrefix: "SOCKET_",
       eventToActionTransformer: VueSocketio.defaults.eventToMutationTransformer
     }
   )

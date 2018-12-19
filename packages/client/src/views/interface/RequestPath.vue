@@ -1,7 +1,7 @@
 <template>
   <a-table
     :columns="columns"
-    :dataSource="value"
+    :dataSource="dataSource"
     :pagination="false"
     size="small"
   >
@@ -19,7 +19,6 @@
 
 <script>
 import Types from "vue-types";
-import cloneDeep from "lodash-es/cloneDeep";
 
 export default {
   props: {
@@ -46,26 +45,13 @@ export default {
           scopedSlots: { customRender: "desc" }
         }
       ],
-      dataSource: this.handleValue(this.value)
+      dataSource: this.handlerValue(this.value)
     };
   },
-  watch: {
-    value: {
-      handler(val) {
-        this.dataSource = this.handleValue(val);
-      },
-      deep: true
-    },
-    dataSource: {
-      handler(val) {
-        this.$emit("input", val.slice(0, -1));
-      },
-      deep: true
-    }
-  },
+
   methods: {
-    handleValue(val) {
-      return cloneDeep(val).concat({
+    handlerValue(val) {
+      return val.concat({
         name: "",
         example: "",
         desc: ""

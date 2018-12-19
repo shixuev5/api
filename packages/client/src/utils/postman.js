@@ -17,13 +17,15 @@ export function createInterface(option) {
         query: [],
         headers: [],
         body: {
-          type: "none"
+          type: "none",
+          value: []
         }
       },
       response: {
         headers: [],
         body: {
-          type: "json"
+          type: "json",
+          value: []
         }
       }
     },

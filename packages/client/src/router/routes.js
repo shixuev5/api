@@ -45,7 +45,7 @@ const routes = [
             components: {
               aside: "module/Aside",
               default: "interface/Tab"
-            },
+            }
           },
           {
             path: "test",

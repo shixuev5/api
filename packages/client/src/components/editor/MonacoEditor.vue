@@ -31,9 +31,9 @@ export default {
     height: Types.number.def(300)
   },
   watch: {
-    value(val) {
-      this.editor.setValue(val);
-    },
+    // value(val) {
+    //   this.editor.setValue(val);
+    // },
     option: {
       handler(val) {
         this.editor.updateOptions(val);
@@ -77,9 +77,9 @@ export default {
     if (this.focus) this.editor.focus();
     for (const key in this.$listeners) {
       if (this.$listeners.hasOwnProperty(key)) {
-        this.editor[`on${key[0].toUpperCase + key.slice(1)}`] = this.$listeners[
-          key
-        ];
+        this.editor[`on${key[0].toUpperCase() + key.slice(1)}`](
+          this.$listeners[key]
+        );
       }
     }
   },

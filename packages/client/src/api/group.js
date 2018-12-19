@@ -7,7 +7,7 @@ class Group extends Base {
   searchUsers(id, payload) {
     return this.fetch.get(`${this.module}/${id}/users`, {
       params: payload
-    })
+    });
   }
   createMember(id, payload) {
     return this.fetch.post(`${this.module}/${id}/members`, payload);

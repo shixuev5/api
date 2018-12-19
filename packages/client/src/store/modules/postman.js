@@ -27,7 +27,7 @@ export default {
         state.list.splice(index, 1);
         state.activeKey = (state.list[index] || state.list[index - 1])._id;
       }
-    },
+    }
   },
   actions: {
     [types.POSTMAN_CREATE]({ commit }) {

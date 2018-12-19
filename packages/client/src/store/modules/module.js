@@ -4,7 +4,7 @@ import * as types from "../types";
 export default {
   state: {
     info: {},
-    list: [],
+    list: []
   },
   getters: {},
   mutations: {
@@ -21,33 +21,38 @@ export default {
     [types.DELETE_MODULE_LIST](state, { _id }) {
       const index = state.list.findIndex(item => item._id === _id);
       state.list.splice(index, 1);
-    },
+    }
   },
   actions: {
     async [types.MODULE_CREATE]({ commit, rootState }, payload) {
-      const response = await module.create(Object.assign({
-        project_id: rootState.project.info._id
-      }, payload));
+      const response = await module.create(
+        Object.assign(
+          {
+            project_id: rootState.project.info._id
+          },
+          payload
+        )
+      );
       commit(types.SET_MODULE_INFO, response);
       commit(types.UPDATE_MODULE_LIST, response);
     },
-    async [types.MODULE_LIST]({commit, rootState }) {
+    async [types.MODULE_LIST]({ commit, rootState }) {
       const response = await module.find({
         project_id: rootState.project.info._id
       });
       commit(types.SET_MODULE_LIST, response);
     },
-    async [types.MODULE_INFO]({commit}, id) {
+    async [types.MODULE_INFO]({ commit }, id) {
       const response = await module.findById(id);
       commit(types.SET_MODULE_INFO, response);
     },
-    async [types.MODULE_UPDATE]({commit}, { _id, ...payload }) {
+    async [types.MODULE_UPDATE]({ commit }, { _id, ...payload }) {
       const response = await module.update(_id, payload);
       commit(types.SET_MODULE_INFO, response);
     },
-    async [types.MODULE_DELETE]({commit}, id) {
+    async [types.MODULE_DELETE]({ commit }, id) {
       await module.remove(id);
       commit(types.SET_MODULE_INFO, {});
-    },
+    }
   }
 };

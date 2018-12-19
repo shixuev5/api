@@ -81,11 +81,6 @@ export default {
         }
       });
     }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.form.validateFields();
-    });
   }
 };
 </script>
