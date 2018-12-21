@@ -3,7 +3,8 @@
     ref="editor"
     class="monaco-editor"
     :style="{
-      height: `${this.height}px`
+      width: processSize(width),
+      height: processSize(height)
     }"
   ></div>
 </template>
@@ -28,12 +29,19 @@ export default {
     option: Types.object.def({}),
     readOnly: Types.bool.def(false),
     theme: Types.string.def("vs"),
-    height: Types.number.def(300)
+    width: Types.oneOfType([String, Number]).def("100%"),
+    height: Types.oneOfType([String, Number]).def(300)
   },
   watch: {
-    // value(val) {
-    //   this.editor.setValue(val);
-    // },
+    value(val) {
+      this.editor.setValue(val);
+    },
+    width() {
+      this.$nextTick(() => this.editor.layout());
+    },
+    height() {
+      this.$nextTick(() => this.editor.layout());
+    },
     option: {
       handler(val) {
         this.editor.updateOptions(val);
@@ -42,6 +50,9 @@ export default {
     }
   },
   methods: {
+    processSize(size) {
+      return !/^\d+$/.test(size) ? size : `${size}px`;
+    },
     setJsonDefault() {
       monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
         allowComments: true,
@@ -61,9 +72,6 @@ export default {
         contextmenu: false,
         minimap: {
           enabled: false
-        },
-        scrollbar: {
-          horizontal: "hidden"
         },
         lineNumbersMinChars: 4,
         tabSize: 2,

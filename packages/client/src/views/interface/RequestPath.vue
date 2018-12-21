@@ -1,7 +1,7 @@
 <template>
   <a-table
     :columns="columns"
-    :dataSource="dataSource"
+    :dataSource="value"
     :pagination="false"
     size="small"
   >
@@ -9,10 +9,10 @@
       <a-input :value="record.name" disabled />
     </template>
     <template slot="example" slot-scope="text, record">
-      <MultiLine v-model="record.example" :disabled="!record.name" />
+      <MultiLine v-model="record.example" />
     </template>
     <template slot="desc" slot-scope="text, record">
-      <MultiLine v-model="record.desc" :disabled="!record.name" />
+      <MultiLine v-model="record.desc" />
     </template>
   </a-table>
 </template>
@@ -44,19 +44,8 @@ export default {
           dataIndex: "desc",
           scopedSlots: { customRender: "desc" }
         }
-      ],
-      dataSource: this.handlerValue(this.value)
+      ]
     };
-  },
-
-  methods: {
-    handlerValue(val) {
-      return val.concat({
-        name: "",
-        example: "",
-        desc: ""
-      });
-    }
   }
 };
 </script>

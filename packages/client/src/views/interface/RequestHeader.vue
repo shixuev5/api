@@ -9,10 +9,10 @@
       <HeaderFields v-model="record.name"></HeaderFields>
     </template>
     <template slot="value" slot-scope="text, record">
-      <a-input v-model="record.value" />
+      <MultiLine v-model="record.value" />
     </template>
     <template slot="desc" slot-scope="text, record">
-      <a-input v-model="record.desc" />
+      <MultiLine v-model="record.desc" />
     </template>
     <template slot="operation" slot-scope="text, record, index">
       <a-icon
@@ -41,7 +41,7 @@ export default {
           scopedSlots: { customRender: "name" }
         },
         {
-          title: "值",
+          title: "数值",
           dataIndex: "value",
           width: "30%",
           scopedSlots: { customRender: "value" }

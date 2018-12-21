@@ -9,7 +9,7 @@
     size="small"
     :scroll="{ y: height }"
   >
-    <span
+    <div
       class="table-custom-row"
       slot="custom"
       slot-scope="text, record"
@@ -17,7 +17,9 @@
     >
       <span class="icon">{{ formatType(record.type) }}</span>
       <span>{{ text }}</span>
-    </span>
+      <span class="right">{{ record.description }}</span>
+      <!-- <a-tag class="right" v-if="record.required" color="blue">required</a-tag> -->
+    </div>
   </a-table>
 </template>
 
@@ -39,7 +41,6 @@ export default {
   data() {
     return {
       formatType,
-      json: this.value,
       columns: [
         {
           title: "title",
@@ -71,7 +72,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.ant-table-wrapper {
+  min-height: 300px;
+}
 /deep/ .ant-table {
+  &-row:nth-child(odd) {
+    background: #f5f5f5;
+  }
   &-row td {
     display: flex;
     align-items: center;

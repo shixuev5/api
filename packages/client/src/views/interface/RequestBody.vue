@@ -31,17 +31,7 @@
         <a-select-option value="text/html">HTML(text/html)</a-select-option>
       </a-select>
     </div>
-    <a-tabs v-if="value.type === 'json'" defaultActiveKey="json">
-      <a-tab-pane tab="JSON" key="json">
-        <MonacoEditor></MonacoEditor>
-      </a-tab-pane>
-      <a-tab-pane tab="Editor" key="editor">
-        <SchemaEditor></SchemaEditor>
-      </a-tab-pane>
-      <a-tab-pane tab="Schema" key="schema">
-        <MonacoEditor></MonacoEditor>
-      </a-tab-pane>
-    </a-tabs>
+    <JsonEditor v-if="value.type === 'json'"></JsonEditor>
     <a-table
       v-if="value.type === 'formdata'"
       :columns="formColumns"
@@ -233,9 +223,6 @@ export default {
     },
     onClick(index) {
       this.value.value.splice(index, 1);
-    },
-    onBlur(e) {
-      console.log(e);
     },
     handleChange() {}
   }

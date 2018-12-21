@@ -4,8 +4,9 @@
       <section>
         <h2 style="min-height: 1.5em">{{ api.name }}</h2>
         <p>
-          <Method :type="api.method" :size="16"></Method> {{ api.path }}
-          <Clipboard :value="api.path"></Clipboard>
+          <Method :type="api.method" :size="16"></Method>
+          <em style="font-size: 16px; margin: 0 8px">{{ url }}</em>
+          <Clipboard :value="url"></Clipboard>
         </p>
         <a-steps :current="step" size="small" style="text-align: left">
           <a-step v-for="(key, value) in status" :key="key">
@@ -33,12 +34,8 @@
             :labelCol="{ span: 2 }"
             :wrapperCol="{ span: 22 }"
           >
-            <a-input v-model="api.path">
-              <a-select
-                slot="addonBefore"
-                v-model="api.method"
-                style="width: 110px"
-              >
+            <div style="display: flex">
+              <a-select v-model="api.method" style="flex: 0 0 110px">
                 <a-select-option value="GET">GET</a-select-option>
                 <a-select-option value="POST">POST</a-select-option>
                 <a-select-option value="PUT">PUT</a-select-option>
@@ -48,14 +45,39 @@
                 <a-select-option value="HEAD">HEAD</a-select-option>
                 <a-select-option value="OPTIONS">OPTIONS</a-select-option>
               </a-select>
-            </a-input>
+              <a-tooltip title="项目基础路径" placement="top">
+                <span style="line-height: 1">
+                  <a-input
+                    :value="project.path"
+                    disabled
+                    style="flex:0 0 160px"
+                  />
+                </span>
+              </a-tooltip>
+              <a-tooltip title="模块基础路径" placement="top">
+                <span style="line-height: 1">
+                  <a-input
+                    :value="modulePath"
+                    disabled
+                    style="flex:0 0 160px"
+                  />
+                </span>
+              </a-tooltip>
+              <a-input v-model="api.path" placeholder="/"> </a-input>
+            </div>
           </a-form-item>
           <a-form-item
             label="所属模块"
             :labelCol="{ span: 2 }"
             :wrapperCol="{ span: 22 }"
           >
-            <a-select v-model="api.module_id">
+            <a-select
+              v-model="api.module_id"
+              allowClear
+              showSearch
+              optionFilterProp="children"
+              :filterOption="filterOption"
+            >
               <a-select-option
                 v-for="module in modules"
                 :value="module._id"
@@ -123,7 +145,12 @@
 <script>
 import Types from "vue-types";
 import { status } from "@/config/constant";
-import { resolvePathParams, resolveQueryParams } from "@/utils/postman";
+import {
+  resolvePathParams,
+  resolveQueryParams,
+  syncQuery,
+  normalizePath
+} from "@/utils/postman";
 import RequestPath from "./RequestPath";
 import RequestQuery from "./RequestQuery";
 import RequestHeader from "./RequestHeader";
@@ -153,6 +180,17 @@ export default {
     modules() {
       return this.$store.state.module.list;
     },
+    project() {
+      return this.$store.state.project.info;
+    },
+    modulePath() {
+      const module = this.modules.find(item => item._id === this.api.module_id);
+      return module ? module.path : "";
+    },
+    url() {
+      const path = `${this.project.path}/${this.modulePath}/${this.api.path}`;
+      return `http://${normalizePath(path)}`;
+    },
     step() {
       return Object.keys(this.status).indexOf(this.api.status);
     }
@@ -162,9 +200,23 @@ export default {
       this.api.request.path = resolvePathParams(val);
       this.api.request.query = resolveQueryParams(val);
     },
+    "api.request.query": {
+      handler(val) {
+        this.api.path = syncQuery(this.api.path, val);
+      },
+      deep: true
+    },
     "api.request.body.type": function() {}
   },
-  methods: {}
+  methods: {
+    filterOption(input, option) {
+      return (
+        option.componentOptions.children[0].text
+          .toLowerCase()
+          .indexOf(input.toLowerCase()) >= 0
+      );
+    }
+  }
 };
 </script>
 
@@ -179,12 +231,11 @@ export default {
     margin: 0 auto;
     box-sizing: content-box;
 
-    section:first-child {
-      text-align: center;
-    }
-
     section {
       margin-bottom: 24px;
+    }
+    section:first-child {
+      text-align: center;
     }
 
     /deep/ .ant-tabs-bar {

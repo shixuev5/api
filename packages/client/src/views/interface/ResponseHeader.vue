@@ -9,10 +9,10 @@
       <a-input v-model="record.name" />
     </template>
     <template slot="value" slot-scope="text, record">
-      <a-input v-model="record.value" />
+      <MultiLine v-model="record.value" />
     </template>
     <template slot="desc" slot-scope="text, record">
-      <a-input v-model="record.desc" />
+      <MultiLine v-model="record.desc" />
     </template>
     <template slot="operation" slot-scope="text, record, index">
       <a-icon
@@ -29,13 +29,7 @@ import Types from "vue-types";
 
 export default {
   props: {
-    value: Types.array.def([
-      {
-        name: "",
-        value: "",
-        desc: ""
-      }
-    ])
+    value: Types.array.def([])
   },
   data() {
     return {
@@ -65,7 +59,7 @@ export default {
           scopedSlots: { customRender: "operation" }
         }
       ],
-      dataSource: this.value
+      dataSource: this.handlerValue(this.value)
     };
   },
   computed: {
@@ -75,19 +69,28 @@ export default {
     }
   },
   watch: {
+    value: {
+      handler(val) {
+        this.dataSource = this.handlerValue(val);
+      },
+      deep: true
+    },
     isModify(val) {
       if (val) {
-        this.dataSource.push({
-          name: "",
-          value: "",
-          desc: ""
-        });
+        this.value.push(this.dataSource[this.dataSource.length - 1]);
       }
     }
   },
   methods: {
+    handlerValue(val) {
+      return val.concat({
+        name: "",
+        value: "",
+        desc: ""
+      });
+    },
     onClick(index) {
-      this.dataSource.splice(index, 1);
+      this.value.splice(index, 1);
     }
   }
 };

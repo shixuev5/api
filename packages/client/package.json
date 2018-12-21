@@ -5,7 +5,7 @@
   "author": "yanhao <136393414@qq.com>",
   "homepage": "https://github.com/shixuev5/api#readme",
   "scripts": {
-    "dev": "vue-cli-service serve",
+    "dev": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
@@ -23,10 +23,8 @@
     "lodash-es": "^4.17.11",
     "mavon-editor": "^2.6.17",
     "monaco-editor": "^0.15.6",
-    "nanoid": "^2.0.0",
     "nprogress": "^0.2.0",
     "qs": "^6.6.0",
-    "query-string": "^6.2.0",
     "socket.io-client": "^2.2.0",
     "timeago.js": "^4.0.0-beta.1",
     "vue": "^2.5.17",

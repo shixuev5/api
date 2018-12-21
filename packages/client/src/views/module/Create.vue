@@ -15,13 +15,13 @@
           ]"
         ></a-input>
       </a-form-item>
-      <a-form-item label="模块路径">
+      <a-form-item label="基础路径">
         <a-input
           v-decorator="[
             'path',
             {
               rules: [
-                { required: true, message: '请输入模块路径!' },
+                { required: true, message: '请输入模块基础路径!' },
                 { message: '请输入有效的URL!' }
               ]
             }

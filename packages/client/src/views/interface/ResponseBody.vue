@@ -9,17 +9,7 @@
         <a-radio value="document">document</a-radio>
       </a-radio-group>
     </div>
-    <a-tabs v-show="value.type === 'json'" defaultActiveKey="json">
-      <a-tab-pane tab="JSON" key="json">
-        <MonacoEditor></MonacoEditor>
-      </a-tab-pane>
-      <a-tab-pane tab="Editor" key="editor">
-        <SchemaEditor></SchemaEditor>
-      </a-tab-pane>
-      <a-tab-pane tab="Schema" key="schema">
-        <MonacoEditor></MonacoEditor>
-      </a-tab-pane>
-    </a-tabs>
+    <JsonEditor v-if="value.type === 'json'"></JsonEditor>
   </div>
 </template>
 
