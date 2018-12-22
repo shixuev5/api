@@ -13,6 +13,25 @@
 //   }
 // }
 
+// async function resolveSchemaRef(schema) {
+//   try {
+//     return await refParser.dereference(schema);
+//   } catch (error) {
+//     throw error;
+//   }
+// }
+
+import uniqueId from 'lodash-es/uniqueId';
+
+export function isValidJSON(str) {
+  try {
+    JSON.parse(str);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
 export function jsonStringify(json) {
   try {
     if (typeof json !== "string") {
@@ -35,19 +54,36 @@ export function jsonParse(content) {
   }
 }
 
-// async function resolveSchemaRef(schema) {
-//   try {
-//     return await refParser.dereference(schema);
-//   } catch (error) {
-//     throw error;
-//   }
-// }
-
 export function capitalize(string) {
   return string[0].toUpperCase() + string.slice(1);
 }
 
-function array2tree(items, config) {
+export function walkSchema(schema, callback) {
+  if(schema.type === 'object') {
+    for (const key in schema.properties) {
+      walkSchema(schema.properties[key], callback);
+    }
+  } else if(schema.type === 'array') {
+    walkSchema(schema.items, callback);
+  }
+  callback(schema);
+}
+
+export function schema2array(schema, parentId = 0) {
+  let arr = [schema];
+  schema.parentId = parentId;
+  schema.id = uniqueId();
+  if(schema.type === 'object') {
+    for (const key in schema.properties) {
+      arr = arr.concat(schema2array(schema.properties[key], schema.id));
+    }
+  } else if(schema.type === 'array') {
+    arr = arr.concat(schema2array(schema.items, schema.id))
+  }
+  return arr;
+}
+
+export function array2tree(items, config) {
   config = Object.assign({ id: "id", parentId: "parentId", root: 0 }, config);
   const rootItems = [];
   const lookup = {};
@@ -82,7 +118,7 @@ export function formatType(type) {
     case "string":
       return "str";
     case "number":
-      return "num";
+      return "no.";
     case "integer":
       return "int";
     case "boolean":

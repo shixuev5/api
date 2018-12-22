@@ -85,9 +85,8 @@ export default {
     if (this.focus) this.editor.focus();
     for (const key in this.$listeners) {
       if (this.$listeners.hasOwnProperty(key)) {
-        this.editor[`on${key[0].toUpperCase() + key.slice(1)}`](
-          this.$listeners[key]
-        );
+        const eventName = `on${key[0].toUpperCase() + key.slice(1)}`;
+        this.editor[eventName] && this.editor[eventName](this.$listeners[key]);
       }
     }
   },

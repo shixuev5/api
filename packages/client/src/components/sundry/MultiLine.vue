@@ -1,6 +1,9 @@
 <template>
-  <a-tooltip :visible="hovered" @visibleChange="handleHoverChange">
-    <span slot="title">{{ text }}</span>
+  <a-tooltip
+    :title="text"
+    :visible="hovered"
+    @visibleChange="handleHoverChange"
+  >
     <a-popover
       trigger="click"
       arrowPointAtCenter
@@ -8,8 +11,8 @@
       :overlayStyle="overlayStyle"
       @visibleChange="handleClickChange"
     >
-      <a-textarea v-model="text" slot="content" :autosize="{ minRows: 4 }" />
-      <a-input v-model="text" :disabled="disabled"> </a-input>
+      <a-textarea v-model="text" slot="content" :rows="4" />
+      <a-input v-model="text" v-bind="$attrs"> </a-input>
     </a-popover>
   </a-tooltip>
 </template>
@@ -18,9 +21,9 @@
 import Types from "vue-types";
 
 export default {
+  inheritAttrs: false,
   props: {
-    value: Types.string.def(""),
-    disabled: Types.bool.def(false)
+    value: Types.string.def("")
   },
   data() {
     return {
@@ -48,8 +51,8 @@ export default {
       }
     },
     handleClickChange(visible) {
-      this.hovered = false;
       this.clicked = visible;
+      this.hovered = false;
     }
   }
 };

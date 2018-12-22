@@ -46,7 +46,7 @@ class Schema {
     uri: "http://example.com/root.json",
     required: true,
     title: true,
-    default: true,
+    default: false,
     examples: true,
     description: true,
     enums: false,
@@ -110,11 +110,12 @@ class Schema {
   }
 
   _handleOptions(schema, key, value) {
-    const { required, title, examples, enums, allowNull } = this._options;
+    const { required, title, examples, description, enums, allowNull } = this._options;
+    description && (schema.description = '');
+    title && (schema.title = key);
     if (isType(value) === "object" && required) {
       schema.required = Object.keys(value);
     }
-    if (title) schema.title = key;
     if (isPrimitive(value) && this._options.default) schema.default = value;
     if (isPrimitive(value) && examples) schema.examples = [value];
     if (isPrimitive(value) && enums) schema.enums = [value];
