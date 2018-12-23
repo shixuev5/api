@@ -10,6 +10,7 @@ export default class BaseService extends Service {
     this.db.schema.path('createdAt').get((v) => new Date(v).getTime());
     this.db.schema.path('updatedAt').get((v) => new Date(v).getTime());
     this.db.schema.set('toJSON', { getters: true });
+    this.db.schema.plugin(require('mongoose-autopopulate'));
   }
 
   total() {

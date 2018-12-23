@@ -19,9 +19,10 @@
 }
 
 .clearfix {
-  &:before, &:after {
+  &:before,
+  &:after {
     display: table;
-    content: '';
+    content: "";
     height: 0;
     clear: both;
   }
@@ -52,4 +53,20 @@
 
 .anticon-delete {
   color: #f5222d;
+}
+
+.ant-card-wider-padding {
+  .ant-card-head {
+    padding: 0 24px;
+
+    .ant-card-extra {
+      padding: 8px 0;
+    }
+  }
+  .ant-card-body {
+    padding: 16px 24px;
+  }
+}
+.ant-card-head-title {
+  padding: 8px 0;
 }

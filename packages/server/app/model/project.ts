@@ -24,8 +24,10 @@ export default (app: Application) => {
       group_id: { type: mongoose.Schema.Types.ObjectId },
       members: [
         {
-          _id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+          _id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate: { select: ['name', 'avatar'] } },
           role: { type: String, enum: ['owner', 'devloper', 'visitor'] },
+          expired: { type: Date, get: (v) => new Date(v).getTime() },
+          authorized: { type: Date, default: Date.now() },
         },
       ],
       stars: [

@@ -8,8 +8,10 @@ export default (app: Application) => {
       desc: String,
       members: [
         {
-          _id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+          _id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate: { select: ['name', 'avatar'] } },
           role: { type: String, enum: ['owner', 'devloper', 'visitor'] },
+          expired: { type: Date, get: (v) => new Date(v).getTime() },
+          authorized: { type: Date, default: Date.now() },
         },
       ],
       permission: { type: String, enum: ['private', 'shared', 'public'] },
