@@ -7,6 +7,7 @@ import ExportInterface from '../../../app/model/interface';
 import ExportLog from '../../../app/model/log';
 import ExportModule from '../../../app/model/module';
 import ExportProject from '../../../app/model/project';
+import ExportScene from '../../../app/model/scene';
 import ExportTemplate from '../../../app/model/template';
 import ExportUser from '../../../app/model/user';
 
@@ -17,6 +18,7 @@ declare module 'egg' {
     Log: ReturnType<typeof ExportLog>;
     Module: ReturnType<typeof ExportModule>;
     Project: ReturnType<typeof ExportProject>;
+    Scene: ReturnType<typeof ExportScene>;
     Template: ReturnType<typeof ExportTemplate>;
     User: ReturnType<typeof ExportUser>;
   }

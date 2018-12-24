@@ -1,9 +1,9 @@
 <template>
-  <div class="wrap">
-    <div class="header">
-      <h1>成员管理</h1>
+  <div class="container">
+    <section class="header">
+      <h2>成员管理</h2>
       <p>您当前的群组角色为：{{ role }}</p>
-    </div>
+    </section>
     <section>
       <h3 class="title-bar">新增成员</h3>
       <a-form layout="inline" @submit.prevent="handleSubmit" :form="form">
@@ -180,18 +180,17 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.wrap {
+.container {
   max-width: 1080px;
   margin: 0 auto;
 
-  .header {
+  section {
+    margin-bottom: 24px;
+  }
+  section:first-child {
     margin: 24px 0;
     text-align: center;
     border-bottom: 1px solid #eee;
-  }
-
-  section {
-    margin-bottom: 24px;
   }
 }
 </style>

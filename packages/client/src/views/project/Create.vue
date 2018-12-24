@@ -42,7 +42,7 @@
         placeholder="/"
       ></a-input>
     </a-form-item>
-    <a-form-item label="项目描述" fieldDecoratorId="">
+    <a-form-item label="项目描述">
       <a-textarea
         v-decorator="['desc']"
         placeholder="请简单描述项目信息... (可选)"
