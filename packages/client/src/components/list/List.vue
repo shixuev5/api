@@ -9,12 +9,13 @@
       slot="renderItem"
       slot-scope="item, index"
     >
-      <a-list-item-meta :description="item.desc">
+      <a-list-item-meta>
         <a-avatar slot="avatar" :size="40">{{ item.name[0] }}</a-avatar>
-        <div slot="title">
+        <span slot="title">
           {{ item.name }}
           <a-tag>{{ showRole(item.members) }}</a-tag>
-        </div>
+        </span>
+        <span slot="description">{{ item.desc || "暂无描述" }}</span>
       </a-list-item-meta>
       <div>
         <a-tooltip
@@ -91,6 +92,9 @@ export default {
       .ant-tag {
         margin: 0 8px;
       }
+    }
+    &-description {
+      min-height: 22px;
     }
   }
   /deep/ &-content {

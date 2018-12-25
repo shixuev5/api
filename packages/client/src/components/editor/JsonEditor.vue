@@ -46,7 +46,7 @@ export default {
   props: {
     value: Types.object.def({
       type: "json",
-      value: undefined
+      value: JSON.stringify({})
     })
   },
   data() {

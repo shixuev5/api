@@ -1,46 +1,75 @@
 <template>
-  <a-table
-    :columns="columns"
-    :dataSource="dataSource"
-    :expandedRowKeys="expandedRowKeys"
-    :pagination="false"
-    :scroll="{ y: height }"
-    :customRow="
-      record => ({
-        on: {
-          dblclick: ondblClick(record)
-        }
-      })
-    "
-    @expand="onExpand"
-    rowKey="id"
-    size="small"
-  >
-    <template slot="name" slot-scope="text, record">
-      <span class="icon">{{ formatType(record.type) }}</span>
-      <span>{{ text }}</span>
-    </template>
-    <template slot="desc" slot-scope="text, record">
-      <MultiLine v-if="!isRoot(record)" v-model="record.description" />
-    </template>
-    <template slot="mock" slot-scope="text, record">
-      <a-input v-if="!isRoot(record)" />
-    </template>
-    <template slot="required" slot-scope="text, record">
-      <a-switch
-        v-if="showRequired(record)"
-        :checked="isRequired(record)"
-        @change="checked => onChange(checked, record)"
-      />
-    </template>
-  </a-table>
+  <div>
+    <a-table
+      :columns="columns"
+      :dataSource="dataSource"
+      :expandedRowKeys="expandedRowKeys"
+      :pagination="false"
+      :scroll="{ y: height }"
+      :customRow="
+        record => ({
+          on: {
+            dblclick: ondblClick(record)
+          }
+        })
+      "
+      @expand="onExpand"
+      rowKey="id"
+      size="small"
+    >
+      <template slot="name" slot-scope="text, record">
+        <span class="icon">{{ formatType(record.type) }}</span>
+        <span>{{ text }}</span>
+      </template>
+      <template slot="desc" slot-scope="text, record">
+        <MultiLine v-if="!isRoot(record)" v-model="record.description" />
+      </template>
+      <template slot="mock" slot-scope="text, record">
+        <a-input v-if="!isRoot(record)" />
+      </template>
+      <template slot="required" slot-scope="text, record">
+        <a-switch
+          v-if="!isForbidden(record)"
+          :checked="isRequired(record)"
+          @change="checked => onChange(checked, record)"
+        />
+      </template>
+    </a-table>
+    <a-modal
+      title="Schema 定义"
+      v-model="visible"
+      @ok="handleOk"
+      @cancel="handleCancel"
+    >
+      <keep-alive>
+        <component :is="componentType" :value="selectedSchema"></component>
+      </keep-alive>
+    </a-modal>
+  </div>
 </template>
 
 <script>
 import Types from "vue-types";
+import capitalize from "lodash-es/capitalize";
+import ArraySchema from "./schema/ArraySchema";
+import BooleanSchema from "./schema/BooleanSchema";
+import IntegerSchema from "./schema/IntegerSchema";
+import NullSchema from "./schema/NullSchema";
+import NumberSchema from "./schema/NumberSchema";
+import ObjectSchema from "./schema/ObjectSchema";
+import StringSchema from "./schema/StringSchema";
 import { formatType, schema2array, array2tree } from "./schema-util.js";
 
 export default {
+  components: {
+    ArraySchema,
+    BooleanSchema,
+    IntegerSchema,
+    NullSchema,
+    NumberSchema,
+    ObjectSchema,
+    StringSchema
+  },
   props: {
     value: Types.object.isRequired,
     height: Types.number.def(600)
@@ -72,14 +101,21 @@ export default {
           title: "必须",
           dataIndex: "required",
           align: "center",
-          width: 80,
+          width: 100,
           scopedSlots: { customRender: "required" }
         }
       ],
       dataSource: [],
       schemaList: [],
-      expandedRowKeys: []
+      expandedRowKeys: [],
+      visible: false,
+      selectedSchema: {}
     };
+  },
+  computed: {
+    componentType() {
+      return `${capitalize(this.selectedSchema.type)}Schema`;
+    }
   },
   watch: {
     value: {
@@ -98,8 +134,8 @@ export default {
     }
   },
   methods: {
-    showRequired(record) {
-      return !this.isRoot(record) || record.title !== "items";
+    isForbidden(record) {
+      return this.isRoot(record) || this.isArrayItems(record);
     },
     isRoot(record) {
       return Boolean(record.$schema);
@@ -113,7 +149,9 @@ export default {
     },
     isRequired(record) {
       const parent = this.schemaList.find(item => item.id === record.parentId);
-      return parent.required && parent.required.includes(record.title);
+      return parent
+        ? parent.required && parent.required.includes(record.title)
+        : true;
     },
     onChange(checked, record) {
       const parent = this.schemaList.find(item => item.id === record.parentId);
@@ -130,15 +168,16 @@ export default {
         this.expandedRowKeys.splice(this.expandedRowKeys.indexOf(record.id), 1);
       }
     },
-    onClick(record) {
+    ondblClick(record) {
       return () => {
-        if (!record.children) return;
-        this.onExpand(!this.expandedRowKeys.includes(record.id), record);
+        if (!this.isForbidden(record)) {
+          this.visible = true;
+          this.selectedSchema = record;
+        }
       };
     },
-    ondblClick(record) {
-      return () => {};
-    }
+    handleOk() {},
+    handleCancel() {}
   }
 };
 </script>
@@ -154,12 +193,6 @@ export default {
   &-row:nth-child(odd) {
     background: #f5f5f5;
   }
-  // &-row td {
-  //   display: flex;
-  //   align-items: center;
-  //   border: none;
-  //   cursor: pointer;
-  // }
   &-row-expand-icon {
     margin-right: 0 !important;
   }
