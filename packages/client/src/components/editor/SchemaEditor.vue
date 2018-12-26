@@ -25,7 +25,11 @@
         <MultiLine v-if="!isRoot(record)" v-model="record.description" />
       </template>
       <template slot="mock" slot-scope="text, record">
-        <a-input v-if="!isRoot(record)" />
+        <a-input
+          :value="record.mock"
+          v-if="!isRoot(record)"
+          @click="onClick(record)"
+        />
       </template>
       <template slot="required" slot-scope="text, record">
         <a-switch
@@ -36,10 +40,11 @@
       </template>
     </a-table>
     <a-modal
-      title="Schema 定义"
       v-model="visible"
-      @ok="handleOk"
-      @cancel="handleCancel"
+      :width="800"
+      :title="componentType === 'MockSchema' ? 'Mock' : 'Schema'"
+      :bodyStyle="{ padding: 0 }"
+      :footer="null"
     >
       <keep-alive>
         <component :is="componentType" :value="selectedSchema"></component>
@@ -58,6 +63,7 @@ import NullSchema from "./schema/NullSchema";
 import NumberSchema from "./schema/NumberSchema";
 import ObjectSchema from "./schema/ObjectSchema";
 import StringSchema from "./schema/StringSchema";
+import MockSchema from "./schema/MockSchema";
 import { formatType, schema2array, array2tree } from "./schema-util.js";
 
 export default {
@@ -68,7 +74,8 @@ export default {
     NullSchema,
     NumberSchema,
     ObjectSchema,
-    StringSchema
+    StringSchema,
+    MockSchema
   },
   props: {
     value: Types.object.isRequired,
@@ -81,7 +88,7 @@ export default {
         {
           title: "名称",
           dataIndex: "title",
-          width: "60%",
+          width: "50%",
           scopedSlots: { customRender: "name" }
         },
         {
@@ -109,13 +116,9 @@ export default {
       schemaList: [],
       expandedRowKeys: [],
       visible: false,
+      componentType: "",
       selectedSchema: {}
     };
-  },
-  computed: {
-    componentType() {
-      return `${capitalize(this.selectedSchema.type)}Schema`;
-    }
   },
   watch: {
     value: {
@@ -173,11 +176,15 @@ export default {
         if (!this.isForbidden(record)) {
           this.visible = true;
           this.selectedSchema = record;
+          this.componentType = `${capitalize(record.type)}Schema`;
         }
       };
     },
-    handleOk() {},
-    handleCancel() {}
+    onClick(record) {
+      this.visible = true;
+      this.selectedSchema = record;
+      this.componentType = "MockSchema";
+    }
   }
 };
 </script>

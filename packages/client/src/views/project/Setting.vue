@@ -114,6 +114,7 @@
       <a-anchor
         class="anchor"
         :getContainer="() => $refs.container"
+        :offsetTop="24"
         showInkInFixed
       >
         <a-anchor-link href="#basic" title="信息" />

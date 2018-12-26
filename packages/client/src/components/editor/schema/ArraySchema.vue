@@ -1,10 +1,10 @@
 <template>
-  <a-form layout="inline">
-    <a-form-item label="Field A">
-      <a-input placeholder="input placeholder" />
+  <a-form layout="vertical">
+    <a-form-item label="maximum">
+      <!-- <a-input-number :min="1" :max="10" v-model="value" @change="onChange" /> -->
     </a-form-item>
-    <a-form-item label="Field B">
-      <a-input placeholder="input placeholder" />
+    <a-form-item label="minimum">
+      <!-- <a-input-number :min="1" :max="10" v-model="value" @change="onChange" /> -->
     </a-form-item>
   </a-form>
 </template>
@@ -24,4 +24,8 @@ export default {
 };
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.ant-form {
+  padding: 16px;
+}
+</style>
