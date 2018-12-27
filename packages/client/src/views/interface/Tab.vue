@@ -7,7 +7,9 @@
     hideAdd
   >
     <a-tab-pane v-for="item in interfaces" :key="item._id">
-      <span slot="tab"><Method :type="item.method" />{{ item.name }}</span>
+      <span class="tab ellipsis" slot="tab"
+        ><Method :type="item.method" />{{ item.name }}</span
+      >
       <Edit :value="item"></Edit>
     </a-tab-pane>
   </a-tabs>
@@ -45,4 +47,10 @@ export default {
 };
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.tab {
+  display: inline-block;
+  max-width: 160px;
+  vertical-align: middle;
+}
+</style>

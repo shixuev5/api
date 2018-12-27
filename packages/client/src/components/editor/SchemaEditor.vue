@@ -9,7 +9,7 @@
       :customRow="
         record => ({
           on: {
-            dblclick: ondblClick(record)
+            dblclick: showModal(record)
           }
         })
       "
@@ -38,6 +38,12 @@
           @change="checked => onChange(checked, record)"
         />
       </template>
+      <template slot="operation" slot-scope="text, record">
+        <a-icon
+          v-if="!isForbidden(record)"
+          type="edit"
+          @click="showModal(record)()"
+      /></template>
     </a-table>
     <a-modal
       v-model="visible"
@@ -110,6 +116,13 @@ export default {
           align: "center",
           width: 100,
           scopedSlots: { customRender: "required" }
+        },
+        {
+          title: "操作",
+          dataIndex: "operation",
+          width: 60,
+          align: "center",
+          scopedSlots: { customRender: "operation" }
         }
       ],
       dataSource: [],
@@ -171,7 +184,7 @@ export default {
         this.expandedRowKeys.splice(this.expandedRowKeys.indexOf(record.id), 1);
       }
     },
-    ondblClick(record) {
+    showModal(record) {
       return () => {
         if (!this.isForbidden(record)) {
           this.visible = true;
@@ -196,6 +209,9 @@ export default {
 /deep/ .ant-table {
   &-row {
     cursor: pointer;
+    .anticon-edit {
+      padding: 8px;
+    }
   }
   &-row:nth-child(odd) {
     background: #f5f5f5;

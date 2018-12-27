@@ -37,4 +37,10 @@ export default {
 };
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+/deep/ .ant-tabs {
+  &-tab {
+    text-align: center !important;
+  }
+}
+</style>
