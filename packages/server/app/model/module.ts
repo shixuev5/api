@@ -5,8 +5,8 @@ export default (app: Application) => {
   const moduleSchema = new mongoose.Schema(
     {
       name: { type: String, required: true },
+      type: { type: String, default: 'module' },
       path: { type: String, required: true },
-      parent_id: { type: mongoose.Schema.Types.ObjectId },
       project_id: { type: mongoose.Schema.Types.ObjectId, required: true },
       stars: [
         {

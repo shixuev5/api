@@ -5,6 +5,7 @@ export default (app: Application) => {
   const interfaceSchema = new mongoose.Schema(
     {
       name: { type: String, required: true },
+      type: { type: String, default: 'interface' },
       desc: String,
       path: { type: String, required: true },
       method: { type: String, required: true },

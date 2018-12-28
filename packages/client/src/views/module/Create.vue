@@ -62,6 +62,13 @@ export default {
     };
   },
   methods: {
+    filterOption(input, option) {
+      return (
+        option.componentOptions.children[0].text
+          .toLowerCase()
+          .indexOf(input.toLowerCase()) >= 0
+      );
+    },
     handleSubmit() {
       this.form.validateFields(async (err, values) => {
         if (!err) {
@@ -76,4 +83,8 @@ export default {
 };
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.ant-form-vertical .ant-form-item {
+  margin-bottom: 16px;
+}
+</style>

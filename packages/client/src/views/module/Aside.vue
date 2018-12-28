@@ -58,6 +58,13 @@ export default {
       expandedKeys: []
     };
   },
+  watch: {
+    expandedKeys(val) {
+      if (!val.length) {
+        this.$store.commit(types.SET_MODULE_INFO, {});
+      }
+    }
+  },
   computed: {
     info() {
       return this.$store.state.project.info;
@@ -75,6 +82,7 @@ export default {
   methods: {
     reload() {
       this.$store.dispatch(types.MODULE_LIST);
+      this.expandedKeys = [];
     },
     async onLoadData(treeNode) {
       if (treeNode.dataRef.children) return;
@@ -84,12 +92,16 @@ export default {
       );
       treeNode.dataRef.children = response.map(item => {
         return {
+          key: item._id,
           scopedSlots: { title: "interface" },
           ...item
         };
       });
     },
-    onSelect(selectedKeys) {
+    onSelect(selectedKeys, { selected, node }) {
+      if (selected && node.dataRef.type === "module") {
+        this.$store.commit(types.SET_MODULE_INFO, node.dataRef);
+      }
       this.expandedKeys = selectedKeys;
     }
   },
@@ -134,6 +146,9 @@ export default {
 
 /* 重设 tree 组件样式 */
 /deep/ .ant-tree {
+  li ul {
+    padding-left: 8px;
+  }
   &-node-content-wrapper {
     width: calc(100% - 24px);
     padding-left: 0 !important;
@@ -144,12 +159,9 @@ export default {
     }
   }
   &-child-tree {
-    .ant-tree-iconEle {
-      display: none;
-    }
-    .ant-tree-title {
-      width: 100%;
-    }
+    // .ant-tree-iconEle {
+    //   display: none;
+    // }
   }
 }
 </style>

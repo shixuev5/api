@@ -4,6 +4,7 @@ export default (app: Application) => {
   const mongoose = app.mongoose;
   const templateSchema = new mongoose.Schema({
     name: { type: String, required: true },
+    type: { type: String, default: 'template' },
     desc: String,
     path: String,
     method: String,

@@ -9,7 +9,7 @@
         <a-radio value="document">document</a-radio>
       </a-radio-group>
     </div>
-    <JsonEditor v-if="value.type === 'json'"></JsonEditor>
+    <JsonEditor v-if="value.type === 'json'" :value="value"></JsonEditor>
   </div>
 </template>
 
@@ -24,8 +24,7 @@ export default {
   },
   data() {
     return {};
-  },
-  methods: {}
+  }
 };
 </script>
 

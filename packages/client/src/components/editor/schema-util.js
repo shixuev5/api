@@ -94,14 +94,16 @@ export function array2tree(items, config) {
 
     if (!lookup[itemId]) {
       lookup[itemId] = item;
-      item.children = [];
     }
     const TreeItem = lookup[itemId];
-    if (parentId === config.root) {
+    if (parentId === config.root || !parentId) {
       rootItems.push(TreeItem);
     } else {
       if (!lookup[parentId]) {
         lookup[parentId] = { children: [] };
+      }
+      if(!lookup[parentId].children) {
+        lookup[parentId].children = [];
       }
       lookup[parentId].children.push(TreeItem);
     }

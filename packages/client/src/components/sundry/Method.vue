@@ -50,6 +50,7 @@ export default {
 .method {
   display: inline-block;
   min-width: 34px;
+  margin-right: 4px;
 }
 .get {
   color: #52c41a;

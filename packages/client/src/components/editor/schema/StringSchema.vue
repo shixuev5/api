@@ -28,14 +28,12 @@
             format
           </a-tooltip>
           <a-select v-model="value.format" allowClear style="width: 200px">
-            <a-select-option value="date">date</a-select-option>
             <a-select-option value="date-time">date-time</a-select-option>
             <a-select-option value="uri">uri</a-select-option>
             <a-select-option value="email">email</a-select-option>
             <a-select-option value="hostname">hostname</a-select-option>
             <a-select-option value="ipv4">ipv4</a-select-option>
             <a-select-option value="ipv6">ipv6</a-select-option>
-            <a-select-option value="regex">regex</a-select-option>
           </a-select>
         </a-form-item>
         <br />
@@ -61,7 +59,11 @@
     </section>
     <section>
       <h3 class="title-bar">代码</h3>
-      <MonacoEditor :value="code"></MonacoEditor>
+      <MonacoEditor
+        ref="code"
+        :value="code"
+        @didChangeModelContent="onChange"
+      ></MonacoEditor>
     </section>
   </div>
 </template>
@@ -77,6 +79,11 @@ export default {
   computed: {
     code() {
       return JSON.stringify(omit(this.value, ["id", "parentId"]), null, 2);
+    }
+  },
+  methods: {
+    onChange() {
+      this.$refs.code.editor.getValue();
     }
   }
 };

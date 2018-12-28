@@ -139,9 +139,7 @@ export default {
         this.schemaList = schema2array(val);
         this.dataSource = array2tree(this.schemaList);
         this.schemaList.forEach(item => {
-          if (!item.children.length) {
-            delete item.children;
-          } else {
+          if (item.children) {
             this.expandedRowKeys.push(item.id);
           }
         });

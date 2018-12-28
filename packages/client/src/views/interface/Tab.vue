@@ -8,8 +8,14 @@
   >
     <a-tab-pane v-for="item in interfaces" :key="item._id">
       <span class="tab ellipsis" slot="tab"
-        ><Method :type="item.method" />{{ item.name }}</span
-      >
+        ><Method :type="item.method" />
+        <a-badge v-if="item.isModify" dot status="warning">
+          {{ item.name }}
+        </a-badge>
+        <template v-else>
+          {{ item.name }}
+        </template>
+      </span>
       <Edit :value="item"></Edit>
     </a-tab-pane>
   </a-tabs>
@@ -40,7 +46,24 @@ export default {
     },
     onRemove(targetKey, action) {
       if (action === "remove") {
-        this.$store.commit(types.DELETE_INTERFACE_TABS, { _id: targetKey });
+        const { isModify } = this.interfaces.find(
+          item => item._id === targetKey
+        );
+        if (isModify) {
+          this.$confirm({
+            title: "Do you Want to delete these items?",
+            content: "Some descriptions",
+            onOk() {
+              console.log("OK");
+            },
+            onCancel() {
+              console.log("Cancel");
+            },
+            class: "test"
+          });
+        } else {
+          this.$store.commit(types.DELETE_INTERFACE_TABS, { _id: targetKey });
+        }
       }
     }
   }
@@ -51,6 +74,8 @@ export default {
 .tab {
   display: inline-block;
   max-width: 160px;
+  line-height: 20px;
+  padding: 8px;
   vertical-align: middle;
 }
 </style>

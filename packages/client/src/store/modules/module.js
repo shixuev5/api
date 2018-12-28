@@ -33,7 +33,6 @@ export default {
           payload
         )
       );
-      commit(types.SET_MODULE_INFO, response);
       commit(types.UPDATE_MODULE_LIST, response);
     },
     async [types.MODULE_LIST]({ commit, rootState }) {

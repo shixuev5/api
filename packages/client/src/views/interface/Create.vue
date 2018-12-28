@@ -92,6 +92,7 @@ export default {
         desc: "",
         tags: [],
         status: "define",
+        module_id: this.$store.state.module.info._id,
         project_id: this.$store.state.project.info._id
       });
       this.$store.commit(types.SET_INTERFACE_TABS, [...interfaceTabs, api]);

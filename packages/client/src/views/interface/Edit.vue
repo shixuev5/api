@@ -18,6 +18,12 @@
             >
           </a-step>
         </a-steps>
+        <a-icon
+          type="save"
+          theme="twoTone"
+          :style="{ fontSize: '16px' }"
+          @click="onSave"
+        />
       </section>
       <section>
         <h3 id="basic" class="title-bar">信息</h3>
@@ -144,7 +150,11 @@
 
 <script>
 import Types from "vue-types";
+import debounce from "lodash-es/debounce";
+import isEqual from "lodash-es/isEqual";
+import omit from "lodash-es/omit";
 import { status } from "@/config/constant";
+import * as types from "@/store/types";
 import {
   resolvePathParams,
   resolveQueryParams,
@@ -196,6 +206,12 @@ export default {
     }
   },
   watch: {
+    api: {
+      handler: debounce(function(val, oldVal) {
+        val.isModify = isEqual(val, oldVal);
+      }, 300),
+      deep: true
+    },
     "api.path": function(val) {
       this.api.request.path = resolvePathParams(val);
       this.api.request.query = resolveQueryParams(val);
@@ -205,8 +221,7 @@ export default {
         this.api.path = syncQuery(this.api.path, val);
       },
       deep: true
-    },
-    "api.request.body.type": function() {}
+    }
   },
   methods: {
     filterOption(input, option) {
@@ -214,6 +229,12 @@ export default {
         option.componentOptions.children[0].text
           .toLowerCase()
           .indexOf(input.toLowerCase()) >= 0
+      );
+    },
+    onSave() {
+      this.$store.dispatch(
+        types.INTERFACE_CREATE,
+        omit(this.api, ["_id", "isModify"])
       );
     }
   }

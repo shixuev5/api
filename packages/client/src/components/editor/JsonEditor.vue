@@ -61,6 +61,8 @@ export default {
     jsonString: {
       handler: debounce(function(val) {
         if (!isValidJSON(val)) return;
+        // 保存 jsonString 到 value 中
+        this.value.value = val;
         this.jsonSchema = merge(
           {},
           this.jsonSchema,
@@ -68,6 +70,9 @@ export default {
         );
       }, 500),
       immediate: true
+    },
+    jsonSchemaString(val) {
+      this.value.schema = val;
     }
   },
   computed: {
