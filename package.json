@@ -8,9 +8,9 @@
     "dev": "lerna run dev",
     "dev:client": "lerna run --scope api-client dev",
     "dev:server": "lerna run --scope api-server dev",
+    "dev:docs": "vuepress dev docs",
+    "build": "lerna run --scope api-client build && vuepress build docs",
     "lint": "lerna run --no-bail lint",
-    "docs": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
     "clean": "lerna clean --yes",
     "commit": "git add . && git-cz --no-verify"
   },
