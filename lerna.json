@@ -4,10 +4,13 @@
   "command": {
     "run": {
       "stream": true
+    },
+    "publish": {
+      "message": "chore(release): publish %s"
     }
   },
   "packages": [
     "packages/*"
   ],
-  "version": "1.0.0"
+  "version": "0.1.0"
 }

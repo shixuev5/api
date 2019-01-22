@@ -12,16 +12,14 @@
     "build": "lerna run --scope api-client build && vuepress build docs",
     "lint": "lerna run --no-bail lint",
     "clean": "lerna clean --yes",
-    "commit": "git add . && git-cz --no-verify"
+    "commit": "git add . && git-cz",
+    "publish": "lerna version"
   },
   "devDependencies": {
     "commitizen": "^3.0.4",
     "cz-conventional-changelog": "^2.1.0",
     "lerna": "^3.5.1",
     "vuepress": "^1.0.0-alpha.25"
-  },
-  "gitHooks": {
-    "pre-commit": "npm run lint"
   },
   "config": {
     "commitizen": {

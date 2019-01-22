@@ -41,7 +41,7 @@ export default {
   actions: {
     async [types.INTERFACE_CREATE]({ commit }, payload) {
       const response = await api.create(payload);
-      debugger
+      debugger;
       commit(types.SET_INTERFACE_LIST, state.list.concat([response]));
     },
     async [types.INTERFACE_LIST]({ commit, state, rootState }, id) {

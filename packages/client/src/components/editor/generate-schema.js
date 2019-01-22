@@ -110,8 +110,15 @@ class Schema {
   }
 
   _handleOptions(schema, key, value) {
-    const { required, title, examples, description, enums, allowNull } = this._options;
-    description && (schema.description = '');
+    const {
+      required,
+      title,
+      examples,
+      description,
+      enums,
+      allowNull
+    } = this._options;
+    description && (schema.description = "");
     title && (schema.title = key);
     if (isType(value) === "object" && required) {
       schema.required = Object.keys(value);

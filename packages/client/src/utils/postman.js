@@ -108,10 +108,10 @@ export function syncQuery(url = "", query) {
           const item = urlQuery.find(i => i.name === m.name);
           item.value = m.example;
         });
-      } else if(params.length === 1) {
-        if(query.length > urlQuery.length) {
+      } else if (params.length === 1) {
+        if (query.length > urlQuery.length) {
           // query 新增操作
-          urlQuery.push({ name: params[0], value: '' });
+          urlQuery.push({ name: params[0], value: "" });
         } else {
           // query 删除操作
           const index = urlQuery.findIndex(item => item.name === params[0]);
@@ -127,7 +127,11 @@ export function syncQuery(url = "", query) {
           urlQuery.splice(index, 1);
         }
       }
-      return url.split("?")[0] + stringifyQuery(urlQuery) + (url.endsWith('&') ? '&' : '');
+      return (
+        url.split("?")[0] +
+        stringifyQuery(urlQuery) +
+        (url.endsWith("&") ? "&" : "")
+      );
     } else {
       return `${url}?${query[0].name}`;
     }

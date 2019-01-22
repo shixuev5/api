@@ -21,7 +21,7 @@
 //   }
 // }
 
-import uniqueId from 'lodash-es/uniqueId';
+import uniqueId from "lodash-es/uniqueId";
 
 export function isValidJSON(str) {
   try {
@@ -59,11 +59,11 @@ export function capitalize(string) {
 }
 
 export function walkSchema(schema, callback) {
-  if(schema.type === 'object') {
+  if (schema.type === "object") {
     for (const key in schema.properties) {
       walkSchema(schema.properties[key], callback);
     }
-  } else if(schema.type === 'array') {
+  } else if (schema.type === "array") {
     walkSchema(schema.items, callback);
   }
   callback(schema);
@@ -73,12 +73,12 @@ export function schema2array(schema, parentId = 0) {
   let arr = [schema];
   schema.parentId = parentId;
   schema.id = uniqueId();
-  if(schema.type === 'object') {
+  if (schema.type === "object") {
     for (const key in schema.properties) {
       arr = arr.concat(schema2array(schema.properties[key], schema.id));
     }
-  } else if(schema.type === 'array') {
-    arr = arr.concat(schema2array(schema.items, schema.id))
+  } else if (schema.type === "array") {
+    arr = arr.concat(schema2array(schema.items, schema.id));
   }
   return arr;
 }
@@ -102,7 +102,7 @@ export function array2tree(items, config) {
       if (!lookup[parentId]) {
         lookup[parentId] = { children: [] };
       }
-      if(!lookup[parentId].children) {
+      if (!lookup[parentId].children) {
         lookup[parentId].children = [];
       }
       lookup[parentId].children.push(TreeItem);
