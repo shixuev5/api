@@ -13,7 +13,7 @@
     "lint": "lerna run --no-bail lint",
     "clean": "lerna clean --yes",
     "commit": "git add . && git-cz",
-    "publish": "lerna version"
+    "publish": "lerna version --conventional-commits"
   },
   "devDependencies": {
     "commitizen": "^3.0.4",
@@ -23,7 +23,7 @@
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+      "path": "cz-conventional-changelog"
     }
   }
 }
