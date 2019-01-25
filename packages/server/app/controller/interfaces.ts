@@ -25,7 +25,7 @@ export default class InterfacesController extends Controller {
   }
   async remove() {
     const { ctx } = this;
-    const { _id } = await ctx.model.Interface.remove(ctx.params.id);
+    const { _id } = await ctx.model.Interface.findByIdAndRemove(ctx.params.id);
     ctx.helper.success({ _id });
   }
 }

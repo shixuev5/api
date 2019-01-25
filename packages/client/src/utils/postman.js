@@ -27,7 +27,7 @@ export function createInterface(option) {
         headers: [],
         body: {
           type: "json",
-          value: []
+          value: ""
         }
       }
     },

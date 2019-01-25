@@ -63,12 +63,13 @@ export default {
         if (!isValidJSON(val)) return;
         // 保存 jsonString 到 value 中
         this.value.value = val;
-        this.jsonSchema = merge(
-          {},
-          this.jsonSchema,
-          new Schema(val).getSchema()
-        );
-      }, 500),
+        // this.jsonSchema = merge(
+        //   {},
+        //   this.jsonSchema,
+        //   new Schema(val).getSchema()
+        // );
+        this.jsonSchema = new Schema(val).getSchema();
+      }, 300),
       immediate: true
     },
     jsonSchemaString(val) {

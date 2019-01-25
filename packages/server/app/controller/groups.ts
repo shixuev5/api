@@ -42,7 +42,7 @@ export default class GroupsController extends Controller {
   /* 删除群组 */
   async remove() {
     const { ctx } = this;
-    const { _id } = await ctx.model.Group.remove(ctx.params.id);
+    const { _id } = await ctx.model.Group.findByIdAndRemove(ctx.params.id);
     ctx.helper.success({ _id });
   }
   /* 获取可添加的用户列表 */

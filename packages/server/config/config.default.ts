@@ -1,4 +1,5 @@
 import { Context, EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
+import { db, secret } from '../../../config.json';
 
 function ignore(ctx: Context): boolean {
   const routes = [
@@ -31,6 +32,10 @@ export default (_appInfo: EggAppInfo) => {
 
   const config = {} as PowerPartial<EggAppConfig>;
 
+  // override config from framework / plugin
+  // use for cookie sign key, should change to your own and keep security
+  config.keys = secret;
+
   // add your egg config in here
   config.middleware = ['errorHandler'];
 
@@ -54,6 +59,19 @@ export default (_appInfo: EggAppInfo) => {
     enable: true,
     secret: config.keys,
     ignore,
+  };
+
+  // mongodb config
+  config.mongoose = {
+    client: {
+      url: `mongodb://${db.host}:${db.port}/${db.database}`,
+      options: {
+        auth: { authSource: db.authSource },
+        user: db.user,
+        pass: db.pass,
+        useCreateIndex: true,
+      },
+    },
   };
 
   config.io = {

@@ -51,15 +51,14 @@ export default {
         );
         if (isModify) {
           this.$confirm({
-            title: "Do you Want to delete these items?",
-            content: "Some descriptions",
-            onOk() {
-              console.log("OK");
-            },
-            onCancel() {
-              console.log("Cancel");
-            },
-            class: "test"
+            title: "删除接口?",
+            content: "未保存情况下移除接口，将丢失接口数据",
+            onOk: () => {
+              this.$store.commit(types.DELETE_INTERFACE_TABS, {
+                _id: targetKey
+              });
+              return Promise.resolve();
+            }
           });
         } else {
           this.$store.commit(types.DELETE_INTERFACE_TABS, { _id: targetKey });

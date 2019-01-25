@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { secret } from '$root/config.json';
 
 export function readJwt() {
   return (
@@ -15,11 +16,7 @@ export function verifyJwt() {
   const token = readJwt();
   if (!token) return false;
   try {
-    const config =
-      process.env.NODE_ENV === "development"
-        ? require("$root/config/config.dev.json")
-        : require("$root/config/config.prod.json");
-    const decode = jwt.verify(token, config.secret);
+    const decode = jwt.verify(token, secret);
     return !!decode;
   } catch (error) {
     cleanJwt();

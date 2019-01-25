@@ -9,9 +9,9 @@ export default class ProjectService extends BaseService {
     return this.db.create({
       members: {
         _id: this.ctx.state.user._id,
-        role: 'owner'
+        role: 'owner',
       },
-      ...payload
+      ...payload,
     });
   }
   /* 我的项目 */
@@ -24,21 +24,21 @@ export default class ProjectService extends BaseService {
 
     const groupIds = await this.service.group
       .owner({
-        ...personExtra
+        ...personExtra,
       })
       .select('_id');
 
     // 查找从我的群组继承权限的项目
     const inheritProjects = await this.db.find({
       group_id: {
-        $in: groupIds
-      }
+        $in: groupIds,
+      },
     });
 
     const ownerProjects = await this.db.find({
-      _id: { $nin: inheritProjects.map(item => item._id) },
+      '_id': { $nin: inheritProjects.map((item) => item._id) },
       'members._id': this.ctx.state.user._id,
-      ...personExtra
+      ...personExtra,
     });
 
     return inheritProjects.concat(ownerProjects);
@@ -47,15 +47,15 @@ export default class ProjectService extends BaseService {
   star(args) {
     return this.db.find({
       'stars._id': this.ctx.state.user._id,
-      ...args
+      ...args,
     });
   }
   /* 探索项目 */
   async explore({ type }) {
     const projects = await this.db.find({
       permission: {
-        $in: ['shared', 'public']
-      }
+        $in: ['shared', 'public'],
+      },
     });
 
     // if (type === 'trend') {
@@ -71,14 +71,14 @@ export default class ProjectService extends BaseService {
   /* 查找项目包含的接口数 */
   async countInterface(projects) {
     const counts = await Promise.all(
-      projects.map(project =>
+      projects.map((project) =>
         this.service.interface.count({
-          project_id: project._id
-        })
-      )
+          project_id: project._id,
+        }),
+      ),
     );
     return projects.map((project, index) =>
-      Object.assign({ interface_num: counts[index] }, project.toJSON())
+      Object.assign({ interface_num: counts[index] }, project.toJSON()),
     );
   }
   /* 获取可添加的用户列表 */
@@ -88,12 +88,12 @@ export default class ProjectService extends BaseService {
     const group = await this.app.model.Group.findOne({ _id: project.group_id });
 
     const memberIds = group.members
-      .map(item => item._id)
-      .concat(project.members.map(item => item._id));
+      .map((item) => item._id)
+      .concat(project.members.map((item) => item._id));
 
     return this.app.model.User.find({
       _id: {
-        $nin: memberIds
+        $nin: memberIds,
       },
       name: { $regex: new RegExp(q, 'i') },
     })
@@ -107,9 +107,9 @@ export default class ProjectService extends BaseService {
       {
         $push: {
           members: {
-            $each: payload
-          }
-        }
+            $each: payload,
+          },
+        },
       },
     );
   }
@@ -118,12 +118,12 @@ export default class ProjectService extends BaseService {
     return this.db.update(
       {
         _id,
-        'members._id': memberId
+        'members._id': memberId,
       },
       {
         $set: {
-          'members.$.role': role
-        }
+          'members.$.role': role,
+        },
       },
     );
   }
@@ -134,9 +134,9 @@ export default class ProjectService extends BaseService {
       {
         $pull: {
           members: {
-            _id: memberId
-          }
-        }
+            _id: memberId,
+          },
+        },
       },
     );
   }
@@ -144,7 +144,7 @@ export default class ProjectService extends BaseService {
   async getProjectRole(_id) {
     const project = await this.db.findOne({ _id });
     const member = project.members.find(
-      item => item._id === this.ctx.state.user._id,
+      (item) => item._id === this.ctx.state.user._id,
     );
     return member
       ? member.role
@@ -173,7 +173,7 @@ export default class ProjectService extends BaseService {
     }
     return this.db.findByIdAndUpdate(_id, {
       $push: {
-        stars: { _id: userId }
+        stars: { _id: userId },
       },
     }, { new: true });
   }
@@ -188,7 +188,7 @@ export default class ProjectService extends BaseService {
     }
     return this.db.findByIdAndUpdate(_id, {
       $pull: {
-        stars: { _id: userId }
+        stars: { _id: userId },
       },
     }, { new: true });
   }

@@ -44,7 +44,7 @@ export default class UsersController extends Controller {
   /* 删除用户 */
   async remove() {
     const { ctx } = this;
-    const { _id } = await ctx.model.User.remove(ctx.params.id);
+    const { _id } = await ctx.model.User.findByIdAndRemove(ctx.params.id);
     ctx.helper.success({ _id });
   }
 }

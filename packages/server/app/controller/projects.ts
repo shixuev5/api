@@ -1,4 +1,4 @@
-import { Controller } from "egg";
+import { Controller } from 'egg';
 
 export default class ProjectsController extends Controller {
   /* 根据 tab 显示分类列表 */
@@ -19,7 +19,7 @@ export default class ProjectsController extends Controller {
     const { ctx } = this;
     const project = await ctx.app.model.Project.findOne({
       name: ctx.query.name,
-      group_id: ctx.query.group_id
+      group_id: ctx.query.group_id,
     });
     ctx.helper.success(project && project._id);
   }
@@ -40,7 +40,7 @@ export default class ProjectsController extends Controller {
   }
   async remove() {
     const { ctx } = this;
-    const { _id } = await ctx.model.Project.remove(ctx.params.id);
+    const { _id } = await ctx.model.Project.findByIdAndRemove(ctx.params.id);
     ctx.helper.success({ _id });
   }
   /* 获取可添加的用户列表 */
@@ -56,12 +56,12 @@ export default class ProjectsController extends Controller {
     if (!Array.isArray(ctx.request.body)) {
       ctx.request.body = [ctx.request.body];
     }
-    ctx.request.body.forEach(item =>
-      service.project.checkPermission(groupRole, item.role)
+    ctx.request.body.forEach((item) =>
+      service.project.checkPermission(groupRole, item.role),
     );
     const res = await service.project.createMember(
       ctx.params.id,
-      ctx.request.body
+      ctx.request.body,
     );
     ctx.helper.success(res);
   }
@@ -70,12 +70,12 @@ export default class ProjectsController extends Controller {
     const { ctx, service } = this;
     service.project.checkPermission(
       await service.project.getProjectRole(ctx.params.id),
-      ctx.request.body.role
+      ctx.request.body.role,
     );
     await service.project.updateMember(
       ctx.params.id,
       ctx.params.member_id,
-      ctx.request.body
+      ctx.request.body,
     );
     ctx.helper.success(ctx.request.body);
   }
